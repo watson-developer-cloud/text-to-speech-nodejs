@@ -17,23 +17,6 @@
 
 'use strict';
 
-/* Feedback Modal */
-$('.feedback').click(function() {
-  $('.feedback-modal').addClass('active');
-  $('body').addClass('no-scroll');
-  $('html').addClass('no-scroll');
-});
-$('.feedback-modal .cancel').click(function() {
-  $('.feedback-modal').removeClass('active');
-  $('body').removeClass('no-scroll');
-  $('html').removeClass('no-scroll');
-});
-$('.feedback-modal .submit').click(function() {
-  $('.feedback-modal').removeClass('active');
-  $('body').removeClass('no-scroll');
-  $('html').removeClass('no-scroll');
-});
-
 $(document).ready(function() {
   var audio = $('.audio').get(0),
     textArea = $('#textArea');
