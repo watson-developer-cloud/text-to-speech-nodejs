@@ -1,0 +1,184 @@
+.no-scroll {
+  overflow: hidden;
+}
+
+.img-container img {
+  width: 100%;
+  height: auto;
+}
+
+.top-nav {
+  background-color: #404041;
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+.top-nav a {
+  font-size: 14px;
+  font-weight: 300;
+  text-decoration: underline;
+  color: white;
+}
+.top-nav a:hover {
+  color: #E0E0E0;
+}
+
+.top-nav .right {
+  float: right;
+  margin-right: 20px;
+}
+.top-nav .left {
+  float: left;
+}
+.top-nav .fork:before {
+  content: " ";
+  background: url("../images/fork-icon.svg") no-repeat;
+  height: 16px;
+  width: 16px;
+  vertical-align: text-bottom;
+  display: inline-block;
+  margin-right: 3px;
+}
+.header {
+  padding-bottom:0px;
+  margin-bottom: 0px;
+  position: relative;
+}
+.header h2 {
+  font-weight: 400;
+}
+.header h3 {
+  color: #00b2ef;
+  font-weight: 400;
+}
+.avatar {
+  padding-right: 0px;
+}
+.avatar img {
+  margin-top: 9px;
+}
+.header a {
+  font-size: 14px;
+  font-weight: 300;
+  text-decoration: underline;
+  color: #404041;
+  display: block;
+  margin-left: 20px;
+  margin-bottom: 3px;
+}
+.header a:hover {
+  color: #777677;
+}
+.header .feedback {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  margin: 0px;
+}
+.feedback-modal {
+  background-color: rgba(255, 255, 255, 0.75);
+  display: block;
+  visibility: hidden;
+  opacity: 0;
+  -webkit-transition: 0.2s;
+  -moz-transition: 0.2s;
+  -o-transition: 0.2s;
+  -ms-transition: 0.2s;
+  transition: 0.2s;
+}
+.feedback-modal.active {
+  visibility: visible;
+  opacity: 1;
+}
+.feedback-modal .well {
+  width: 75%;
+  max-width: 535px;
+  min-height: 230px;
+  max-height: 315px;
+  position: absolute;
+  top: 0px;
+  bottom: 0px;
+  left: -9999px;
+  right: -9999px;
+  margin: 90px auto;
+  box-shadow: 0px 0px 10px #bbb;
+}
+.feedback-modal h2 {
+  margin: 0px 0px 18px 0px;
+}
+.feedback-modal .radios {
+  margin-bottom: 18px;
+}
+.feedback-modal label,
+.feedback-modal input {
+  margin: 0px;
+}
+.feedback-modal label.bad {
+  margin-right: 10px;
+}
+.feedback-modal label.rating {
+  margin-left: 4px;
+  margin-right: 10px;
+  font-weight: 400;
+}
+.feedback-modal textarea {
+  display: block;
+  width: 100%;
+  height: 70px;
+  margin-bottom: 18px;
+}
+.feedback-modal .btn {
+  margin-right: 10px;
+}
+
+.errorMsg {
+  font-weight:bold;
+  color:red;
+}
+.pause {
+  display: none;
+}
+
+.ie-speak {
+  position: relative;
+}
+.speak-button:disabled {
+  opacity: 0.2;
+}
+.ie-speak .arrow-box {
+  position: absolute;
+  width: 220px;
+  height: 107px;
+  padding: 15px;
+  background-color: #00b2ef;
+  color: white;
+  bottom: 100%;
+  left: -9999px;
+  right: -9999px;
+  margin: auto;
+  visibility: hidden;
+  opacity: 0;
+  -webkit-transition: 0.2s;
+  -moz-transition: 0.2s;
+  -ms-transition: 0.2s;
+  -o-transition: 0.2s;
+  transition: 0.2s;
+  display: none;
+}
+.ie-speak .arrow-box:after {
+  content: ' ';
+  border: 10px solid transparent;
+  border-top: 10px solid #00b2ef;
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -10px;
+}
+.ie-speak:hover .arrow-box {
+  -webkit-transform: translateY(-20px);
+  -moz-transform: translateY(-20px);
+  -ms-transform: translateY(-20px);
+  -o-transform: translateY(-20px);
+  transform: translateY(-20px);
+  visibility: visible;
+  opacity: 1;
+}

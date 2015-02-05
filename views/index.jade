@@ -1,0 +1,65 @@
+//- index.jade
+extends ./layout.jade
+
+block row-content
+  div.row
+    div.col-lg-7.col-md-7.col-xs-12
+      h2 Try the service
+      div.well
+        form.form-horizontal(method='get')
+          fieldset
+            div.row
+              div.col-lg-12.col-xs-12
+                label.control-label(for='textArea') Enter or paste the text to be synthesized into speech:
+                textarea#textArea.form-control(name='text', rows='8', required)
+                  | The Text to Speech service uses IBM's speech synthesis capabilities
+                  | to convert English or Spanish text to an audio signal.
+                  | The audio is streamed back to the client with minimal delay.
+                  | The service can be accessed via a REST interface.
+                span.help-block
+                  small The text language must match the selected voice language:
+                    |  Mixing language (English text with a Spanish voice) does not produce valid results.
+            div.row(style='margin-bottom:30px;')
+              label.col-lg-12.col-xs-12.control-label(for='voice') Select the Voice model:
+              div.col-lg-12.col-xs-12
+                select.form-control#voice(style='width:100%', name='voice', required)
+                  option(value='VoiceEnUsMichael') English male voice
+                  option(value='VoiceEnUsLisa') English female voice
+                  option(value='VoiceEsEsEnrique') Spanish male voice
+            div.row
+              div.col-lg-4.col-xs-4.download-container
+                input.btn.btn-block.download-button(value='Download')
+              div.col-lg-4.col-xs-4.text-center
+              div.col-lg-4.col-xs-4.ie-speak
+                input.btn.btn-block.speak-button(value='Speak')
+                div.arrow-box
+                  p This browser cannot play the ogg audio format.
+                    |   Use Chrome or Firefox to play audio.
+    div.col-lg-5.col-md-5.col-xs-12
+      h2 Output
+      div.row
+        div.col-lg-12.col-xs-12
+          div.well.result(style='display:none')
+            div.text-center
+              audio.audio(autoplay, preload='auto', autobuffer, controls)
+            div
+              span.help-block The synthesized audio is streamed to the client as it is being produced, using the HTTP chunked encoding. The audio is returned in the 
+                a(href='http://www.vorbis.com/') Ogg Vorbis
+                |  format which can be played using 
+                a(href='http://www.videolan.org/vlc/index.html') VLC
+                | , 
+                a(href='http://audacity.sourceforge.net/') Audacity
+                |  and many other players.
+          div.well.error(style='display:none')
+            div.form-group.row
+              div.col-lg-12.col-xs-12
+                p.errorMsg Error processing the request.
+  div.row
+    div.help-block.text-center
+      small Audio output only plays on browsers supporting
+        | ogg audio format, including recent versions of 
+        a(href='https://www.google.com/intl/en/chrome/browser/desktop/', target='_blank')
+          | Chrome 
+        | and 
+        a(href='https://www.mozilla.org/en-US/firefox/new/', target='_blank')
+          | Firefox.

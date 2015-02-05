@@ -1,0 +1,7 @@
+applications:
+- services:
+  - text-to-speech-service
+  name: text-to-speech-nodejs
+  command: node app.js
+  path: .
+  memory: 256M
