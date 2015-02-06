@@ -18,7 +18,6 @@
 
 var express = require('express'),
   app = express(),
-  undress = require('undress'),
   bluemix = require('./config/bluemix'),
   TextToSpeech = require('./text-to-speech'),
   extend = require('util')._extend;
@@ -42,8 +41,6 @@ app.get('/', function(req, res) {
 });
 
 app.get('/synthesize', function(req, res) {
-  // remove accents since they are not supported yet
-  req.query.text = undress(req.query.text).replace(/¿|;/g,'');
   var transcript = textToSpeech.synthesize(req.query);
 
   transcript.on('response', function(response) {
