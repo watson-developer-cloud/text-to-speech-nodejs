@@ -5,3 +5,7 @@ applications:
   command: node app.js
   path: .
   memory: 256M
+declared-services:
+  text-to-speech-service:
+    label: text_to_speech
+    plan: free
