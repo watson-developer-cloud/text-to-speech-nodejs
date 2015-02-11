@@ -6,6 +6,6 @@ applications:
   path: .
   memory: 256M
   declared-services:
-    text-to-speech-service:
-      label: text_to_speech
+    text_to_speech:
+      label: text-to-speech-service
       plan: free
