@@ -1,9 +1,11 @@
 applications:
-- name: text-to-speech-nodejs
+- services:
+  - text-to-speech-service
+  name: text-to-speech-nodejs
   command: node app.js
   path: .
   memory: 256M
   declared-services:
     text_to_speech:
-      label: text_to_speech
+      label: text-to-speech-service
       plan: free
