@@ -1,7 +1,7 @@
 ---
 declared-services:
 - text-to-speech-service:
-    type: text_to_speech
+    label: text_to_speech
     plan: free
 applications:
 - services:
