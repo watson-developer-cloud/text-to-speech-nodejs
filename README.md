@@ -1,4 +1,4 @@
-# Text to Speech Java Starter Application
+# Text to Speech Nodejs Starter Application
 
   The IBM Watson [Text to Speech][service_url] service is designed for streaming, low latency, synthesis of audio from text. It is the inverse of the automatic speech recognition. The TTS service can be accessed via a REST interface or directly via TCP.
 
