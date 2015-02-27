@@ -21,6 +21,24 @@ $(document).ready(function() {
   var audio = $('.audio').get(0),
     textArea = $('#textArea');
 
+  var textChanged = false,
+    spanishText = 'El servicio de Voz a Texto utiliza la tecnología de síntesis de voz de IBM para convertir texto en Inglés o Español en una señal de audio. El audio es enviado de vuelta al cliente con un retraso mínimo. El servicio puede ser accedido a través de una interfaz REST.',
+    englishText = 'The Text to Speech service uses IBM\'s speech synthesis capabilities to convert English or Spanish text to an audio signal. The audio is streamed back to the client with minimal delay. The service can be accessed via a REST interface.';
+
+  $('#textArea').val(englishText);
+
+  $('#voice').change(function(){
+    if (!textChanged) {
+      if ($(this).val() === 'VoiceEsEsEnrique')
+        $('#textArea').val(spanishText);
+      else
+        $('#textArea').val(englishText);
+    }
+  });
+
+  $('#textArea').change(function(){
+    textChanged = true;
+  });
 
   // IE and Safari not supported disabled Speak button
   if ($('body').hasClass('ie') || $('body').hasClass('safari')) {
@@ -46,7 +64,7 @@ $(document).ready(function() {
   $('.download-button').click(function() {
     textArea.focus();
     if (validText(textArea.val())) {
-      window.location.href = '/synthesize?download=true&' + $('form').serialize();
+      window.location.href = '/synthesize?download=true&' + $('.speech-form').serialize();
     }
   });
 
@@ -56,7 +74,7 @@ $(document).ready(function() {
 
     $('#textArea').focus();
     if (validText(textArea.val())) {
-      audio.setAttribute('src','/synthesize?' + $('form').serialize());
+      audio.setAttribute('src','/synthesize?' + $('.speech-form').serialize());
     }
   });
 

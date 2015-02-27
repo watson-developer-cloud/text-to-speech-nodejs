@@ -6,16 +6,12 @@ block row-content
     div.col-lg-7.col-md-7.col-xs-12
       h2 Try the service
       div.well
-        form.form-horizontal(method='get')
+        form.speech-form.form-horizontal(method='get')
           fieldset
             div.row
               div.col-lg-12.col-xs-12
                 label.control-label(for='textArea') Enter or paste the text to be synthesized into speech:
                 textarea#textArea.form-control(name='text', rows='8', required)
-                  | The Text to Speech service uses IBM's speech synthesis capabilities
-                  | to convert English or Spanish text to an audio signal.
-                  | The audio is streamed back to the client with minimal delay.
-                  | The service can be accessed via a REST interface.
                 span.help-block
                   small The text language must match the selected voice language:
                     |  Mixing language (English text with a Spanish voice) does not produce valid results.
