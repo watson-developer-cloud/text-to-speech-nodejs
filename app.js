@@ -19,7 +19,7 @@
 var express = require('express'),
   app = express(),
   bluemix = require('./config/bluemix'),
-  TextToSpeech = require('./text-to-speech'),
+  watson = require('watson-developer-cloud'),
   extend = require('util')._extend;
 
 // Bootstrap application settings
@@ -27,13 +27,14 @@ require('./config/express')(app);
 
 // if bluemix credentials exists, then override local
 var credentials = extend({
-  url: '<url>',
+  version: 'v1',
   username: '<username>',
-  password: '<password>'
+  password: '<password>',
+  headers: { 'Accept': 'audio/ogg; codecs=opus' }
 }, bluemix.getServiceCreds('text_to_speech')); // VCAP_SERVICES
 
 // Create the service wrapper
-var textToSpeech = new TextToSpeech(credentials);
+var textToSpeech = new watson.text_to_speech(credentials);
 
 // render index page
 app.get('/', function(req, res) {
