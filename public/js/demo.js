@@ -51,7 +51,7 @@ $(document).ready(function() {
 
   $('.audio').on('error', function () {
     $('.result').hide();
-    $('errorMgs').text('Error processing the request.');
+    $('.errorMgs').text('Error processing the request.');
     $('.errorMsg').css('color','red');
     $('.error').show();
   });
@@ -78,15 +78,27 @@ $(document).ready(function() {
     }
   });
 
+  function containsAllLatin1(str) {
+    return  /^[A-z\u00C0-\u00ff\s'\.,-\/#!$%\^&\*;:{}=\-_`~()]+$/.test(str) ;
+  }
+
   function validText(text) {
-    if ($.trim(text)) {
-      $('.error').hide();
-      return true;
-    } else {
+    $('.error').hide();
+    $('.errorMsg').text('');
+    $('.latin').hide();
+
+    if ($.trim(text).length === 0) { // empty text
       $('.errorMsg').text('Please enter the text you would like to synthesize in the text window.');
       $('.errorMsg').css('color','#00b2ef');
       $('.error').show();
       return false;
     }
+
+    if (!containsAllLatin1(text)) {
+      $('.latin').show();
+      $('.error').show();
+       return false;
+    }
+    return true;
   }
 });

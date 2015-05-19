@@ -45,7 +45,6 @@ app.get('/synthesize', function(req, res) {
   var transcript = textToSpeech.synthesize(req.query);
 
   transcript.on('response', function(response) {
-    console.log(response.headers);
     if (req.query.download) {
       response.headers['content-disposition'] = 'attachment; filename=transcript.ogg';
     }
