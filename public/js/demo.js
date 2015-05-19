@@ -79,7 +79,7 @@ $(document).ready(function() {
   });
 
   function containsAllLatin1(str) {
-    return  /^[A-z\u00C0-\u00ff\s?¿"'\.,-\/#!$%\^&\*;:{}=\-_`~()]+$/.test(str) ;
+    return  /^[A-z\u00C0-\u00ff\s?@¿"'\.,-\/#!$%\^&\*;:{}=\-_`~()]+$/.test(str) ;
   }
 
   function validText(text) {
