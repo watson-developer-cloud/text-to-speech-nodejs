@@ -17,11 +17,12 @@
 'use strict';
 
 // Module dependencies
+var request = require('superagent');
 var express    = require('express'),
   errorhandler = require('errorhandler'),
   bodyParser   = require('body-parser');
 
-module.exports = function (app) {
+module.exports = function (app, options) {
 
   // Configure Express
   app.use(bodyParser.urlencoded({ extended: true }));
@@ -36,5 +37,53 @@ module.exports = function (app) {
   if (!process.env.VCAP_SERVICES) {
     app.use(errorhandler());
   }
+
+  // render index page
+  app.get('/', function(req, res) {
+    // textToSpeech.voices({}, function(err, data) {
+    //   if (!err) {
+    //     console.log('data', data);
+    //     res.render('index', {result: 'success', data: data});
+    //   } else {
+    //     console.log('err', err);
+    //     res.render('index', {result: 'error', data: null});
+    //   }
+    // })
+    res.render('index');
+  });
+
+  app.post('/synthesize', function(req, res) {
+    var req = request
+      .get('https://stream.watsonplatform.net/text-to-speech-beta/api/v1/synthesize')
+      .set('Accept', 'audio/ogg;codecs=opus')
+      .auth(options.username, options.password)
+      .query(req.body)
+      .end(function(err, data) {
+        console.log('data', data);
+      });
+
+    // params['Accept'] = 'audio/ogg;codecs=opus';
+    // var transcript = textToSpeech.synthesize(params);
+    // transcript.on('response', function(response) {
+    //   response.headers['Mime-Type'] = 'audio/ogg; codecs=opus';
+    //   if (req.query.download) {
+    //     response.headers['content-disposition'] = 'attachment; filename=transcript.ogg';
+    //   }
+    // });
+    // res.headers['Content-Type'] = 'audio/ogg; codecs=opus';
+    req.pipe(res);
+  });
+
+  // app.get('/synthesize', function(req, res) {
+  //   var transcript = textToSpeech.synthesize(req.query);
+  //   transcript.on('response', function(response) {
+  //     response.headers['Mime-Type'] = 'audio/ogg; codecs=opus';
+  //     if (req.query.download) {
+  //       response.headers['content-disposition'] = 'attachment; filename=transcript.ogg';
+  //     }
+  //   });
+  //   transcript.pipe(res);
+  // });
+
 
 };
