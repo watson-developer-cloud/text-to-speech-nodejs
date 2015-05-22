@@ -43,10 +43,8 @@ module.exports = function (app, textToSpeech) {
     console.log('textToSpeech', textToSpeech);
     textToSpeech.voices({}, function(err, data) {
       if (!err) {
-        console.log('data', data);
         res.render('index', {result: 'success', data: data});
       } else {
-        console.log('err', err);
         res.render('index', {result: 'error', data: null});
       }
     })
