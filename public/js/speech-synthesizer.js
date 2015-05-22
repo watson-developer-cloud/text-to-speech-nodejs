@@ -37,8 +37,8 @@ SpeechSynthesis.prototype.getVoices = function() {
 	var speechSynthesisVoiceCollection = [];
 	var voices = this._voices;
 	for (i=0; i < voices.length; i++) {
-		var voice = voices[i];
-		var speechSynthesisVoice = new SpeechSynthesisVoice(voice.url, voice.name, voice.language, voice.gender);
+		var voiceOptions = voices[i];
+		var speechSynthesisVoice = new SpeechSynthesisVoice(voiceOptions);
 		speechSynthesisVoice.localService = false;
 		speechSynthesisVoiceCollection.push(speechSynthesisVoice);
 	}
@@ -72,11 +72,12 @@ SpeechSynthesis.prototype.speak = function(utterance) {
 // Functions used for speech synthesis  events listeners.
 SpeechSynthesis.prototype.onvoiceschanged = function() {}; 
 
-function SpeechSynthesisVoice(voiceURI, name, lang, _gender) {
-	this._gender = _gender;
-	this.voiceURI = voiceURI;
-	this.name = name;
-	this.lang = lang;
+function SpeechSynthesisVoice(_options) {
+	var options = _options || {};
+	this._gender = options.gender;
+	this.voiceURI = options.url;
+	this.name = options.name;
+	this.lang = options.language;
 }
 
 function SpeechSynthesisUtterance(_options) {
