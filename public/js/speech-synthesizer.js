@@ -1,4 +1,4 @@
-
+'use strict';
 
 /**
  *
@@ -31,14 +31,24 @@ function SpeechSynthesis (_options) {
 
 }
 
-SpeechSynthesis.prototype.onvoiceschanged = function() {}; 
-
-
 SpeechSynthesis.prototype.getVoices = function() {
-	return this._voices;
+	var i;
+	var speechSynthesisVoiceCollection = [];
+	var voices = this._voices;
+	for (i=0; i < voices.length; i++) {
+		var voice = voices[i];
+		var speechSynthesisVoice = new SpeechSynthesisVoice(voice.url, voice.name, voice.language, voice.gender);
+		speechSynthesisVoice.localService = false;
+		speechSynthesisVoiceCollection.push(speechSynthesisVoice);
+	}
+	return speechSynthesisVoiceCollection;
 }
 
-function SpeechSynthesisVoice(voiceURI, name, lang) {
+// Functions used for speech synthesis  events listeners.
+SpeechSynthesis.prototype.onvoiceschanged = function() {}; 
+
+function SpeechSynthesisVoice(voiceURI, name, lang, _gender) {
+	this._gender = _gender;
 	this.voiceURI = voiceURI;
 	this.name = name;
 	this.lang = lang;
