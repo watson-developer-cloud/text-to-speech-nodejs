@@ -22,7 +22,6 @@ function SpeechSynthesis (_options) {
 	xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
 	xhr.onreadystatechange = function() {
 		if (xhr.readyState === 4) {
-			console.log('voices', JSON.parse(xhr.responseText));
 			this._voices = JSON.parse(xhr.responseText).voices;
 			this.onvoiceschanged();
 		}
@@ -85,6 +84,7 @@ function SpeechSynthesisUtterance(_options) {
 	this.text = options.text;
 	this.lang = options.lang;
 	this.voice = options.voice;
+	this.download = options.download || false;
 }
 
 // Functions used for speech utterance  events listeners.
@@ -99,10 +99,10 @@ SpeechSynthesisUtterance.prototype.resume = function() {};
  * Utilities
  */
 var serializeQueryString = function(obj) {
-   var str = Object.keys(obj).map(function(key) {
-			return encodeURIComponent(key) + "=" + encodeURIComponent(obj[key]);
-		});
-   return str.join("&");
+	var str = Object.keys(obj).map(function(key) {
+		return encodeURIComponent(key) + "=" + encodeURIComponent(obj[key]);
+	});
+	return str.join("&");
 }
 
 /* FileSaver.js
