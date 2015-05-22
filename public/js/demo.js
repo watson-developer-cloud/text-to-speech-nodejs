@@ -21,6 +21,13 @@ $(document).ready(function() {
   var audio = $('.audio').get(0),
     textArea = $('#textArea');
 
+	var speechSynthesisOptions = {
+		audioElement: audio,
+		url: 'http://localhost:3000'
+	};
+
+	var speechSynthesis = new SpeechSynthesis(speechSynthesisOptions);
+
   var textChanged = false,
     spanishText = 'El servicio de Voz a Texto utiliza la tecnología de síntesis de voz de IBM para convertir texto en Inglés o Español en una señal de audio. El audio es enviado de vuelta al cliente con un retraso mínimo. El servicio puede ser accedido a través de una interfaz REST.',
     englishText = 'The Text to Speech service uses IBM\'s speech synthesis capabilities to convert English or Spanish text to an audio signal. The audio is streamed back to the client with minimal delay. The service can be accessed via a REST interface.',
@@ -57,9 +64,8 @@ $(document).ready(function() {
     }
   });
 
-	var tts = new SpeechSynthesis();
-	tts.onvoiceschanged = function() {
-		var voices = tts.getVoices();
+	speechSynthesis.onvoiceschanged = function() {
+		var voices = speechSynthesis.getVoices();
 		console.log('voices', voices);
 		$.each(voices, function(idx, voice) {
 			var voiceName = voice.name.substring(6, voice.name.length - 5);
@@ -99,24 +105,13 @@ $(document).ready(function() {
   $('.download-button').click(function() {
     textArea.focus();
     if (validText(textArea.val())) {
-      var url = '/synthesize?download=true';
-      var data = {
-        text : $('#textArea').val(),
-				voice : $('#voice').val()
-      };
-      var jsonData = JSON.stringify(data);
-      var xhr = new XMLHttpRequest();
-      xhr.open('POST', url, true);
-      xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-      xhr.setRequestHeader("Accept", "audio/ogg; codecs=opus");
-      xhr.responseType = 'blob';
-      xhr.onreadystatechange = function() {
-        if (xhr.readyState === 4) {
-          var blob = new Blob([this.response], {type: 'audio/ogg'});
-          saveAs(blob, "transcript.ogg");
-        }
-      };
-      xhr.send(jsonData);
+			var options = {
+				text: $('#textArea'),
+				voice: $('#voice'),
+				download: true
+			};
+			var utterance = new SpeechSynthesisUtterance(options);
+			speechSynthesis.speak(utterance);
     }
   });
 
@@ -126,26 +121,15 @@ $(document).ready(function() {
 
     $('#textArea').focus();
     if (validText(textArea.val())) {
-      var url = '/synthesize';
-      var data = {
-        text : $('#textArea').val(),
-        voice : $('#voice').val()
-      };
-      var jsonData = JSON.stringify(data);
-      var xhr = new XMLHttpRequest();
-      xhr.open('POST', url, true);
-      xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-      xhr.setRequestHeader("Accept", "audio/ogg; codecs=opus");
-      xhr.responseType = 'blob';
-      xhr.onreadystatechange = function() {
-        if (xhr.readyState === 4) {
-          var blob = new Blob([this.response], {type: 'audio/ogg'});
-          var objectUrl = URL.createObjectURL(blob);
-          audio.src = objectUrl;
-          audio.play();
-        }
-      };
-      xhr.send(jsonData);
+
+			var options = {
+				text: $('#textArea'),
+				voice: $('#voice')
+			};
+
+			var utterance = new SpeechSynthesisUtterance(options);
+			speechSynthesis.speak(utterance);
+
     }
   });
 
