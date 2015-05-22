@@ -99,15 +99,12 @@ $(document).ready(function() {
     $('.error').hide();
   });
 
-  function TextToSpeech(url, headers) {
-  }
-
   $('.download-button').click(function() {
     textArea.focus();
     if (validText(textArea.val())) {
 			var options = {
-				text: $('#textArea'),
-				voice: $('#voice'),
+				text: $('#textArea').val(),
+				voice: $('#voice').val(),
 				download: true
 			};
 			var utterance = new SpeechSynthesisUtterance(options);
@@ -123,8 +120,8 @@ $(document).ready(function() {
     if (validText(textArea.val())) {
 
 			var options = {
-				text: $('#textArea'),
-				voice: $('#voice')
+				text: $('#textArea').val(),
+				voice: $('#voice').val()
 			};
 
 			var utterance = new SpeechSynthesisUtterance(options);
