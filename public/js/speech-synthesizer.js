@@ -14,6 +14,7 @@ function SpeechSynthesis (_options) {
 	}
 
 	this._url = options.url;
+	this._audioElement = options.audioElement;
 	this._voices = [];
 
 	var xhr = new XMLHttpRequest();
@@ -31,6 +32,7 @@ function SpeechSynthesis (_options) {
 
 }
 
+// SpeechSynthesis methods
 SpeechSynthesis.prototype.getVoices = function() {
 	var i;
 	var speechSynthesisVoiceCollection = [];
@@ -44,6 +46,30 @@ SpeechSynthesis.prototype.getVoices = function() {
 	return speechSynthesisVoiceCollection;
 }
 
+SpeechSynthesis.prototype.speak = function(utterance) {
+	var xhr = new XMLHttpRequest();
+	var audio = this._audioElement || new Audio();
+	var url = this._url + '/synthesize?' + serializeQueryString(utterance);
+	xhr.open('GET', url, true);
+	xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+	xhr.setRequestHeader("Accept", "audio/ogg; codecs=opus");
+	xhr.responseType = 'blob';
+	xhr.onreadystatechange = function() {
+		if (xhr.readyState === 4) {
+			var blob = new Blob([this.response], {type: 'audio/ogg'});
+			if (!utterance.download) {
+				var objectUrl = URL.createObjectURL(blob);
+				audio.src = objectUrl;
+				audio.play();
+				utterance.start();
+			} else {
+				saveAs(blob, "transcript.ogg");
+			}
+		}
+	};
+	xhr.send();
+}; 
+
 // Functions used for speech synthesis  events listeners.
 SpeechSynthesis.prototype.onvoiceschanged = function() {}; 
 
@@ -54,9 +80,30 @@ function SpeechSynthesisVoice(voiceURI, name, lang, _gender) {
 	this.lang = lang;
 }
 
-function SpeechSynthesisVoiceList() {
+function SpeechSynthesisUtterance(_options) {
+	var options = _options || {};
+	this.text = options.text;
+	this.lang = options.lang;
+	this.voice = options.voice;
 }
 
+// Functions used for speech utterance  events listeners.
+SpeechSynthesisUtterance.prototype.start = function() {};
+SpeechSynthesisUtterance.prototype.end = function() {};
+SpeechSynthesisUtterance.prototype.error = function() {};
+SpeechSynthesisUtterance.prototype.pause = function() {};
+SpeechSynthesisUtterance.prototype.resume = function() {};
+
+
+/*
+ * Utilities
+ */
+var serializeQueryString = function(obj) {
+   var str = Object.keys(obj).map(function(key) {
+			return encodeURIComponent(key) + "=" + encodeURIComponent(obj[key]);
+		});
+   return str.join("&");
+}
 
 /* FileSaver.js
  * A saveAs() FileSaver implementation.
