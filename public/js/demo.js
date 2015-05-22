@@ -49,42 +49,44 @@ $(document).ready(function() {
     $('.ie-speak .arrow-box').show();
   }
 
-  // $('.audio').on('error', function () {
-  //   $('.result').hide();
-  //   $('.errorMgs').text('Error processing the request.');
-  //   $('.errorMsg').css('color','red');
-  //   $('.error').show();
-  // });
-  //
-  // $('.audio').on('loadeddata', function () {
-  //   $('.result').show();
-  //   $('.error').hide();
-  // });
+  $('.audio').on('error', function () {
+    $('.result').hide();
+    $('.errorMgs').text('Error processing the request.');
+    $('.errorMsg').css('color','red');
+    $('.error').show();
+  });
+
+  $('.audio').on('loadeddata', function () {
+    $('.result').show();
+    $('.error').hide();
+  });
+
+  function TextToSpeech(url, headers) {
+  }
 
   $('.download-button').click(function() {
     textArea.focus();
     if (validText(textArea.val())) {
-      var url = '/synthesize?download=true';
-      var data = JSON.stringify($('.speech-form').serialize());
-      $.ajax({
-        type: "POST",
-        url: url,
-        data: data,
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        success: function(data){
-          console.log(data);
-        },
-        failure: function(errMsg) {
-          console.log(errMsg);
+      var url = '/synthesize';
+      var data = {
+        text : $('#textArea').val(),
+				voice : $('#voice').val()
+      };
+      var jsonData = JSON.stringify(data);
+      var xhr = new XMLHttpRequest();
+      xhr.open('POST', url, true);
+      xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+      xhr.setRequestHeader("Accept", "audio/ogg; codecs=opus");
+      xhr.responseType = 'blob';
+      xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4) {
+          var blob = new Blob([this.response], {type: 'audio/ogg'});
+          saveAs(blob, "transcript.ogg");
         }
-      });
+      };
+      xhr.send(jsonData);
     }
   });
-
-   //PLAY SOUND BUFFER
-   function playSound(buffer, context) {
-   }
 
   $('.speak-button').click(function() {
     $('.result').hide();
@@ -107,9 +109,8 @@ $(document).ready(function() {
         if (xhr.readyState === 4) {
           var blob = new Blob([this.response], {type: 'audio/ogg'});
           var objectUrl = URL.createObjectURL(blob);
-          var audioPlayer = new Audio();
-          audioPlayer.src = objectUrl;
-          audioPlayer.play();
+          audio.src = objectUrl;
+          audio.play();
         }
       };
       xhr.send(jsonData);
