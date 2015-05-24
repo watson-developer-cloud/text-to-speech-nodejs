@@ -41,7 +41,7 @@ function SpeechSynthesis (_options) {
  * @param {String} audioElement HTMLAudioElement (ie, <audio> element)
  *
  */
-SpeechSynthesis.production.createMediaElementSource = function(audioElement) {
+SpeechSynthesis.prototype.createMediaElementSource = function(audioElement) {
 	this._audioElement = audioElement;
 };
  
