@@ -10,7 +10,7 @@ function SpeechSynthesis (_options) {
 
 	var options = _options || {
 		// TODO: change to production server when released
-		url: 'http://localhost:3000'
+		url: 'https://stream-d.watsonplatform.net/text-to-speech-beta/api/v1'
 	}
 
 	this._url = options.url;
@@ -59,6 +59,9 @@ SpeechSynthesis.prototype.speak = function(utterance) {
 			if (!utterance.download) {
 				var objectUrl = URL.createObjectURL(blob);
 				audio.src = objectUrl;
+				audio.onload = function() {
+					URL.revokeObjectURL(objectURL);
+				};
 				audio.play();
 				utterance.start();
 			} else {
