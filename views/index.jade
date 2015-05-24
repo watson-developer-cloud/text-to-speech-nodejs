@@ -20,8 +20,6 @@ block row-content
               label.col-lg-12.col-xs-12.control-label(for='voice') Select the Voice model:
             div.col-lg-12.col-xs-12
               select.form-control#voice(style='width:100%', name='voice', required)
-                for voice in data.voices
-                  option(value=voice.name) #{voice.gender + ' voice: ' + voice.name.substring(9, voice.name.length)}
             div.row
               div.col-lg-4.col-xs-4.download-container
                 input.btn.btn-block.download-button(value='Download')
