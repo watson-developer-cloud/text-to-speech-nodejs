@@ -40,18 +40,18 @@ module.exports = function (app, textToSpeech) {
 
   // render index page with voice options
   app.get('/', function(req, res) {
-    console.log('textToSpeech', textToSpeech);
+		res.render('index');
+  });
+
+  // render index page with voice options
+  app.get('/voices', function(req, res) {
     textToSpeech.voices({}, function(err, data) {
-      if (!err) {
-        res.render('index', {result: 'success', data: data});
-      } else {
-        res.render('index', {result: 'error', data: null});
-      }
+			res.json(data);
     })
   });
 
-  app.post('/synthesize', function(req, res) {
-    var transcript = textToSpeech.synthesize(req.body);
+  app.get('/synthesize', function(req, res) {
+    var transcript = textToSpeech.synthesize(req.query);
     transcript.on('response', function(response) {
       response.headers['Content-Type'] = 'audio/ogg; codecs=opus';
       if (req.query.download) {
