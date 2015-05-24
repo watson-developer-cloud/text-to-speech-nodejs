@@ -2,6 +2,7 @@
 
 /**
  *
+ * @constructor
  * @param {Object} _options configuration parameters
  * @param {String} _options.url  resource URL
  *
@@ -32,13 +33,31 @@ function SpeechSynthesis (_options) {
 }
 
 // SpeechSynthesis methods
+
+/**
+ *
+ * Attaches HTMLAudioElement (ie, <audio> element)
+ * @param {Object} _options configuration parameters
+ * @param {String} audioElement HTMLAudioElement (ie, <audio> element)
+ *
+ */
+SpeechSynthesis.production.createMediaElementSource = function(audioElement) {
+	this._audioElement = audioElement;
+};
+ 
+/**
+ *
+ * Gets available voice models, empty array until onvoicechanged has been called
+ * @return {array} array of SpeechSynthesisVoice objects
+ *
+ */
 SpeechSynthesis.prototype.getVoices = function() {
-	var i;
-	var speechSynthesisVoiceCollection = [];
-	var voices = this._voices;
+	var i, voiceOptions, speechSynthesisVoice,
+			speechSynthesisVoiceCollection = [],
+			voices = this._voices;
 	for (i=0; i < voices.length; i++) {
-		var voiceOptions = voices[i];
-		var speechSynthesisVoice = new SpeechSynthesisVoice(voiceOptions);
+		voiceOptions = voices[i];
+		speechSynthesisVoice = new SpeechSynthesisVoice(voiceOptions);
 		speechSynthesisVoice.localService = false;
 		speechSynthesisVoiceCollection.push(speechSynthesisVoice);
 	}
@@ -47,8 +66,16 @@ SpeechSynthesis.prototype.getVoices = function() {
 
 SpeechSynthesis.prototype.speak = function(utterance) {
 	var xhr = new XMLHttpRequest();
-	var audio = this._audioElement || new Audio();
 	var url = this._url + '/synthesize?' + serializeQueryString(utterance);
+	// If the user sets an audio source via the createMediaElementSource method
+	// set that element's source to the URL
+	// This is the only way to presently stream chunked media
+	// since the alternative, XMLHttpRequest, must wait until the data is fully loaded
+	if (this._audioElement) {
+		this._audioElement.src = url;
+		return;
+	}
+	var audio = new Audio();
 	xhr.open('GET', url, true);
 	xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
 	xhr.setRequestHeader("Accept", "audio/ogg; codecs=opus");
