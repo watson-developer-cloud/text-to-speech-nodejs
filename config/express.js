@@ -37,7 +37,6 @@ module.exports = function (app, textToSpeech) {
   if (!process.env.VCAP_SERVICES) {
     app.use(errorhandler());
   }
-
   // render index page with voice options
   app.get('/', function(req, res) {
 		res.render('index');
@@ -45,8 +44,8 @@ module.exports = function (app, textToSpeech) {
 
   // render index page with voice options
   app.get('/voices', function(req, res) {
-    textToSpeech.voices({}, function(err, data) {
-			res.json(data);
+    textToSpeech.getVoices({}, function(err, response, body) {
+			res.send(body);
     })
   });
 
@@ -59,6 +58,12 @@ module.exports = function (app, textToSpeech) {
       }
     });
     transcript.pipe(res);
+  });
+
+  app.get('/token', function(req, res) {
+    textToSpeech.getToken({}, function(err, response, body) {
+			res.send(body);
+    })
   });
 
 };
