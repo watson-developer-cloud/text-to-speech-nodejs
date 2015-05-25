@@ -15,11 +15,13 @@ function SpeechSynthesis (_options) {
 	}
 
 	this._url = options.url;
+	this._api_key = options.api_key;
 	this._audioElement = options.audioElement;
 	this._voices = [];
 
 	var xhr = new XMLHttpRequest();
 	xhr.open('GET', this._url + '/voices', true);
+	xhr.setRequestHeader('X-Watson-DPAT-Token', this._api_key ? this._api_key : '');
 	xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
 	xhr.onreadystatechange = function() {
 		if (xhr.readyState === 4) {
@@ -78,7 +80,17 @@ SpeechSynthesis.prototype.speak = function(utterance) {
 	var audio = new Audio();
 	xhr.open('GET', url, true);
 	xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-	xhr.setRequestHeader("Accept", "audio/ogg; codecs=opus");
+	xhr.setRequestHeader('X-Watson-DPAT-Token', this._api_key ? this._api_key : '');
+
+	if (audio.canPlayType('audio/ogg').length > 0) {
+		xhr.setRequestHeader("Accept", "audio/ogg; codecs=opus");
+	} else if (audio.canPlayType('audio/wav').length > 0) {
+		xhr.setRequestHeader("Accept", "audio/wav");
+	} else {
+		var evt = new SpeechSynthesisErrorEvent('audio-hardware', 'No appropriate audio player is available on your browser for SpeechSynthesis audio');
+		this.error(evt);
+		return false;
+	}
 	xhr.responseType = 'blob';
 	xhr.onreadystatechange = function() {
 		if (xhr.readyState === 4) {
@@ -101,6 +113,13 @@ SpeechSynthesis.prototype.speak = function(utterance) {
 
 // Functions used for speech synthesis  events listeners.
 SpeechSynthesis.prototype.onvoiceschanged = function() {}; 
+SpeechSynthesis.prototype.start = function() {};
+SpeechSynthesis.prototype.end = function() {};
+SpeechSynthesis.prototype.error = function() {};
+SpeechSynthesis.prototype.pause = function() {};
+SpeechSynthesis.prototype.resume = function() {};
+SpeechSynthesis.prototype.mark = function() {};
+SpeechSynthesis.prototype.boundary = function() {};
 
 function SpeechSynthesisVoice(_options) {
 	var options = _options || {};
@@ -118,13 +137,36 @@ function SpeechSynthesisUtterance(_options) {
 	this.download = options.download || false;
 }
 
-// Functions used for speech utterance  events listeners.
-SpeechSynthesisUtterance.prototype.start = function() {};
-SpeechSynthesisUtterance.prototype.end = function() {};
-SpeechSynthesisUtterance.prototype.error = function() {};
-SpeechSynthesisUtterance.prototype.pause = function() {};
-SpeechSynthesisUtterance.prototype.resume = function() {};
+/**
+ *
+ * SpeechSynthesis event prototype
+ * @constructor
+ * @param {String} utterance that triggered the event
+ * @param {String} charIndex of the speaking position in original utterance string
+ * @param {Number} elapsedTime 
+ * @param {String} name of marker (SSML)
+ *
+ */
+function SpeechSynthesisEvent(_options) {
+	var options = _options || {};
+	this.utterance = options.utterance;
+	this.charIndex = options.charIndex;
+	this.elapsedTime = options.elapsedTime;
+	this.name = options.name;
+}
 
+/**
+ *
+ * Error prototype
+ * @constructor
+ * @param {String} error code indicating what went wrong
+ * @param {String} message
+ *
+ */
+function SpeechSynthesisErrorEvent(error, message) {
+	this.error = error;
+	this.message = message;
+}
 
 /*
  * Utilities
