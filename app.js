@@ -20,37 +20,18 @@ var express = require('express'),
   app = express(),
   bluemix = require('./config/bluemix'),
   watson = require('watson-developer-cloud'),
+	// environmental variable points to demo's json config file
+	config = require(process.env.WATSON_OPTIONS_FILE),
   extend = require('util')._extend;
 
-// Bootstrap application settings
-require('./config/express')(app);
-
 // if bluemix credentials exists, then override local
-var credentials = extend({
-  version: 'v1',
-  username: '<username>',
-  password: '<password>',
-  headers: { 'Accept': 'audio/ogg; codecs=opus' }
-}, bluemix.getServiceCreds('text_to_speech')); // VCAP_SERVICES
+var credentials = extend(config, bluemix.getServiceCreds('text_to_speech'));
 
 // Create the service wrapper
 var textToSpeech = new watson.text_to_speech(credentials);
 
-// render index page
-app.get('/', function(req, res) {
-  res.render('index');
-});
-
-app.get('/synthesize', function(req, res) {
-  var transcript = textToSpeech.synthesize(req.query);
-
-  transcript.on('response', function(response) {
-    if (req.query.download) {
-      response.headers['content-disposition'] = 'attachment; filename=transcript.ogg';
-    }
-  });
-  transcript.pipe(res);
-});
+// Configure express
+require('./config/express')(app, textToSpeech);
 
 var port = process.env.VCAP_APP_PORT || 3000;
 app.listen(port);
