@@ -21,14 +21,14 @@ var express = require('express'),
   bluemix = require('./config/bluemix'),
   watson = require('watson-developer-cloud'),
 	// environmental variable points to demo's json config file
-	config = require(process.env.WATSON_OPTIONS_FILE),
+	config = require(process.env.WATSON_CONFIG_FILE),
   extend = require('util')._extend;
 
 // if bluemix credentials exists, then override local
 var credentials = extend(config, bluemix.getServiceCreds('text_to_speech'));
 
 // Create the service wrapper
-var textToSpeech = new watson.text_to_speech(credentials);
+var textToSpeech = new watson.text_to_speech(config);
 
 // Configure express
 require('./config/express')(app, textToSpeech);
