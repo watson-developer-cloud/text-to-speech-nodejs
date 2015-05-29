@@ -18,22 +18,28 @@
 'use strict';
 
 $(document).ready(function() {
+
+	function getBaseURL() {
+		return location.protocol + "//" + location.hostname + 
+	(location.port && ":" + location.port);
+	}
+
   var audio = $('.audio').get(0),
     textArea = $('#textArea');
 
 	var speechSynthesisOptions = {
 		audioElement: audio,
-		url: 'http://localhost:3000'
+		url: getBaseURL()
 	};
 
 	var speechSynthesis = new SpeechSynthesis(speechSynthesisOptions);
 
   var textChanged = false,
-    spanishText = 'Consciente de su patrimonio espiritual y moral, la Unión está fundada sobre los valores indivisibles y universales de la dignidad humana, la libertad, la igualdad y la solidaridad, y se basa en los principios de la democracia y el Estado de Derecho. Al instituir la ciudadanía de la Unión y crear un espacio de libertad, seguridad y justicia, sitúa a la persona en el centro de su actuación.',
-		frenchText = 'Le service TTS d\'IBM profite de ses capacités de synthèse de la parole à partir du texte pour transformer le texte à un signal audio. Le signal audio est ensuite passé au client dans un délai minimal. On peut appeler Le service via une interface REST',
-		englishText = 'Conscious of its spiritual and moral heritage, the Union is founded on the indivisible, universal values of human dignity, freedom, equality and solidarity; it is based on the principles of democracy and the rule of law. It places the individual at the heart of its activities, by establishing the citizenship of the Union and by creating an area of freedom, security and justice.',
-		germanText = 'In dem Bewusstsein ihres geistig-religiösen und sittlichen Erbes gründet sich die Union auf die unteilbaren und universellen Werte der Würde des Menschen, der Freiheit, der Gleichheit und der Solidarität. Sie beruht auf den Grundsätzen der Demokratie und der Rechtsstaatlichkeit. Sie stellt den Menschen in den Mittelpunkt ihres Handelns, indem sie die Unionsbürgerschaft und einen Raum der Freiheit, der Sicherheit und des Rechts begründet.',
-		italianText = 'Consapevole del suo patrimonio spirituale e morale, l\'Unione si fonda sui valori indivisibili e universali della dignità umana, della libertà, dell\'uguaglianza e della solidarietà; essa si basa sul principio della democrazia e sul principio dello Stato di diritto. Pone la persona al centro della sua azione istituendo la cittadinanza dell\'Unione e creando uno spazio di libertà, sicurezza e giustizia.';
+    spanishText = "Consciente de su patrimonio espiritual y moral, la Unión está fundada sobre los valores indivisibles y universales de la dignidad humana, la libertad, la igualdad y la solidaridad, y se basa en los principios de la democracia y el Estado de Derecho. Al instituir la ciudadanía de la Unión y crear un espacio de libertad, seguridad y justicia, sitúa a la persona en el centro de su actuación.",
+		frenchText = "Consciente de son patrimoine spirituel et moral, l'Union se fonde sur les valeurs indivisibles et universelles de dignité humaine, de liberté, d'égalité et de solidarité; elle repose sur le principe de la démocratie et le principe de l'État de droit. Elle place la personne au coeur de son action en instituant la citoyenneté de l'Union et en créant un espace de liberté, de sécurité et de justice.",
+		englishText = "Conscious of its spiritual and moral heritage, the Union is founded on the indivisible, universal values of human dignity, freedom, equality and solidarity; it is based on the principles of democracy and the rule of law. It places the individual at the heart of its activities, by establishing the citizenship of the Union and by creating an area of freedom, security and justice.",
+		germanText = "In dem Bewusstsein ihres geistig-religiösen und sittlichen Erbes gründet sich die Union auf die unteilbaren und universellen Werte der Würde des Menschen, der Freiheit, der Gleichheit und der Solidarität. Sie beruht auf den Grundsätzen der Demokratie und der Rechtsstaatlichkeit. Sie stellt den Menschen in den Mittelpunkt ihres Handelns, indem sie die Unionsbürgerschaft und einen Raum der Freiheit, der Sicherheit und des Rechts begründet.",
+		italianText = "Consapevole del suo patrimonio spirituale e morale, l'Unione si fonda sui valori indivisibili e universali della dignità umana, della libertà, dell'uguaglianza e della solidarietà; essa si basa sul principio della democrazia e sul principio dello Stato di diritto. Pone la persona al centro della sua azione istituendo la cittadinanza dell'Unione e creando uno spazio di libertà, sicurezza e giustizia.";
 
 
   $('#textArea').val(englishText);
@@ -93,30 +99,24 @@ $(document).ready(function() {
     $('.error').show();
   });
 
-  $('.audio').on('loadeddata', function () {
-    $('.result').show();
-    $('.error').hide();
-  });
+	$('.audio').on('loadeddata', function () {
+		$('.result').show();
+		$('.error').hide();
+	});
 
-  $('.download-button').click(function() {
-    textArea.focus();
-    if (validText(textArea.val())) {
-			var options = {
-				text: $('#textArea').val(),
-				voice: $('#voice').val(),
-				download: true
-			};
-			var utterance = new SpeechSynthesisUtterance(options);
-			speechSynthesis.speak(utterance);
-    }
-  });
+	$('.download-button').click(function() {
+		textArea.focus();
+		if (validText(textArea.val())) {
+			window.location.href = '/synthesize?download=true&' + $('.speech-form').serialize();
+		}
+	});
 
-  $('.speak-button').click(function() {
-    $('.result').hide();
-    audio.pause();
+	$('.speak-button').click(function() {
+		$('.result').hide();
+		audio.pause();
 
-    $('#textArea').focus();
-    if (validText(textArea.val())) {
+		$('#textArea').focus();
+		if (validText(textArea.val())) {
 
 			var options = {
 				text: $('#textArea').val(),
