@@ -17,7 +17,6 @@
 'use strict';
 
 // Module dependencies
-var request = require('superagent');
 var express    = require('express'),
   errorhandler = require('errorhandler'),
   bodyParser   = require('body-parser');
