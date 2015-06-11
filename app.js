@@ -18,8 +18,11 @@
 
 var express = require('express'),
   app = express(),
+  errorhandler = require('errorhandler'),
+  bodyParser   = require('body-parser'),
   bluemix = require('./config/bluemix'),
   watson = require('watson-developer-cloud'),
+	path = require('path'),
 	// environmental variable points to demo's json config file
 	config = require(process.env.WATSON_CONFIG_FILE),
   extend = require('util')._extend;
@@ -30,8 +33,24 @@ var credentials = extend(config, bluemix.getServiceCreds('text_to_speech'));
 // Create the service wrapper
 var textToSpeech = new watson.text_to_speech(credentials);
 
-// Configure express
-require('./config/express')(app, textToSpeech);
+// Setup static public directory
+app.use(express.static(path.join(__dirname , './public')));
+
+// Add error handling in dev
+if (!process.env.VCAP_SERVICES) {
+	app.use(errorhandler());
+}
+
+// render index page with voice options
+app.get('/', function(req, res) {
+	res.sendFile(path.join(__dirname, './public', 'index.html'));
+});
+
+app.get('/token', function(req, res) {
+	textToSpeech.getToken({}, function(err, response, body) {
+		res.send(body);
+	})
+});
 
 var port = process.env.VCAP_APP_PORT || 3000;
 app.listen(port);
