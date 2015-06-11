@@ -28,7 +28,7 @@ var express = require('express'),
 var credentials = extend(config, bluemix.getServiceCreds('text_to_speech'));
 
 // Create the service wrapper
-var textToSpeech = new watson.text_to_speech(config);
+var textToSpeech = new watson.text_to_speech(credentials);
 
 // Configure express
 require('./config/express')(app, textToSpeech);
