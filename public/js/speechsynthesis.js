@@ -47,7 +47,7 @@ function SpeechSynthesis (_options) {
 
 	var xhr = new XMLHttpRequest();
 	xhr.open('GET', this._url + '/voices', true);
-	xhr.setRequestHeader('X-Watson-DPAT-Token', this._api_key ? this._api_key : '');
+	xhr.setRequestHeader('X-Watson-Authorization-Token', this._api_key ? this._api_key : '');
 	xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
 	xhr.onreadystatechange = function() {
 		if (xhr.readyState === 4) {
@@ -352,5 +352,4 @@ window.SpeechSynthesisUtterance = require('./SpeechSynthesisUtterance');
 window.SpeechSynthesisEvent = require('./SpeechSynthesisEvent');
 window.SpeechSynthesisErrorEvent = require('./SpeechSynthesisErrorEvent');
 window.SpeechSynthesisVoice = require('./SpeechSynthesisVoice');
-
 },{"./SpeechSynthesis":1,"./SpeechSynthesisErrorEvent":2,"./SpeechSynthesisEvent":3,"./SpeechSynthesisUtterance":4,"./SpeechSynthesisVoice":5}]},{},[7]);

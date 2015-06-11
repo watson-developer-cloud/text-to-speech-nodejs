@@ -27,12 +27,34 @@ $(document).ready(function() {
   var audio = $('.audio').get(0),
     textArea = $('#textArea');
 
-	var speechSynthesisOptions = {
-		audioElement: audio,
-		url: getBaseURL()
-	};
+  function getToken(callback) {
+    $.get('/token', function(data) {
+      callback(data);
+    });
+  }
 
-	var speechSynthesis = new SpeechSynthesis(speechSynthesisOptions);
+  getToken(function(token) {
+    var speechSynthesisOptions = {
+      audioElement: audio,
+      url: 'https://stream-d.watsonplatform.net/text-to-speech-beta/api/v1',
+      api_key: token
+    };
+
+    var speechSynthesis = new SpeechSynthesis(speechSynthesisOptions);
+
+    speechSynthesis.onvoiceschanged = function() {
+      var voices = speechSynthesis.getVoices();
+      $.each(voices, function(idx, voice) {
+        var voiceName = voice.name.substring(6, voice.name.length - 5);
+        var optionText = voice._gender + ' voice: ' + voiceName + ' (' + voice.lang + ')';
+        $('#voice')
+        .append($('<option>', { value : voice.name })
+          .prop('selected', voice.name === 'en-US_MichaelVoice' ? true : false)
+          .text(optionText));
+      });
+    };
+  });
+
 
   var textChanged = false,
     spanishText = "Consciente de su patrimonio espiritual y moral, la Unión está fundada sobre los valores indivisibles y universales de la dignidad humana, la libertad, la igualdad y la solidaridad, y se basa en los principios de la democracia y el Estado de Derecho. Al instituir la ciudadanía de la Unión y crear un espacio de libertad, seguridad y justicia, sitúa a la persona en el centro de su actuación.",
@@ -69,18 +91,6 @@ $(document).ready(function() {
 			}
     }
   });
-
-	speechSynthesis.onvoiceschanged = function() {
-		var voices = speechSynthesis.getVoices();
-		$.each(voices, function(idx, voice) {
-			var voiceName = voice.name.substring(6, voice.name.length - 5);
-			var optionText = voice._gender + ' voice: ' + voiceName + ' (' + voice.lang + ')';
-			$('#voice')
-			.append($('<option>', { value : voice.name })
-				.prop('selected', voice.name === 'en-US_MichaelVoice' ? true : false)
-				.text(optionText));
-		});
-	};
 
 
   // IE and Safari not supported disabled Speak button
