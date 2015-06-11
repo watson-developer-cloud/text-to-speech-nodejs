@@ -1,7 +1,6 @@
-'use strict';
-
+(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 /**
- * Copyright 2014 IBM Corp. All Rights Reserved.
+ * Copyright 2015 IBM Corp. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,15 +23,22 @@
  * @author Eric S. Bullington <esbullin@us.ibm.com>
  * @constructor
  * @param {Object} _options configuration parameters
- * @param {String} _options.url  resource URL
+ * @param {String} _url  implementation-specificresource URL
  *
  */
+
+'use strict';
+
+var serializeQueryString = require('../utils').serializeQueryString,
+		SpeechSynthesisErrorEvent = require('./SpeechSynthesisErrorEvent'),
+		SpeechSynthesisVoice = require('./SpeechSynthesisVoice');
+
 function SpeechSynthesis (_options) {
 
 	var options = _options || {
 		// TODO: change to production server when released
 		url: 'https://stream-d.watsonplatform.net/text-to-speech-beta/api/v1'
-	}
+	};
 
 	this._url = options.url;
 	this._api_key = options.api_key;
@@ -84,7 +90,7 @@ SpeechSynthesis.prototype.getVoices = function() {
 		speechSynthesisVoiceCollection.push(speechSynthesisVoice);
 	}
 	return speechSynthesisVoiceCollection;
-}
+};
 
 SpeechSynthesis.prototype.speak = function(utterance) {
 	var xhr = new XMLHttpRequest();
@@ -115,8 +121,8 @@ SpeechSynthesis.prototype.speak = function(utterance) {
 	xhr.onreadystatechange = function() {
 		if (xhr.readyState === 4) {
 			var blob = new Blob([this.response], {type: 'audio/ogg'});
-			var objectUrl = URL.createObjectURL(blob);
-			audio.src = objectUrl;
+			var objectURL = URL.createObjectURL(blob);
+			audio.src = objectURL;
 			audio.onload = function() {
 				URL.revokeObjectURL(objectURL);
 			};
@@ -126,6 +132,18 @@ SpeechSynthesis.prototype.speak = function(utterance) {
 	};
 	xhr.send();
 }; 
+
+/**
+ *
+ * Attaches HTMLAudioElement (ie, <audio> element)
+ * @param {Object} _options configuration parameters
+ * @param {String} audioElement HTMLAudioElement (ie, <audio> element)
+ *
+ */
+SpeechSynthesis.prototype.createMediaElementSource = function(audioElement) {
+	this._audioElement = audioElement;
+};
+ 
 
 // Functions used for speech synthesis  events listeners.
 SpeechSynthesis.prototype.onvoiceschanged = function() {}; 
@@ -137,32 +155,73 @@ SpeechSynthesis.prototype.resume = function() {};
 SpeechSynthesis.prototype.mark = function() {};
 SpeechSynthesis.prototype.boundary = function() {};
 
-function SpeechSynthesisVoice(_options) {
-	var options = _options || {};
-	this._gender = options.gender;
-	this.voiceURI = options.url;
-	this.name = options.name;
-	this.lang = options.language;
-}
-
-function SpeechSynthesisUtterance(_options) {
-	var options = _options || {};
-	this.text = options.text;
-	this.lang = options.lang;
-	this.voice = options.voice;
-	this.download = options.download || false;
-}
+module.exports = SpeechSynthesis;
+},{"../utils":6,"./SpeechSynthesisErrorEvent":2,"./SpeechSynthesisVoice":5}],2:[function(require,module,exports){
+/**
+ * Copyright 2015 IBM Corp. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 /**
  *
+ * Error prototype
+ * @author Eric S. Bullington <esbullin@us.ibm.com>
+ * @constructor
+ * @param {String} error code indicating what went wrong
+ * @param {String} message
+ *
+ */
+
+'use strict';
+
+function SpeechSynthesisErrorEvent(error, message) {
+	this.error = error;
+	this.message = message;
+}
+
+module.exports = SpeechSynthesisErrorEvent;
+},{}],3:[function(require,module,exports){
+/**
+ * Copyright 2015 IBM Corp. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+ 
+ /**
+ *
  * SpeechSynthesis event prototype
  * @constructor
+ * @author Eric S. Bullington <esbullin@us.ibm.com>
  * @param {String} utterance that triggered the event
  * @param {String} charIndex of the speaking position in original utterance string
  * @param {Number} elapsedTime 
  * @param {String} name of marker (SSML)
  *
  */
+
+'use strict';
+
 function SpeechSynthesisEvent(_options) {
 	var options = _options || {};
 	this.utterance = options.utterance;
@@ -171,25 +230,127 @@ function SpeechSynthesisEvent(_options) {
 	this.name = options.name;
 }
 
+module.exports = SpeechSynthesisEvent;
+},{}],4:[function(require,module,exports){
+/**
+ * Copyright 2015 IBM Corp. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 /**
  *
- * Error prototype
+ * SpeechSynthesisUtterance prototype
+ * @author Eric S. Bullington <esbullin@us.ibm.com>
  * @constructor
- * @param {String} error code indicating what went wrong
- * @param {String} message
+ * @param {String} text to be synthesized and spoken for this utterance
+ * @param {String} lang language of the speech synthesis for the utterance, using BCP 47 tag
+ * @param {Number} voice 
+ * @param {Number} volume 
+ * @param {Number} rate 
+ * @param {Number} pitch 
  *
  */
-function SpeechSynthesisErrorEvent(error, message) {
-	this.error = error;
-	this.message = message;
+
+'use strict';
+
+function SpeechSynthesisUtterance(_options) {
+	var options = _options || {};
+	this.text = options.text;
+	this.lang = options.lang;
+	this.voice = options.voice;
+	this.volume = options.volume;
+	this.rate = options.rate;
+	this.pitch = options.pitch;
 }
 
-/*
- * Utilities
+module.exports = SpeechSynthesisUtterance;
+},{}],5:[function(require,module,exports){
+/**
+ * Copyright 2015 IBM Corp. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
-var serializeQueryString = function(obj) {
+
+/**
+ *
+ * SpeechSynthesisVoice prototype
+ * @author Eric S. Bullington <esbullin@us.ibm.com>
+ * @constructor
+ * @param {Object} _options configuration parameters
+ * @param {String} voiceURI points to remote IBM text-to-speech endpoint
+ * @param {String} name attribute is a human-readable name that represents the voice
+ * @param {String} lang attribute is a BCP 47 language tag indicating the language of the voice
+ * @param {String} localService always false for this implementation
+ * @param {String} default attribute that is true for at most one voice per language
+ * @param {String} _gender implementation-specific extension indicating voice's gender
+ *
+ */
+
+'use strict';
+
+function SpeechSynthesisVoice(_options) {
+	var options = _options || {};
+	this.voiceURI = options.url;
+	this.name = options.name;
+	this.lang = options.language;
+	this.localService = false;
+	this.default = options.default || false;
+	this._gender = options.gender;
+}
+
+module.exports = SpeechSynthesisVoice;
+},{}],6:[function(require,module,exports){
+'use strict';
+
+/**
+ * Copyright 2014 IBM Corp. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+module.exports.serializeQueryString = function(obj) {
 	var str = Object.keys(obj).map(function(key) {
 		return encodeURIComponent(key) + "=" + encodeURIComponent(obj[key]);
 	});
 	return str.join("&");
-}
+};
+},{}],7:[function(require,module,exports){
+
+window.SpeechSynthesis = require('./SpeechSynthesis');
+window.SpeechSynthesisUtterance = require('./SpeechSynthesisUtterance');
+window.SpeechSynthesisEvent = require('./SpeechSynthesisEvent');
+window.SpeechSynthesisErrorEvent = require('./SpeechSynthesisErrorEvent');
+window.SpeechSynthesisVoice = require('./SpeechSynthesisVoice');
+
+},{"./SpeechSynthesis":1,"./SpeechSynthesisErrorEvent":2,"./SpeechSynthesisEvent":3,"./SpeechSynthesisUtterance":4,"./SpeechSynthesisVoice":5}]},{},[7]);
