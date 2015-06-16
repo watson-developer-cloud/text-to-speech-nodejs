@@ -22,9 +22,10 @@ var express = require('express'),
   bodyParser   = require('body-parser'),
   bluemix = require('./config/bluemix'),
   watson = require('watson-developer-cloud'),
-	path = require('path'),
-	// environmental variable points to demo's json config file
-	config = require(process.env.WATSON_CONFIG_FILE),
+  path = require('path'),
+  // environmental variable points to demo's json config file
+  // config = require(process.env.WATSON_CONFIG_FILE),
+  config = JSON.parse(process.env.WATSON_CONFIG),
   extend = require('util')._extend;
 
 // if bluemix credentials exists, then override local
@@ -38,18 +39,18 @@ app.use(express.static(path.join(__dirname , './public')));
 
 // Add error handling in dev
 if (!process.env.VCAP_SERVICES) {
-	app.use(errorhandler());
+  app.use(errorhandler());
 }
 
 // render index page with voice options
 app.get('/', function(req, res) {
-	res.sendFile(path.join(__dirname, './public', 'index.html'));
+  res.sendFile(path.join(__dirname, './public', 'index.html'));
 });
 
 app.get('/token', function(req, res) {
-	textToSpeech.getToken({}, function(err, response, body) {
-		res.send(body);
-	})
+  textToSpeech.getToken({}, function(err, response, body) {
+    res.send(body);
+  })
 });
 
 var port = process.env.VCAP_APP_PORT || 3000;
