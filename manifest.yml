@@ -1,12 +1,8 @@
----
-declared-services:
-  text-to-speech-service:
-    label: text_to_speech
-    plan: free
 applications:
-- services:
-  - text-to-speech-service
-  name: text-to-speech-nodejs
+- disk_quota: 1024M
+  host: TestTwo
+  name: TestTwo
   command: node app.js
   path: .
-  memory: 256M
+  instances: 1
+  memory: 512M
