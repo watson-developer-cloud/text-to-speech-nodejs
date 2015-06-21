@@ -17,6 +17,7 @@
 
 'use strict';
 
+$(document).ready(function() {
 
 function getToken(callback) {
   $.get('/token', function(data) {
@@ -25,17 +26,27 @@ function getToken(callback) {
 }
 
 getToken(function(token) {
+
+
+  console.log('token', token);
+
+  var audio = $('.audio').get(0);
+
   var speechSynthesisOptions = {
     audioElement: audio,
-  url: 'https://stream-d.watsonplatform.net/text-to-speech-beta/api/v1',
-  api_key: token
+    url: 'https://stream-s.watsonplatform.net/text-to-speech-beta/api/v1',
+    api_key: token
   };
 
   var speechSynthesis = new SpeechSynthesis(speechSynthesisOptions);
 
+  console.log('getting speechSynthesis', speechSynthesis);
+
   speechSynthesis.onvoiceschanged = function() {
+    console.log('voices changed');
     var voices = speechSynthesis.getVoices();
     console.log('voices', voices);
+    showVoices(voices, speechSynthesis);
   };
 });
 
@@ -44,7 +55,7 @@ function parseVoices(voices) {
   var voiceName = voice.name.substring(6, voice.name.length - 5);
 }
 
-$(document).ready(function() {
+function showVoices(voices, speechSynthesis) {
 
   function getBaseURL() {
     return location.protocol + "//" + location.hostname + 
@@ -128,22 +139,26 @@ $(document).ready(function() {
       }
     });
 
-    $('.speak-button').click(function() {
+    $('.speak-button').click(function(evt) {
+      evt.stopPropagation();
+      evt.preventDefault();
       $('.result').hide();
       audio.pause();
 
       $('#textArea').focus();
       if (validText(textArea.val())) {
 
-        var options = {
+        var utteranceOptions = {
           text: $('#textArea').val(),
-      voice: $('#voice').val()
+          voice: $('#voice').val()
         };
 
-        var utterance = new SpeechSynthesisUtterance(options);
+        var utterance = new SpeechSynthesisUtterance(utteranceOptions);
+        console.log('utterance', utterance);
         speechSynthesis.speak(utterance);
 
       }
+      return false;
     });
 
     function containsAllLatin1(str) {
@@ -169,4 +184,7 @@ $(document).ready(function() {
       }
       return true;
     }
+
+}
+
 });
