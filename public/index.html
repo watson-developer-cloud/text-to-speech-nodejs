@@ -77,12 +77,18 @@
           <p class="help-block">The text language must match the selected voice language: Mixing language (English text with a Spanish male voice) does not produce valid results. The synthesized audio is streamed to the client as it is being produced, using the HTTP chunked encoding. The audio is returned in the Ogg Vorbis format which can be played using <a href="#">VLC</a> and <a href="#">Audacity</a> players.</p>
         </div><!-- .col-lg-8 --> 
         <div class="col-lg-4 col-md-12 col-sm-12">
+
           <div class="opt-box">
-                  <h6><strong>Would you like to help make this service better?</strong><br><br>
-         <div class="form-group opt-box-input">
-            <input type="radio">Allow Watson to learn from this session<br><input type="radio" name="group1" value="">Opt out
-          </div></h6>
+              <h6><strong>Would you like to help make this service better?</strong><br><br>
+                <div class="form-group opt-box-input">
+                  <div id="sessionPermissionsRadioGroup">
+                    <input type="radio" name="sessionpermissions" value="true" checked="checked">Allow Watson to learn from this session<br>
+                    <input type="radio" name="sessionpermissions" value="false">Opt out
+                  </div>
+              </div>
+            </h6>
           </div>
+
         </div>
 
 
@@ -92,20 +98,12 @@
         
         <div class="col-lg-6 col-md-6 col-sm-12">
           <div class="dropdown">
-            <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
-            Choose Language
-            <span class="caret"></span>
-            </button>
-            <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">English (US)</a></li>
-            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">English (UK)</a></li>
-            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Spanish (Castilian)</a></li>
-            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Spanish (NA)</a></li>
-            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">French (Canadian)</a></li>
-            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">German</a></li>
-            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Italian</a></li>
-            </ul>
-          </div></div>
+            <select id="dropdownMenu1" class="custom-select form-control" required>
+              <option default>Please select a model</option>
+            </select>
+          </div>
+        </div>
+
         <div class="col-lg-6 col-md-6 col-sm-12">
           <div class="dropdown">
             <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">

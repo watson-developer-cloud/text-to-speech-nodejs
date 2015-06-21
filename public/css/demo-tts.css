@@ -12,3 +12,12 @@ input[type="radio"], input[type="checkbox"] {
   margin-top: 1px \9;
   line-height: normal;
 }
+
+
+select.custom-select {
+  /* overflow: hidden; */
+  height: 3.5em;
+  border: 0;
+  background-color: white;
+  outline: 2px solid #c7c7c7;
+}
