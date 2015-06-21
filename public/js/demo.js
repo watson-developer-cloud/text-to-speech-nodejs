@@ -27,8 +27,11 @@ function getToken(callback) {
 
 getToken(function(token) {
 
-
-  console.log('token', token);
+  // Show tabs
+  $('#nav-tabs a').click(function (e) {
+    e.preventDefault()
+    $(this).tab('show')
+  })
 
   var audio = $('.audio').get(0);
 
@@ -135,7 +138,14 @@ function showVoices(voices, speechSynthesis) {
     $('.download-button').click(function() {
       textArea.focus();
       if (validText(textArea.val())) {
-        window.location.href = '/synthesize?download=true&' + $('.speech-form').serialize();
+        var utteranceOptions = {
+          text: $('#textArea').val(),
+          voice: $('#voice').val(),
+          download: true
+        };
+
+        var utterance = new SpeechSynthesisUtterance(utteranceOptions);
+        speechSynthesis.speak(utterance);
       }
     });
 
@@ -154,7 +164,6 @@ function showVoices(voices, speechSynthesis) {
         };
 
         var utterance = new SpeechSynthesisUtterance(utteranceOptions);
-        console.log('utterance', utterance);
         speechSynthesis.speak(utterance);
 
       }
