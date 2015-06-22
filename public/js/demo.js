@@ -136,9 +136,11 @@ function showVoices(voices, speechSynthesis) {
     });
 
     $('.download-button').click(function() {
+      console.log('click download');
       textArea.focus();
       if (validText(textArea.val())) {
-        var utteranceOptions = {
+
+        var utteranceDownloadOptions = {
           text: $('#textArea').val(),
           voice: $('#voice').val(),
           download: true
@@ -146,6 +148,7 @@ function showVoices(voices, speechSynthesis) {
 
         var utterance = new SpeechSynthesisUtterance(utteranceOptions);
         speechSynthesis.speak(utterance);
+
       }
     });
 
@@ -164,6 +167,15 @@ function showVoices(voices, speechSynthesis) {
         };
 
         var utterance = new SpeechSynthesisUtterance(utteranceOptions);
+        var progressIndicator = $('#progressIndicator');
+        utterance.ondownloadprogress = function(evt) {
+          // console.log('download progress', evt.loaded);
+          console.log('download progress', evt.total);
+          if (evt.lengthComputable) {
+            var percentComplete = (evt.loaded / evt.total)*100;
+            progressIndicator.attr('value', percentComplete);
+          }
+        };
         speechSynthesis.speak(utterance);
 
       }
@@ -195,5 +207,16 @@ function showVoices(voices, speechSynthesis) {
     }
 
 }
+
+  (function() {
+    console.log('Initializing session permissions handler');
+    // Radio buttons
+    var sessionPermissionsRadio = $("#sessionPermissionsRadioGroup input[type='radio']");
+    sessionPermissionsRadio.click(function(evt) {
+      var checkedValue = sessionPermissionsRadio.filter(':checked').val();
+      console.log('checkedValue', checkedValue);
+      localStorage.setItem('sessionPermissions', checkedValue);
+    });
+  }())
 
 });
