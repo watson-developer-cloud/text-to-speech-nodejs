@@ -20,3 +20,17 @@ select.custom-select {
   background-color: white;
   outline: 2px solid #c7c7c7;
 }
+
+.error-row {
+  padding-left: 1em;
+  padding-right: 1em;
+  display: none;
+  background-color: #d74108;
+  color: white;
+}
+
+.error-row a {
+  color: white;
+  margin-bottom: 0.2em;
+}
+
