@@ -43,12 +43,6 @@ function showError(msg) {
 
 getToken(function(token) {
 
-  // Show tabs
-  $('#nav-tabs a').click(function (e) {
-    e.preventDefault()
-    $(this).tab('show')
-  })
-
   var audio = $('.audio').get(0);
 
   var speechSynthesisOptions = {
@@ -73,6 +67,19 @@ function parseVoices(voices) {
 
 function showVoices(voices, speechSynthesis) {
 
+    var currentTab = 'Text';
+
+    // Show tabs
+    $('#nav-tabs a').click(function (e) {
+      e.preventDefault()
+      $(this).tab('show')
+    })
+
+    $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+      console.log('target', $(e.target).text() );
+      currentTab = $(e.target).text();
+    });
+
   $.each(voices, function(idx, voice) {
     var voiceName = voice.name.substring(6, voice.name.length - 5);
     var optionText = voice._gender + ' voice: ' + voiceName + ' (' + voice.lang + ')';
@@ -88,6 +95,7 @@ function showVoices(voices, speechSynthesis) {
     var textChanged = false;
 
     $('#textArea').val(englishText);
+    $('#ssmlArea').val(englishSSML);
 
     $('#textArea').change(function(){
       textChanged = true;
@@ -159,7 +167,7 @@ function showVoices(voices, speechSynthesis) {
       textArea.focus();
       if (validText(textArea.val())) {
         var utteranceDownloadOptions = {
-          text: $('#textArea').val(),
+          text: currentTab === 'SSML' ? $('#ssmlArea').val(): $('#textArea').val(),
           voice: $('#voice').val(),
           download: true
         };
@@ -186,7 +194,7 @@ function showVoices(voices, speechSynthesis) {
       if (validText(textArea.val())) {
 
         var utteranceOptions = {
-          text: $('#textArea').val(),
+          text: currentTab === 'SSML' ? $('#ssmlArea').val(): $('#textArea').val(),
           voice: $('#voice').val(),
           sessionPermissions: JSON.parse(localStorage.getItem('sessionPermissions')) ? 0 : 1
         };
