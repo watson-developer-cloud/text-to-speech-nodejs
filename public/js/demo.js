@@ -1,5 +1,5 @@
 /**
- * Copyright 2014 IBM Corp. All Rights Reserved.
+ * Copyright 2014, 2015 IBM Corp. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,6 +25,22 @@ function getToken(callback) {
   });
 }
 
+function showError(msg) {
+  console.error('Error: ', msg);
+  var errorAlert = $('.error-row');
+  errorAlert.hide();
+  errorAlert.css('background-color', '#d74108');
+  errorAlert.css('color', 'white');
+  var errorMessage = $('#errorMessage');
+  errorMessage.text(msg);
+  errorAlert.show();
+  $('#errorClose').click(function(e) {
+    e.preventDefault();
+    errorAlert.hide();
+    return false;
+  });
+}
+
 getToken(function(token) {
 
   // Show tabs
@@ -43,8 +59,6 @@ getToken(function(token) {
 
   var speechSynthesis = new SpeechSynthesis(speechSynthesisOptions);
 
-  console.log('getting speechSynthesis', speechSynthesis);
-
   speechSynthesis.onvoiceschanged = function() {
     console.log('voices changed');
     var voices = speechSynthesis.getVoices();
@@ -53,17 +67,11 @@ getToken(function(token) {
   };
 });
 
-
 function parseVoices(voices) {
   var voiceName = voice.name.substring(6, voice.name.length - 5);
 }
 
 function showVoices(voices, speechSynthesis) {
-
-  function getBaseURL() {
-    return location.protocol + "//" + location.hostname + 
-  (location.port && ":" + location.port);
-  }
 
   $.each(voices, function(idx, voice) {
     var voiceName = voice.name.substring(6, voice.name.length - 5);
@@ -77,13 +85,7 @@ function showVoices(voices, speechSynthesis) {
     var audio = $('.audio').get(0),
     textArea = $('#textArea');
 
-    var textChanged = false,
-    spanishText = "Consciente de su patrimonio espiritual y moral, la Unión está fundada sobre los valores indivisibles y universales de la dignidad humana, la libertad, la igualdad y la solidaridad, y se basa en los principios de la democracia y el Estado de Derecho. Al instituir la ciudadanía de la Unión y crear un espacio de libertad, seguridad y justicia, sitúa a la persona en el centro de su actuación.",
-    frenchText = "Consciente de son patrimoine spirituel et moral, l'Union se fonde sur les valeurs indivisibles et universelles de dignité humaine, de liberté, d'égalité et de solidarité; elle repose sur le principe de la démocratie et le principe de l'État de droit. Elle place la personne au coeur de son action en instituant la citoyenneté de l'Union et en créant un espace de liberté, de sécurité et de justice.",
-    englishText = "Conscious of its spiritual and moral heritage, the Union is founded on the indivisible, universal values of human dignity, freedom, equality and solidarity; it is based on the principles of democracy and the rule of law. It places the individual at the heart of its activities, by establishing the citizenship of the Union and by creating an area of freedom, security and justice.",
-    germanText = "In dem Bewusstsein ihres geistig-religiösen und sittlichen Erbes gründet sich die Union auf die unteilbaren und universellen Werte der Würde des Menschen, der Freiheit, der Gleichheit und der Solidarität. Sie beruht auf den Grundsätzen der Demokratie und der Rechtsstaatlichkeit. Sie stellt den Menschen in den Mittelpunkt ihres Handelns, indem sie die Unionsbürgerschaft und einen Raum der Freiheit, der Sicherheit und des Rechts begründet.",
-    italianText = "Consapevole del suo patrimonio spirituale e morale, l'Unione si fonda sui valori indivisibili e universali della dignità umana, della libertà, dell'uguaglianza e della solidarietà; essa si basa sul principio della democrazia e sul principio dello Stato di diritto. Pone la persona al centro della sua azione istituendo la cittadinanza dell'Unione e creando uno spazio di libertà, sicurezza e giustizia.";
-
+    var textChanged = false;
 
     $('#textArea').val(englishText);
 
@@ -92,8 +94,9 @@ function showVoices(voices, speechSynthesis) {
     });
 
     $('#voice').change(function(){
+      var lang = $(this).val().substring(0, 2);
       if (!textChanged) {
-        switch($(this).val().substring(0, 2)) {
+        switch(lang) {
           case 'es':
             $('#textArea').val(spanishText);
             break;
@@ -111,6 +114,25 @@ function showVoices(voices, speechSynthesis) {
             break;
         }
       }
+      if (!textChanged) {
+        switch(lang) {
+          case 'es':
+            $('#ssmlArea').val(spanishSSML);
+            break;
+          case 'fr':
+            $('#ssmlArea').val(frenchSSML);
+            break;
+          case 'de':
+            $('#ssmlArea').val(germanSSML);
+            break;
+          case 'it':
+            $('#ssmlArea').val(italianSSML);
+            break;
+          default:
+            $('#ssmlArea').val(englishSSML);
+            break;
+        }
+      }
     });
 
 
@@ -124,31 +146,33 @@ function showVoices(voices, speechSynthesis) {
     }
 
     $('.audio').on('error', function () {
-      $('.result').hide();
-      $('.errorMgs').text('Error processing the request.');
-      $('.errorMsg').css('color','red');
-      $('.error').show();
+      showError('Error processing the request');
     });
 
     $('.audio').on('loadeddata', function () {
       $('.result').show();
-      $('.error').hide();
+      $('.error-row').hide();
     });
 
     $('.download-button').click(function() {
       console.log('click download');
       textArea.focus();
       if (validText(textArea.val())) {
-
         var utteranceDownloadOptions = {
           text: $('#textArea').val(),
           voice: $('#voice').val(),
           download: true
         };
-
-        var utterance = new SpeechSynthesisUtterance(utteranceOptions);
-        speechSynthesis.speak(utterance);
-
+        // We run this query through the Node.js proxy
+        // because Firefox doesn't support initiating the
+        // 'save as' file dialog from JavaScript
+        // (so Node.js sends the appropriate 'content-disposition' header)
+        var sessionPermissions = JSON.parse(localStorage.getItem('sessionPermissions')) ? 0 : 1;
+        var downloadURL = '/synthesize?download=true'
+          + '&X-WDC-PL-OPT-OUT=' +  sessionPermissions
+          + '&voice=' + utteranceDownloadOptions.voice
+          + '&text=' + encodeURIComponent(utteranceDownloadOptions.text);
+        window.location.href = downloadURL;
       }
     });
 
@@ -163,19 +187,12 @@ function showVoices(voices, speechSynthesis) {
 
         var utteranceOptions = {
           text: $('#textArea').val(),
-          voice: $('#voice').val()
+          voice: $('#voice').val(),
+          sessionPermissions: JSON.parse(localStorage.getItem('sessionPermissions')) ? 0 : 1
         };
 
         var utterance = new SpeechSynthesisUtterance(utteranceOptions);
         var progressIndicator = $('#progressIndicator');
-        utterance.ondownloadprogress = function(evt) {
-          // console.log('download progress', evt.loaded);
-          console.log('download progress', evt.total);
-          if (evt.lengthComputable) {
-            var percentComplete = (evt.loaded / evt.total)*100;
-            progressIndicator.attr('value', percentComplete);
-          }
-        };
         speechSynthesis.speak(utterance);
 
       }
@@ -187,20 +204,17 @@ function showVoices(voices, speechSynthesis) {
     }
 
     function validText(text) {
-      $('.error').hide();
+      $('.error-row').hide();
       $('.errorMsg').text('');
       $('.latin').hide();
 
       if ($.trim(text).length === 0) { // empty text
-        $('.errorMsg').text('Please enter the text you would like to synthesize in the text window.');
-        $('.errorMsg').css('color','#00b2ef');
-        $('.error').show();
+        showError('Please enter the text you would like to synthesize in the text window.');
         return false;
       }
 
       if (!containsAllLatin1(text)) {
-        $('.latin').show();
-        $('.error').show();
+        showError('Language not supported. Please use only ISO 8859 characters');
         return false;
       }
       return true;
@@ -211,6 +225,8 @@ function showVoices(voices, speechSynthesis) {
   (function() {
     console.log('Initializing session permissions handler');
     // Radio buttons
+    // Set default to allow
+    localStorage.setItem('sessionPermissions', true);
     var sessionPermissionsRadio = $("#sessionPermissionsRadioGroup input[type='radio']");
     sessionPermissionsRadio.click(function(evt) {
       var checkedValue = sessionPermissionsRadio.filter(':checked').val();
