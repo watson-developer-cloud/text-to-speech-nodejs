@@ -47,7 +47,7 @@ getToken(function(token) {
 
   var speechSynthesisOptions = {
     audioElement: audio,
-    url: 'https://stream-s.watsonplatform.net/text-to-speech-beta/api/v1',
+    url: 'https://stream.watsonplatform.net/text-to-speech/api/v1',
     api_key: token
   };
 
@@ -200,7 +200,6 @@ function showVoices(voices, speechSynthesis) {
         };
 
         var utterance = new SpeechSynthesisUtterance(utteranceOptions);
-        var progressIndicator = $('#progressIndicator');
         speechSynthesis.speak(utterance);
 
       }
