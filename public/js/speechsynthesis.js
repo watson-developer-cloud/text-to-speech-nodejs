@@ -35,8 +35,7 @@ var serializeQueryString = require('../utils').serializeQueryString,
 
 function SpeechSynthesis (options) {
 
-  // TODO: change to production server when released
-  this._url = options && options.url || 'https://stream-s.watsonplatform.net/text-to-speech-beta/api/v1';
+  this._url = options && options.url || 'https://stream.watsonplatform.net/text-to-speech/api/v1';
   this._api_key = options.api_key;
   this._audioElement = options.audioElement;
   this._voices = [];
