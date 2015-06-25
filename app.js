@@ -60,7 +60,7 @@ app.get('/synthesize', function(req, res) {
 
 });
 
-Get token from Watson using your credentials
+// Get token from Watson using your credentials
 app.get('/token', function(req, res) {
   console.log('Fetching token');
   var params = {
