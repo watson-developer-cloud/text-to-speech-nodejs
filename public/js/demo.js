@@ -47,16 +47,15 @@ getToken(function(token) {
 
   var speechSynthesisOptions = {
     audioElement: audio,
-    url: 'https://stream.watsonplatform.net/text-to-speech/api/v1',
+    url: 'https://stream-s.watsonplatform.net/text-to-speech-beta/api/v1',
+    // url: 'https://stream.watsonplatform.net/text-to-speech/api/v1',
     api_key: token
   };
 
   var speechSynthesis = new SpeechSynthesis(speechSynthesisOptions);
 
   speechSynthesis.onvoiceschanged = function() {
-    console.log('voices changed');
     var voices = speechSynthesis.getVoices();
-    console.log('voices', voices);
     showVoices(voices, speechSynthesis);
   };
 });
@@ -76,18 +75,25 @@ function showVoices(voices, speechSynthesis) {
     })
 
     $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-      console.log('target', $(e.target).text() );
       currentTab = $(e.target).text();
     });
+
+  var defaultVoice = 'en-US_MichaelVoice';
 
   $.each(voices, function(idx, voice) {
     var voiceName = voice.name.substring(6, voice.name.length - 5);
     var optionText = voice._gender + ' voice: ' + voiceName + ' (' + voice.lang + ')';
-      $('#voice')
-      .append($('<option>', { value : voice.name })
-        .prop('selected', voice.name === 'en-US_MichaelVoice' ? true : false)
-        .text(optionText));
-      });
+    $("#dropdownMenuList").append(
+      $("<li>")
+        .attr('role', 'presentation')
+        .append(
+          $('<a>').attr('role', 'menu-item')
+            .attr('href', '/')
+            .attr('data-voice', voice.name)
+            .append(optionText)
+          )
+      )
+    });
 
     var audio = $('.audio').get(0),
     textArea = $('#textArea');
@@ -101,8 +107,16 @@ function showVoices(voices, speechSynthesis) {
       textChanged = true;
     });
 
-    $('#voice').change(function(){
-      var lang = $(this).val().substring(0, 2);
+    // $('#voice').change(function(){
+    $("#dropdownMenuList").click(function(evt) {
+      evt.preventDefault();
+      evt.stopPropagation();
+      var newVoiceDescription = $(evt.target).text();
+      var newVoice = $(evt.target).data('voice');
+      $('#dropdownMenuDefault').empty().text(newVoiceDescription);
+      $('#dropdownMenu1').dropdown('toggle');
+
+      var lang = newVoice.substring(0, 2);
       if (!textChanged) {
         switch(lang) {
           case 'es':
@@ -141,6 +155,7 @@ function showVoices(voices, speechSynthesis) {
             break;
         }
       }
+
     });
 
 
@@ -163,7 +178,6 @@ function showVoices(voices, speechSynthesis) {
     });
 
     $('.download-button').click(function() {
-      console.log('click download');
       textArea.focus();
       if (validText(textArea.val())) {
         var utteranceDownloadOptions = {
@@ -230,14 +244,12 @@ function showVoices(voices, speechSynthesis) {
 }
 
   (function() {
-    console.log('Initializing session permissions handler');
     // Radio buttons
     // Set default to allow
     localStorage.setItem('sessionPermissions', true);
     var sessionPermissionsRadio = $("#sessionPermissionsRadioGroup input[type='radio']");
     sessionPermissionsRadio.click(function(evt) {
       var checkedValue = sessionPermissionsRadio.filter(':checked').val();
-      console.log('checkedValue', checkedValue);
       localStorage.setItem('sessionPermissions', checkedValue);
     });
   }())

@@ -34,3 +34,6 @@ select.custom-select {
   margin-bottom: 0.2em;
 }
 
+#dropdownMenuList {
+  width: 99%;
+}
