@@ -18,7 +18,6 @@
 
 var express = require('express'),
   app = express(),
-  request = require('request'),
   errorhandler = require('errorhandler'),
   bodyParser   = require('body-parser'),
   bluemix = require('./config/bluemix'),
