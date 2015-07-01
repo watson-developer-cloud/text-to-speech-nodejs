@@ -17,6 +17,7 @@
 'use strict';
 
 var express = require('express'),
+  request = require('request'),
   app = express(),
   errorhandler = require('errorhandler'),
   bodyParser   = require('body-parser'),
@@ -26,17 +27,13 @@ var express = require('express'),
   path = require('path'),
   // environmental variable: username, password, etc.
   config = JSON.parse(process.env.WATSON_CONFIG),
-  // Make a second copy since Watson SDK deletes some keys
-  authorizationConfig = JSON.parse(process.env.WATSON_CONFIG),
   extend = require('util')._extend;
 
 // if bluemix credentials exists, then override local
 var credentials = extend(config, bluemix.getServiceCreds('text_to_speech'));
-var authorizationCredentials = extend(authorizationConfig, bluemix.getServiceCreds('authorization'));
 
 // Create the service wrapper
 var textToSpeech = new watson.text_to_speech(credentials);
-var authorization = new watson.authorization(authorizationCredentials);
 
 // Setup static public directory
 app.use(express.static(path.join(__dirname , './public')));
@@ -60,15 +57,36 @@ app.get('/synthesize', function(req, res) {
 });
 
 // Get token from Watson using your credentials
+// To use in place of token handler below
+// whenever authorization service  accepts URL-encoded query strings
+// app.get('/token', function(req, res) {
+//   console.log('Fetching token');
+//   var params = {
+//     url: 'https://' + credentials.hostname + '/text-to-speech-beta/api'
+//   };
+//   authorization.getToken(params, function(token) {
+//     console.log('Fetching token', token);
+//     res.send(token);
+//   });
+// });
+
+// Get token from Watson using your credentials
 app.get('/token', function(req, res) {
-  console.log('Fetching token');
-  var params = {
-    url: 'https://' + credentials.hostname + '/text-to-speech-beta/api'
-  };
-  authorization.getToken(params, function(token) {
-    console.log('Fetching token', token);
-    res.send(token);
-  });
+  console.log('fetching token');
+  request.get({'url': 
+    'https://' 
+    + credentials.hostname 
+    + '/authorization/api/v1/token?url=' 
+    + 'https://' + credentials.hostname + '/text-to-speech/api',
+    'auth': {
+      'user': credentials.username,
+      'pass': credentials.password,
+      'sendImmediately': true
+    }
+  }, function(err, response, body) {
+    res.send(body);
+  }
+  );
 });
 
 // Add error handling in dev
