@@ -26,8 +26,11 @@ var express = require('express'),
   url = require('url'),
   path = require('path'),
   // environmental variable: username, password, etc.
-  config = JSON.parse(process.env.WATSON_CONFIG),
   extend = require('util')._extend;
+
+// For local development, put username and password in config
+// or store in your environment
+var config = {};
 
 // if bluemix credentials exists, then override local
 var credentials = extend(config, bluemix.getServiceCreds('text_to_speech'));
@@ -72,7 +75,6 @@ app.get('/synthesize', function(req, res) {
 
 // Get token from Watson using your credentials
 app.get('/token', function(req, res) {
-  console.log('fetching token');
   request.get({'url': 
     'https://' 
     + credentials.hostname 
