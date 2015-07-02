@@ -22,7 +22,17 @@ var express = require('express'),
   errorhandler = require('errorhandler'),
   bluemix = require('./config/bluemix'),
   watson = require('watson-developer-cloud'),
-  extend = require('util')._extend;
+  extend = require('util')._extend,
+  RateLimit  = require('express-rate-limit');
+
+app.enable('trust proxy');
+
+var rateLimit = RateLimit({
+  windowMs: 60 * 1000,
+  delayMs: 1,
+  max: 10,
+  global: false
+});
 
 // For local development, put username and password in config
 // or store in your environment
@@ -43,7 +53,7 @@ var textToSpeech = new watson.text_to_speech(credentials);
 app.use(express.static('./public'));
 
 
-app.get('/synthesize', function(req, res) {
+app.get('/synthesize',rateLimit, function(req, res) {
   var transcript = textToSpeech.synthesize(req.query);
   transcript.on('response', function(response) {
     if (req.query.download) {
