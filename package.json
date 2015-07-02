@@ -1,6 +1,6 @@
 {
   "name": "TextToSpeechNodejsStarterApp",
-  "version": "0.0.5",
+  "version": "0.1.5",
   "description": "A sample nodejs app for Bluemix that use the Text to Speech service",
   "dependencies": {
     "body-parser": "~1.12.0",
@@ -9,7 +9,7 @@
     "express-rate-limit": "^1.0.2",
     "jade": "~1.9.2",
     "request": "^2.58.0",
-    "watson-developer-cloud": "~0.9.15"
+    "watson-developer-cloud": "~0.9.18"
   },
   "engines": {
     "node": "0.10.38"

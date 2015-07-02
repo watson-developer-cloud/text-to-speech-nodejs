@@ -16,14 +16,13 @@
 
 'use strict';
 
-var express = require('express'),
-  request = require('request'),
-  app = express(),
+var express    = require('express'),
+  app          = express(),
   errorhandler = require('errorhandler'),
-  bluemix = require('./config/bluemix'),
-  watson = require('watson-developer-cloud'),
-  extend = require('util')._extend,
-  RateLimit  = require('express-rate-limit');
+  bluemix      = require('./config/bluemix'),
+  watson       = require('watson-developer-cloud'),
+  extend       = require('util')._extend,
+  RateLimit    = require('express-rate-limit');
 
 app.enable('trust proxy');
 
@@ -36,18 +35,17 @@ var rateLimit = RateLimit({
 
 // For local development, put username and password in config
 // or store in your environment
-var config = {
-  version: 'v1',
+var credentials = extend({
   url: 'https://stream.watsonplatform.net/text-to-speech/api',
   username: '<username>',
-  password: '<password>'
-};
+  password: '<password>',
+  version: 'v1'
+}, bluemix.getServiceCreds('text_to_speech'));
+var authCredentials = extend({}, credentials);
 
-// if bluemix credentials exists, then override local
-var credentials = extend(config, bluemix.getServiceCreds('text_to_speech'));
-
-// Create the service wrapper
-var textToSpeech = new watson.text_to_speech(credentials);
+// Create the service wrappers
+var textToSpeech = watson.text_to_speech(credentials);
+var authorization = watson.authorization(authCredentials);
 
 // Setup static public directory
 app.use(express.static('./public'));
@@ -66,16 +64,13 @@ app.get('/synthesize',rateLimit, function(req, res) {
 
 // Get token from Watson using your credentials
 app.get('/token', function(req, res) {
-  request.get({
-    url: 'https://stream.watsonplatform.net/authorization/api/v1/token?url=' +
-      'https://stream.watsonplatform.net/text-to-speech/api',
-    auth: {
-      user: credentials.username,
-      pass: credentials.password,
-      sendImmediately: true
+  authorization.getToken({url: credentials.url}, function(err, token) {
+    if (err) {
+      console.log('error:', err);
+      res.status(err.code);
     }
-  }, function(err, response, body) {
-    res.status(response.statusCode).send(body);
+
+    res.send(token);
   });
 });
 
