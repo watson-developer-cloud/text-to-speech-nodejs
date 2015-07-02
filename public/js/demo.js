@@ -59,9 +59,7 @@ getToken(function(token) {
   };
 });
 
-function parseVoices(voices) {
-  var voiceName = voice.name.substring(6, voice.name.length - 5);
-}
+var voice = 'en-US_MichaelVoice';
 
 function showVoices(voices, speechSynthesis) {
 
@@ -69,15 +67,13 @@ function showVoices(voices, speechSynthesis) {
 
     // Show tabs
     $('#nav-tabs a').click(function (e) {
-      e.preventDefault()
-      $(this).tab('show')
-    })
+      e.preventDefault();
+      $(this).tab('show');
+    });
 
     $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
       currentTab = $(e.target).text();
     });
-
-  var defaultVoice = 'en-US_MichaelVoice';
 
   $.each(voices, function(idx, voice) {
     var voiceName = voice.name.substring(6, voice.name.length - 5);
@@ -111,11 +107,11 @@ function showVoices(voices, speechSynthesis) {
       evt.preventDefault();
       evt.stopPropagation();
       var newVoiceDescription = $(evt.target).text();
-      var newVoice = $(evt.target).data('voice');
+      voice = $(evt.target).data('voice');
       $('#dropdownMenuDefault').empty().text(newVoiceDescription);
       $('#dropdownMenu1').dropdown('toggle');
 
-      var lang = newVoice.substring(0, 2);
+      var lang = voice.substring(0, 2);
       if (!textChanged) {
         switch(lang) {
           case 'es':
@@ -181,7 +177,7 @@ function showVoices(voices, speechSynthesis) {
       if (validText(textArea.val())) {
         var utteranceDownloadOptions = {
           text: currentTab === 'SSML' ? $('#ssmlArea').val(): $('#textArea').val(),
-          voice: $('#voice').val(),
+          voice: voice,
           download: true
         };
         // We run this query through the Node.js proxy
@@ -208,7 +204,7 @@ function showVoices(voices, speechSynthesis) {
 
         var utteranceOptions = {
           text: currentTab === 'SSML' ? $('#ssmlArea').val(): $('#textArea').val(),
-          voice: $('#voice').val(),
+          voice: voice,
           sessionPermissions: JSON.parse(localStorage.getItem('sessionPermissions')) ? 0 : 1
         };
 
@@ -220,7 +216,7 @@ function showVoices(voices, speechSynthesis) {
     });
 
     function containsAllLatin1(str) {
-      return  /^[A-z\u00C0-\u00ff\s?@¿"'\.,-\/#!$%\^&\*;:{}=\-_`~()]+$/.test(str) ;
+       return  /^[A-z\u00C0-\u00ff\s?@¿"'\.,-\/#!$%\^&\*;:{}=\-_`~()0-9]+$/.test(str);
     }
 
     function validText(text) {

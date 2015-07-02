@@ -20,17 +20,18 @@ var express = require('express'),
   request = require('request'),
   app = express(),
   errorhandler = require('errorhandler'),
-  bodyParser   = require('body-parser'),
   bluemix = require('./config/bluemix'),
   watson = require('watson-developer-cloud'),
-  url = require('url'),
-  path = require('path'),
-  // environmental variable: username, password, etc.
   extend = require('util')._extend;
 
 // For local development, put username and password in config
 // or store in your environment
-var config = {};
+var config = {
+  version: 'v1',
+  url: 'https://stream.watsonplatform.net/text-to-speech/api',
+  username: '<username>',
+  password: '<password>'
+};
 
 // if bluemix credentials exists, then override local
 var credentials = extend(config, bluemix.getServiceCreds('text_to_speech'));
@@ -39,19 +40,13 @@ var credentials = extend(config, bluemix.getServiceCreds('text_to_speech'));
 var textToSpeech = new watson.text_to_speech(credentials);
 
 // Setup static public directory
-app.use(express.static(path.join(__dirname , './public')));
+app.use(express.static('./public'));
 
-
-// render index page with voice options
-app.get('/', function(req, res) {
-  res.sendFile(path.join(__dirname, './public', 'index.html'));
-});
 
 app.get('/synthesize', function(req, res) {
   var transcript = textToSpeech.synthesize(req.query);
   transcript.on('response', function(response) {
     if (req.query.download) {
-      console.log('downloading file...');
       response.headers['content-disposition'] = 'attachment; filename=transcript.ogg';
     }
   });
@@ -59,36 +54,21 @@ app.get('/synthesize', function(req, res) {
 
 });
 
-// Get token from Watson using your credentials
-// To use in place of token handler below
-// whenever authorization service  accepts URL-encoded query strings
-// app.get('/token', function(req, res) {
-//   console.log('Fetching token');
-//   var params = {
-//     url: 'https://' + credentials.hostname + '/text-to-speech-beta/api'
-//   };
-//   authorization.getToken(params, function(token) {
-//     console.log('Fetching token', token);
-//     res.send(token);
-//   });
-// });
 
 // Get token from Watson using your credentials
 app.get('/token', function(req, res) {
-  request.get({'url': 
-    'https://' 
-    + credentials.hostname 
-    + '/authorization/api/v1/token?url=' 
-    + 'https://' + credentials.hostname + '/text-to-speech/api',
-    'auth': {
-      'user': credentials.username,
-      'pass': credentials.password,
-      'sendImmediately': true
+  console.log('obj');
+  request.get({
+    url: 'https://stream.watsonplatform.net/authorization/api/v1/token?url=' +
+      'https://stream.watsonplatform.net/text-to-speech/api',
+    auth: {
+      user: credentials.username,
+      pass: credentials.password,
+      sendImmediately: true
     }
   }, function(err, response, body) {
     res.send(body);
-  }
-  );
+  });
 });
 
 // Add error handling in dev

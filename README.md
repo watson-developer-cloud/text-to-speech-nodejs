@@ -34,7 +34,7 @@ Give it a try! Click the button below to fork into IBM DevOps Services and deplo
 
 5. Create the Text to Speech service in Bluemix.
   ```sh
-  $ cf create-service text_to_speech free text-to-speech-service
+  $ cf create-service text_to_speech standard text-to-speech-service
   ```
 
 6. Push it live!
@@ -42,7 +42,6 @@ Give it a try! Click the button below to fork into IBM DevOps Services and deplo
   $ cf push
   ```
 
-See the full [Getting Started][getting_started] documentation for more details, including code snippets and references.
 
 ## Running locally
   The application uses [Node.js](http://nodejs.org/) and [npm](https://www.npmjs.com/) so you will have to download and install them as part of the steps below.
@@ -101,5 +100,4 @@ To troubleshoot your Bluemix app the main useful source of information are the l
 
 [service_url]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/text-to-speech.html
 [cloud_foundry]: https://github.com/cloudfoundry/cli
-[getting_started]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/doc/getting_started/
 [sign_up]: https://apps.admin.ibmcloud.com/manage/trial/bluemix.html?cm_mmc=WatsonDeveloperCloud-_-LandingSiteGetStarted-_-x-_-CreateAnAccountOnBluemixCLI

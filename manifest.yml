@@ -1,8 +1,12 @@
+---
+declared-services:
+  text-to-speech-service:
+    label: text_to_speech
+    plan: standard
 applications:
-- disk_quota: 1024M
-  host: text-to-speech-demo
-  name: text-to-speech-demo
+- services:
+  - text-to-speech-service
+  name: text-to-speech-nodejs
   command: node app.js
   path: .
-  instances: 1
-  memory: 512M
+  memory: 256M
