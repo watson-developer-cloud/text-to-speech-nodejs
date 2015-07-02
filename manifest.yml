@@ -1,11 +1,11 @@
 ---
 declared-services:
-  text-to-speech-service:
+  text-to-speech-service-standard:
     label: text_to_speech
     plan: standard
 applications:
 - services:
-  - text-to-speech-service
+  - text-to-speech-service-standard
   name: text-to-speech-nodejs
   command: node app.js
   path: .
