@@ -61,7 +61,6 @@ app.get('/synthesize',rateLimit, function(req, res) {
     }
   });
   transcript.pipe(res);
-
 });
 
 
