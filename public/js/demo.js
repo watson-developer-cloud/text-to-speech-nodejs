@@ -22,6 +22,9 @@ $(document).ready(function() {
 function getToken(callback) {
   $.get('/token', function(data) {
     callback(data);
+  })
+  .fail(function(){
+    console.log('Couldn\'t get token check your credentials');
   });
 }
 

@@ -57,7 +57,6 @@ app.get('/synthesize', function(req, res) {
 
 // Get token from Watson using your credentials
 app.get('/token', function(req, res) {
-  console.log('obj');
   request.get({
     url: 'https://stream.watsonplatform.net/authorization/api/v1/token?url=' +
       'https://stream.watsonplatform.net/text-to-speech/api',
@@ -67,7 +66,7 @@ app.get('/token', function(req, res) {
       sendImmediately: true
     }
   }, function(err, response, body) {
-    res.send(body);
+    res.status(response.statusCode).send(body);
   });
 });
 
