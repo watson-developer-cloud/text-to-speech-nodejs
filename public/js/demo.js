@@ -19,15 +19,6 @@
 
 $(document).ready(function() {
 
-function getToken(callback) {
-  $.get('/token', function(data) {
-    callback(data);
-  })
-  .fail(function(){
-    console.log('Couldn\'t get token check your credentials');
-  });
-}
-
 function showError(msg) {
   console.error('Error: ', msg);
   var errorAlert = $('.error-row');
@@ -44,27 +35,30 @@ function showError(msg) {
   });
 }
 
-getToken(function(token) {
+function synthesizeRequest(options, audio) {
+  var sessionPermissions = JSON.parse(localStorage.getItem('sessionPermissions')) ? 0 : 1;
+  var downloadURL = '/synthesize'
+    + '?X-WDC-PL-OPT-OUT=' +  sessionPermissions
+    + '&voice=' + options.voice
+    + '&text=' + encodeURIComponent(options.text);
+  if (options.download) {
+    downloadURL += '&download=true';
+    window.location.href = downloadURL;
+    return true;
+  }
+  audio.pause();
+  audio.currentTime = 0;
+  audio.src = downloadURL;
+  audio.play();
+  return true;
+}
 
-  var audio = $('.audio').get(0);
-
-  var speechSynthesisOptions = {
-    audioElement: audio,
-    url: 'https://stream.watsonplatform.net/text-to-speech/api/v1',
-    api_key: token
-  };
-
-  var speechSynthesis = new SpeechSynthesis(speechSynthesisOptions);
-
-  speechSynthesis.onvoiceschanged = function() {
-    var voices = speechSynthesis.getVoices();
-    showVoices(voices, speechSynthesis);
-  };
-});
+var voices = SPEECH_SYNTHESIS_VOICES.voices
+showVoices(voices);
 
 var voice = 'en-US_MichaelVoice';
 
-function showVoices(voices, speechSynthesis) {
+function showVoices(voices) {
 
     var currentTab = 'Text';
 
@@ -80,7 +74,7 @@ function showVoices(voices, speechSynthesis) {
 
   $.each(voices, function(idx, voice) {
     var voiceName = voice.name.substring(6, voice.name.length - 5);
-    var optionText = voice._gender + ' voice: ' + voiceName + ' (' + voice.lang + ')';
+    var optionText = voice.gender + ' voice: ' + voiceName + ' (' + voice.language + ')';
     $("#dropdownMenuList").append(
       $("<li>")
         .attr('role', 'presentation')
@@ -176,23 +170,14 @@ function showVoices(voices, speechSynthesis) {
     });
 
     $('.download-button').click(function() {
-      textArea.focus();
-      if (validText(textArea.val())) {
-        var utteranceDownloadOptions = {
-          text: currentTab === 'SSML' ? $('#ssmlArea').val(): $('#textArea').val(),
-          voice: voice,
-          download: true
-        };
-        // We run this query through the Node.js proxy
-        // because Firefox doesn't support initiating the
-        // 'save as' file dialog from JavaScript
-        // (so Node.js sends the appropriate 'content-disposition' header)
-        var sessionPermissions = JSON.parse(localStorage.getItem('sessionPermissions')) ? 0 : 1;
-        var downloadURL = '/synthesize?download=true'
-          + '&X-WDC-PL-OPT-OUT=' +  sessionPermissions
-          + '&voice=' + utteranceDownloadOptions.voice
-          + '&text=' + encodeURIComponent(utteranceDownloadOptions.text);
-        window.location.href = downloadURL;
+    textArea.focus();
+    if (validText(textArea.val())) {
+      var utteranceDownloadOptions = {
+        text: currentTab === 'SSML' ? $('#ssmlArea').val(): $('#textArea').val(),
+        voice: voice,
+        download: true
+      };
+      synthesizeRequest(utteranceDownloadOptions);
       }
     });
 
@@ -200,7 +185,6 @@ function showVoices(voices, speechSynthesis) {
       evt.stopPropagation();
       evt.preventDefault();
       $('.result').hide();
-      audio.pause();
 
       $('#textArea').focus();
       if (validText(textArea.val())) {
@@ -211,8 +195,7 @@ function showVoices(voices, speechSynthesis) {
           sessionPermissions: JSON.parse(localStorage.getItem('sessionPermissions')) ? 0 : 1
         };
 
-        var utterance = new SpeechSynthesisUtterance(utteranceOptions);
-        speechSynthesis.speak(utterance);
+        synthesizeRequest(utteranceOptions, audio);
 
       }
       return false;
@@ -242,8 +225,7 @@ function showVoices(voices, speechSynthesis) {
 }
 
   (function() {
-    // Radio buttons
-    // Set default to allow
+    // Radio buttons for session permissions
     localStorage.setItem('sessionPermissions', true);
     var sessionPermissionsRadio = $("#sessionPermissionsRadioGroup input[type='radio']");
     sessionPermissionsRadio.click(function(evt) {
