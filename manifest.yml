@@ -6,7 +6,7 @@ declared-services:
 applications:
 - services:
   - text-to-speech-service-standard
-  name: text-to-speech-nodejs
+  name: text-to-speech-demo
   command: node app.js
   path: .
-  memory: 256M
+  memory: 512M
