@@ -29,7 +29,7 @@ var credentials = extend({
   url: 'https://stream.watsonplatform.net/text-to-speech/api',
   version: 'v1',
   username: '<username>',
-  password: '<password>'  
+  password: '<password>',
 }, bluemix.getServiceCreds('text_to_speech'));
 
 // Create the service wrappers
