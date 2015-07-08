@@ -37,10 +37,11 @@ function showError(msg) {
 
 function synthesizeRequest(options, audio) {
   var sessionPermissions = JSON.parse(localStorage.getItem('sessionPermissions')) ? 0 : 1;
-  var downloadURL = '/synthesize'
-    + '?X-WDC-PL-OPT-OUT=' +  sessionPermissions
-    + '&voice=' + options.voice
-    + '&text=' + encodeURIComponent(options.text);
+  var downloadURL = '/synthesize' +
+    '?voice=' + options.voice +
+    '&text=' + encodeURIComponent(options.text) +
+    '&X-WDC-PL-OPT-OUT=' +  sessionPermissions;
+
   if (options.download) {
     downloadURL += '&download=true';
     window.location.href = downloadURL;
@@ -53,7 +54,7 @@ function synthesizeRequest(options, audio) {
   return true;
 }
 
-var voices = SPEECH_SYNTHESIS_VOICES.voices
+var voices = SPEECH_SYNTHESIS_VOICES.voices;
 showVoices(voices);
 
 var voice = 'en-US_MichaelVoice';
@@ -75,8 +76,8 @@ function showVoices(voices) {
   $.each(voices, function(idx, voice) {
     var voiceName = voice.name.substring(6, voice.name.length - 5);
     var optionText = voice.gender + ' voice: ' + voiceName + ' (' + voice.language + ')';
-    $("#dropdownMenuList").append(
-      $("<li>")
+    $('#dropdownMenuList').append(
+      $('<li>')
         .attr('role', 'presentation')
         .append(
           $('<a>').attr('role', 'menu-item')
@@ -84,7 +85,7 @@ function showVoices(voices) {
             .attr('data-voice', voice.name)
             .append(optionText)
           )
-      )
+      );
     });
 
     var audio = $('.audio').get(0),
@@ -100,7 +101,7 @@ function showVoices(voices) {
     });
 
     // $('#voice').change(function(){
-    $("#dropdownMenuList").click(function(evt) {
+    $('#dropdownMenuList').click(function(evt) {
       evt.preventDefault();
       evt.stopPropagation();
       var newVoiceDescription = $(evt.target).text();
@@ -201,8 +202,13 @@ function showVoices(voices) {
       return false;
     });
 
+    /**
+     * Check that the text doesn't contains non latin-1 characters.
+     * @param  String  The string to test
+     * @return true if the string is latin-1
+     */
     function containsAllLatin1(str) {
-       return  /^[A-z\u00C0-\u00ff\s?@¿"'\.,-\/#!$%\^&\*;:{}=\-_`~()0-9]+$/.test(str);
+       return  /^[A-z\u00C0-\u00ff\s?@¿''\.,-\/#!$%\^&\*;:{}=\-_`~()0-9]+$/.test(str);
     }
 
     function validText(text) {
@@ -227,11 +233,11 @@ function showVoices(voices) {
   (function() {
     // Radio buttons for session permissions
     localStorage.setItem('sessionPermissions', true);
-    var sessionPermissionsRadio = $("#sessionPermissionsRadioGroup input[type='radio']");
-    sessionPermissionsRadio.click(function(evt) {
+    var sessionPermissionsRadio = $('#sessionPermissionsRadioGroup input[type="radio"]');
+    sessionPermissionsRadio.click(function() {
       var checkedValue = sessionPermissionsRadio.filter(':checked').val();
       localStorage.setItem('sessionPermissions', checkedValue);
     });
-  }())
+  }());
 
 });
