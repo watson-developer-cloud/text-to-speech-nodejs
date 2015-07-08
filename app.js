@@ -1,5 +1,5 @@
 /**
- * Copyright 2014 IBM Corp. All Rights Reserved.
+ * Copyright 2014, 2015 IBM Corp. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,19 +27,16 @@ var express    = require('express'),
 // or store in your environment
 var credentials = extend({
   url: 'https://stream.watsonplatform.net/text-to-speech/api',
+  version: 'v1',
   username: '<username>',
-  password: '<password>',
-  version: 'v1'
+  password: '<password>'  
 }, bluemix.getServiceCreds('text_to_speech'));
-var authCredentials = extend({}, credentials);
 
 // Create the service wrappers
 var textToSpeech = watson.text_to_speech(credentials);
-var authorization = watson.authorization(authCredentials);
 
 // Setup static public directory
 app.use(express.static('./public'));
-
 
 app.get('/synthesize', function(req, res) {
   var transcript = textToSpeech.synthesize(req.query);
@@ -48,21 +45,12 @@ app.get('/synthesize', function(req, res) {
       response.headers['content-disposition'] = 'attachment; filename=transcript.ogg';
     }
   });
+  transcript.on('error', function(error) {
+    console.log('Synthesize error: ', error)
+  });
   transcript.pipe(res);
 });
 
-
-// Get token from Watson using your credentials
-app.get('/token', function(req, res) {
-  authorization.getToken({url: credentials.url}, function(err, token) {
-    if (err) {
-      console.log('error:', err);
-      res.status(err.code);
-    }
-
-    res.send(token);
-  });
-});
 
 // Add error handling in dev
 if (!process.env.VCAP_SERVICES) {
