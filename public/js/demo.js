@@ -19,47 +19,48 @@
 
 $(document).ready(function() {
 
-function showError(msg) {
-  console.error('Error: ', msg);
-  var errorAlert = $('.error-row');
-  errorAlert.hide();
-  errorAlert.css('background-color', '#d74108');
-  errorAlert.css('color', 'white');
-  var errorMessage = $('#errorMessage');
-  errorMessage.text(msg);
-  errorAlert.show();
-  $('#errorClose').click(function(e) {
-    e.preventDefault();
+  function showError(msg) {
+    console.error('Error: ', msg);
+    var errorAlert = $('.error-row');
     errorAlert.hide();
-    return false;
-  });
-}
+    errorAlert.css('background-color', '#d74108');
+    errorAlert.css('color', 'white');
+    var errorMessage = $('#errorMessage');
+    errorMessage.text(msg);
+    errorAlert.show();
+    $('#errorClose').click(function(e) {
+      e.preventDefault();
+      errorAlert.hide();
+      return false;
+    });
+  }
 
-function synthesizeRequest(options, audio) {
-  var sessionPermissions = JSON.parse(localStorage.getItem('sessionPermissions')) ? 0 : 1;
-  var downloadURL = '/synthesize' +
-    '?voice=' + options.voice +
-    '&text=' + encodeURIComponent(options.text) +
-    '&X-WDC-PL-OPT-OUT=' +  sessionPermissions;
+  function synthesizeRequest(options, audio) {
+    var sessionPermissions = JSON.parse(localStorage.getItem('sessionPermissions')) ? 0 : 1;
+    var downloadURL = '/synthesize' +
+      '?voice=' + options.voice +
+      '&text=' + encodeURIComponent(options.text) +
+      '&X-WDC-PL-OPT-OUT=' +  sessionPermissions;
 
-  if (options.download) {
-    downloadURL += '&download=true';
-    window.location.href = downloadURL;
+    if (options.download) {
+      downloadURL += '&download=true';
+      window.location.href = downloadURL;
+      return true;
+    }
+    audio.pause();
+    audio.currentTime = 0;
+    audio.src = downloadURL;
+    audio.play();
     return true;
   }
-  audio.pause();
-  audio.currentTime = 0;
-  audio.src = downloadURL;
-  audio.play();
-  return true;
-}
 
-var voices = SPEECH_SYNTHESIS_VOICES.voices;
-showVoices(voices);
+  // Global comes from file constants.js
+  var voices = SPEECH_SYNTHESIS_VOICES.voices;
+  showVoices(voices);
 
-var voice = 'en-US_MichaelVoice';
+  var voice = 'en-US_MichaelVoice';
 
-function showVoices(voices) {
+  function showVoices(voices) {
 
     var currentTab = 'Text';
 
@@ -73,23 +74,32 @@ function showVoices(voices) {
       currentTab = $(e.target).text();
     });
 
-  $.each(voices, function(idx, voice) {
-    var voiceName = voice.name.substring(6, voice.name.length - 5);
-    var optionText = voice.gender + ' voice: ' + voiceName + ' (' + voice.language + ')';
-    $('#dropdownMenuList').append(
-      $('<li>')
+    var LANGUAGE_TABLE = {
+      'en-US': 'English (en-US)',
+      'es-US': 'Spanish (es-US)',
+      'de-DE': 'German (de-DE)',
+      'fr-FR': 'French (fr-FR)',
+      'it-IT': 'Italian (it-IT)',
+      'es-ES': 'Spanish (es-ES)'
+    };
+
+    $.each(voices, function(idx, voice) {
+      var voiceName = voice.name.substring(6, voice.name.length - 5);
+      var optionText = LANGUAGE_TABLE[voice.language] + ': ' + voiceName + ' ('  + voice.gender + ')';
+      $('#dropdownMenuList').append(
+        $('<li>')
         .attr('role', 'presentation')
         .append(
           $('<a>').attr('role', 'menu-item')
-            .attr('href', '/')
-            .attr('data-voice', voice.name)
-            .append(optionText)
+          .attr('href', '/')
+          .attr('data-voice', voice.name)
+          .append(optionText)
           )
-      );
+        );
     });
 
     var audio = $('.audio').get(0),
-    textArea = $('#textArea');
+        textArea = $('#textArea');
 
     var textChanged = false;
 
@@ -100,7 +110,6 @@ function showVoices(voices) {
       textChanged = true;
     });
 
-    // $('#voice').change(function(){
     $('#dropdownMenuList').click(function(evt) {
       evt.preventDefault();
       evt.stopPropagation();
@@ -171,14 +180,14 @@ function showVoices(voices) {
     });
 
     $('.download-button').click(function() {
-    textArea.focus();
-    if (validText(textArea.val())) {
-      var utteranceDownloadOptions = {
-        text: currentTab === 'SSML' ? $('#ssmlArea').val(): $('#textArea').val(),
-        voice: voice,
-        download: true
-      };
-      synthesizeRequest(utteranceDownloadOptions);
+      textArea.focus();
+      if (validText(textArea.val())) {
+        var utteranceDownloadOptions = {
+          text: currentTab === 'SSML' ? $('#ssmlArea').val(): $('#textArea').val(),
+      voice: voice,
+      download: true
+        };
+        synthesizeRequest(utteranceDownloadOptions);
       }
     });
 
@@ -192,8 +201,8 @@ function showVoices(voices) {
 
         var utteranceOptions = {
           text: currentTab === 'SSML' ? $('#ssmlArea').val(): $('#textArea').val(),
-          voice: voice,
-          sessionPermissions: JSON.parse(localStorage.getItem('sessionPermissions')) ? 0 : 1
+      voice: voice,
+      sessionPermissions: JSON.parse(localStorage.getItem('sessionPermissions')) ? 0 : 1
         };
 
         synthesizeRequest(utteranceOptions, audio);
@@ -208,7 +217,7 @@ function showVoices(voices) {
      * @return true if the string is latin-1
      */
     function containsAllLatin1(str) {
-       return  /^[A-z\u00C0-\u00ff\s?@¿''\.,-\/#!$%\^&\*;:{}=\-_`~()0-9]+$/.test(str);
+      return  /^[A-z\u00C0-\u00ff\s?@¿''\.,-\/#!$%\^&\*;:{}=\-_`~()0-9]+$/.test(str);
     }
 
     function validText(text) {
@@ -228,7 +237,7 @@ function showVoices(voices) {
       return true;
     }
 
-}
+  }
 
   (function() {
     // Radio buttons for session permissions
