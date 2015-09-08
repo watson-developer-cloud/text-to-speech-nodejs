@@ -76,6 +76,7 @@ $(document).ready(function() {
 
     var LANGUAGE_TABLE = {
       'en-US': 'English (en-US)',
+      'en-GB': 'English (en-GB)',
       'es-US': 'Spanish (es-US)',
       'de-DE': 'German (de-DE)',
       'fr-FR': 'French (fr-FR)',
