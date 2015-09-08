@@ -28,8 +28,8 @@ var express    = require('express'),
 var credentialsBackup = {
   url: 'https://stream.watsonplatform.net/text-to-speech/api',
   version: 'v1',
-  username: '',
-  password: '',
+  username: '<username>',
+  password: '<password>',
 };
 
 var credentials = extend(credentialsBackup, bluemix.getServiceCreds('text_to_speech'));
