@@ -40,6 +40,13 @@ window.SPEECH_SYNTHESIS_VOICES = {
       "description": "English language with US dialect, male voice.  The voice used by Watson Jeopardy system."
     }, 
     {
+      "url": "https://stream.watsonplatform.net/text-to-speech/api/v1/voices/en-GB_KateVoice", 
+      "gender": "female", 
+      "name": "en-GB_KateVoice", 
+      "language": "en-GB", 
+      "description": "English language with UK dialect, female.  Higher-quality uncompressed Kate voice."
+    },    
+    {
       "url": "https://stream.watsonplatform.net/text-to-speech/api/v1/voices/fr-FR_ReneeVoice", 
       "gender": "female", 
       "name": "fr-FR_ReneeVoice", 
@@ -87,6 +94,6 @@ window.SPEECH_SYNTHESIS_VOICES = {
       "name": "es-US_SofiaVoice", 
       "language": "es-US", 
       "description": "Spanish language with US dialect, female.  Higher-quality uncompressed Sofia voice."
-    }
+    }    
   ]
 }

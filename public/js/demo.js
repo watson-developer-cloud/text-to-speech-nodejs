@@ -48,7 +48,11 @@ $(document).ready(function() {
       return true;
     }
     audio.pause();
-    audio.currentTime = 0;
+    try {
+      audio.currentTime = 0;
+    } catch(ex) {
+      // ignore. Firefox just freaks out here for no apparent reason.
+    }
     audio.src = downloadURL;
     audio.play();
     return true;
@@ -76,6 +80,7 @@ $(document).ready(function() {
 
     var LANGUAGE_TABLE = {
       'en-US': 'English (en-US)',
+      'en-GB': 'English (en-GB)',
       'es-US': 'Spanish (es-US)',
       'de-DE': 'German (de-DE)',
       'fr-FR': 'French (fr-FR)',
