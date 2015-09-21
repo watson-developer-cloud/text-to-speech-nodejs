@@ -26,20 +26,15 @@ var express    = require('express'),
 // For local development, put username and password in config
 // or store in your environment
 var credentialsBackup = {
-  //url: 'https://stream.watsonplatform.net/text-to-speech/api',
-  url: 'https://stream-s.watsonplatform.net/text-to-speech/api',
+  url: 'https://stream.watsonplatform.net/text-to-speech/api',
   version: 'v1',
-  //username: '<username>',
-  //password: '<password>',
-  //username: '99b82716-2c7c-451a-819a-77b83458866c',
-  //password: 'NgnoDOh4E3Wz'
-  username: 'bdb86865-60a4-4e42-bfa8-4c91dfd583d2',
-  password: 'L3MIsuh4AGpz',
+  username: '<username>',
+  password: '<password>',
   use_vcap_services: false    
 };
 
-//var credentials = extend(credentialsBackup, bluemix.getServiceCreds('text_to_speech'));
-var credentials = credentialsBackup;
+var credentials = extend(credentialsBackup, bluemix.getServiceCreds('text_to_speech'));
+//var credentials = credentialsBackup;
 
 // Create the service wrappers
 var textToSpeech = watson.text_to_speech(credentials);
