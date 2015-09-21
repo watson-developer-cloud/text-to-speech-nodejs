@@ -25,18 +25,35 @@ var express    = require('express'),
 
 // For local development, put username and password in config
 // or store in your environment
-var credentials = extend({
+var credentialsBackup = {
   url: 'https://stream.watsonplatform.net/text-to-speech/api',
   version: 'v1',
   username: '<username>',
   password: '<password>',
-}, bluemix.getServiceCreds('text_to_speech'));
+  use_vcap_services: true   
+};
+
+var credentials = extend(credentialsBackup, bluemix.getServiceCreds('text_to_speech'));
+//var credentials = credentialsBackup;
 
 // Create the service wrappers
 var textToSpeech = watson.text_to_speech(credentials);
+var authorization = watson.authorization(credentials);
 
 // Setup static public directory
 app.use(express.static('./public'));
+
+// Get token from Watson using your credentials
+app.get('/token', function(req, res) {
+  authorization.getToken({url: credentials.url}, function(err, token) {
+    if (err) {
+      console.log('error:', err);
+      res.status(err.code);
+    }
+
+    res.send(token);
+  });
+});
 
 app.get('/synthesize', function(req, res) {
   var transcript = textToSpeech.synthesize(req.query);

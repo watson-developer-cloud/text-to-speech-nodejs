@@ -45,7 +45,7 @@
 
         <div class="col-lg-10 col-md-10 col-xs-12">
           <h1>Text to Speech</h1>
-          <p>The Text to Speech service understands text and natural language to generate synthesized audio output complete with appropriate cadence and intonation. It is available in 11 voices across 5 languages, including the voice used by Watson in the 2011 Jeopardy match.</p>
+          <p>The Text to Speech service understands text and natural language to generate synthesized audio output complete with appropriate cadence and intonation. It is available in 12 voices across 6 languages, including the voice used by Watson in the 2011 Jeopardy match.</p>
           <p><img src="images/link.svg" class="glyph"><strong>Resources:</strong></br>
           <div class="resources">
             <a href="http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/apis/#!/text-to-speech">API Overview</a>
@@ -68,7 +68,10 @@
           <h2>Input Text</h2>
         </div><!-- .col-lg-12 -->
         <div class="col-lg-8 col-md-12 col-sm-12"  style="margin-bottom: 1em;">
-          <p class="help-block">The text language must match the selected voice language: Mixing language (English text with a Spanish male voice) does not produce valid results. The synthesized audio is streamed to the client as it is being produced, using the HTTP chunked encoding. The audio is returned in the Ogg Vorbis format which can be played using <a href="http://www.videolan.org/vlc/index.html">VLC</a> and Audacity players.</p>
+          <p class="help-block">
+            The text language must match the selected voice language: Mixing language (English text with a Spanish male voice) does not produce valid results.
+            The synthesized audio is streamed to the client as it is being produced, using the HTTP chunked encoding.
+            The audio is returned in the Ogg Opus format which can be played using <a href="http://www.videolan.org/vlc/index.html">VLC</a> and Audacity players.</p>
         </div><!-- .col-lg-8 --> 
         <div class="col-lg-4 col-md-12 col-sm-12">
 
