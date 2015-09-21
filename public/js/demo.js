@@ -48,7 +48,11 @@ $(document).ready(function() {
       return true;
     }
     audio.pause();
-    audio.currentTime = 0;
+    try {
+      audio.currentTime = 0;
+    } catch(ex) {
+      // ignore. Firefox just freaks out here for no apparent reason.
+    }
     audio.src = downloadURL;
     audio.play();
     return true;
