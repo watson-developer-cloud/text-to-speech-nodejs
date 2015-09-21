@@ -30,6 +30,7 @@ var credentialsBackup = {
   version: 'v1',
   username: '<username>',
   password: '<password>',
+  use_vcap_services: true   
 };
 
 var credentials = extend(credentialsBackup, bluemix.getServiceCreds('text_to_speech'));

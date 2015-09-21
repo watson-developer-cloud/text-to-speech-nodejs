@@ -81,6 +81,7 @@ $(document).ready(function() {
     var LANGUAGE_TABLE = {
       'en-US': 'English (en-US)',
       'en-GB': 'English (en-GB)',
+      'ja-JP': 'Japanese (ja-JP)',
       'es-US': 'Spanish (es-US)',
       'de-DE': 'German (de-DE)',
       'fr-FR': 'French (fr-FR)',
@@ -124,7 +125,7 @@ $(document).ready(function() {
       $('#dropdownMenu1').dropdown('toggle');
 
       var lang = voice.substring(0, 2);
-      if (!textChanged) {
+      //if (!textChanged) {
         switch(lang) {
           case 'es':
             $('#textArea').val(spanishText);
@@ -138,12 +139,15 @@ $(document).ready(function() {
           case 'it':
             $('#textArea').val(italianText);
             break;
+          case 'ja':
+            $('#textArea').val(japaneseText);
+            break;
           default:
             $('#textArea').val(englishText);
             break;
         }
-      }
-      if (!textChanged) {
+      //}
+      //if (!textChanged) {
         switch(lang) {
           case 'es':
             $('#ssmlArea').val(spanishSSML);
@@ -157,11 +161,14 @@ $(document).ready(function() {
           case 'it':
             $('#ssmlArea').val(italianSSML);
             break;
+          case 'ja':
+            $('#ssmlArea').val(japaneseSSML);
+            break;
           default:
             $('#ssmlArea').val(englishSSML);
             break;
         }
-      }
+      //}
 
     });
 
@@ -186,7 +193,7 @@ $(document).ready(function() {
 
     $('.download-button').click(function() {
       textArea.focus();
-      if (validText(textArea.val())) {
+      if (validText(voice, textArea.val())) {
         var utteranceDownloadOptions = {
           text: currentTab === 'SSML' ? $('#ssmlArea').val(): $('#textArea').val(),
       voice: voice,
@@ -202,7 +209,7 @@ $(document).ready(function() {
       $('.result').hide();
 
       $('#textArea').focus();
-      if (validText(textArea.val())) {
+      if (validText(voice, textArea.val())) {
 
         var utteranceOptions = {
           text: currentTab === 'SSML' ? $('#ssmlArea').val(): $('#textArea').val(),
@@ -223,9 +230,17 @@ $(document).ready(function() {
      */
     function containsAllLatin1(str) {
       return  /^[A-z\u00C0-\u00ff\s?@¿''\.,-\/#!$%\^&\*;:{}=\-_`~()0-9]+$/.test(str);
+    }     
+
+    /**
+    * Check that the text contains Japanese characters only
+    * @return true if the string contains only Japanese characters   
+    */
+    function containsAllJapanese(str) {
+       return str.match(/^[\u3000-\u303f\u3040-\u309f\u30a0-\u30ff\uff00-\uff9f\u4e00-\u9faf\u3400-\u4dbf]+$/);
     }
 
-    function validText(text) {
+    function validText(voice, text) {
       $('.error-row').hide();
       $('.errorMsg').text('');
       $('.latin').hide();
@@ -234,14 +249,23 @@ $(document).ready(function() {
         showError('Please enter the text you would like to synthesize in the text window.');
         return false;
       }
-
-      if (!containsAllLatin1(text)) {
-        showError('Language not supported. Please use only ISO 8859 characters');
-        return false;
+      
+      // check text validity based on language
+      if (voice.substr(0,5) == 'ja-JP') {
+         if (!containsAllJapanese(text)) {
+            showError('Language not supported. Please use only Japanese characters');
+            return false;
+         }     	
+      } else {
+         if (!containsAllLatin1(text)) {
+            showError('Language not supported. Please use only ISO 8859 characters');
+            return false;
+         }      	
       }
+
+      console.log("->voice: " + voice);      
       return true;
     }
-
   }
 
   (function() {
