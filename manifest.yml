@@ -5,7 +5,7 @@ declared-services:
     plan: standard
 applications:
 - services:
-  - text-to-speech-service
+  - text-to-speech-service-standard
   name: text-to-speech-demo
   path: .
   memory: 512M
