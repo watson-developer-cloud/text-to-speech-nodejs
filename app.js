@@ -18,44 +18,19 @@
 
 var express    = require('express'),
   app          = express(),
-  errorhandler = require('errorhandler'),
-  bluemix      = require('./config/bluemix'),
-  watson       = require('watson-developer-cloud'),
-  extend       = require('util')._extend;
+  watson       = require('watson-developer-cloud');
 
-// For local development, put username and password in config
-// or store in your environment
-var credentialsBackup = {
-  url: 'https://stream.watsonplatform.net/text-to-speech/api',
+// Bootstrap application settings
+require('./config/express')(app);
+
+// For local development, replace username and password
+var textToSpeech = watson.text_to_speech({
   version: 'v1',
   username: '<username>',
-  password: '<password>',
-  use_vcap_services: true   
-};
-
-var credentials = extend(credentialsBackup, bluemix.getServiceCreds('text_to_speech'));
-//var credentials = credentialsBackup;
-
-// Create the service wrappers
-var textToSpeech = watson.text_to_speech(credentials);
-var authorization = watson.authorization(credentials);
-
-// Setup static public directory
-app.use(express.static('./public'));
-
-// Get token from Watson using your credentials
-app.get('/token', function(req, res) {
-  authorization.getToken({url: credentials.url}, function(err, token) {
-    if (err) {
-      console.log('error:', err);
-      res.status(err.code);
-    }
-
-    res.send(token);
-  });
+  password: '<password>'
 });
 
-app.get('/synthesize', function(req, res) {
+app.get('/api/synthesize', function(req, res, next) {
   var transcript = textToSpeech.synthesize(req.query);
   transcript.on('response', function(response) {
     if (req.query.download) {
@@ -63,18 +38,23 @@ app.get('/synthesize', function(req, res) {
     }
   });
   transcript.on('error', function(error) {
-    console.log('Synthesize error: ', error)
+    next(error);
   });
   transcript.pipe(res);
 });
 
+// app.get('/api/voices', function(req, res, next) {
+//   textToSpeech.voices(function (error, voices) {
+//     if (error)
+//       next(error);
+//     else
+//       res.json(voices);
+//   });
+// });
 
-// Add error handling in dev
-if (!process.env.VCAP_SERVICES) {
-  app.use(errorhandler());
-}
+// error-handler settings
+require('./config/error-handler')(app);
 
 var port = process.env.VCAP_APP_PORT || 3000;
 app.listen(port);
-
 console.log('listening at:', port);

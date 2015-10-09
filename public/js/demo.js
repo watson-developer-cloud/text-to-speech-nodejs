@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/*global $:false */
+/*global $:false, SPEECH_SYNTHESIS_VOICES */
 
 'use strict';
 
@@ -37,7 +37,7 @@ $(document).ready(function() {
 
   function synthesizeRequest(options, audio) {
     var sessionPermissions = JSON.parse(localStorage.getItem('sessionPermissions')) ? 0 : 1;
-    var downloadURL = '/synthesize' +
+    var downloadURL = '/api/synthesize' +
       '?voice=' + options.voice +
       '&text=' + encodeURIComponent(options.text) +
       '&X-WDC-PL-OPT-OUT=' +  sessionPermissions;
@@ -125,53 +125,33 @@ $(document).ready(function() {
       $('#dropdownMenu1').dropdown('toggle');
 
       var lang = voice.substring(0, 2);
-      //if (!textChanged) {
         switch(lang) {
           case 'es':
             $('#textArea').val(spanishText);
-            break;
-          case 'fr':
-            $('#textArea').val(frenchText);
-            break;
-          case 'de':
-            $('#textArea').val(germanText);
-            break;
-          case 'it':
-            $('#textArea').val(italianText);
-            break;
-          case 'ja':
-            $('#textArea').val(japaneseText);
-            break;
-          default:
-            $('#textArea').val(englishText);
-            break;
-        }
-      //}
-      //if (!textChanged) {
-        switch(lang) {
-          case 'es':
             $('#ssmlArea').val(spanishSSML);
             break;
           case 'fr':
+            $('#textArea').val(frenchText);
             $('#ssmlArea').val(frenchSSML);
             break;
           case 'de':
+            $('#textArea').val(germanText);
             $('#ssmlArea').val(germanSSML);
             break;
           case 'it':
+            $('#textArea').val(italianText);
             $('#ssmlArea').val(italianSSML);
             break;
           case 'ja':
+            $('#textArea').val(japaneseText);
             $('#ssmlArea').val(japaneseSSML);
             break;
           default:
+            $('#textArea').val(englishText);
             $('#ssmlArea').val(englishSSML);
             break;
         }
-      //}
-
     });
-
 
     // IE and Safari not supported disabled Speak button
     if ($('body').hasClass('ie') || $('body').hasClass('safari')) {
@@ -196,8 +176,8 @@ $(document).ready(function() {
       if (validText(voice, textArea.val())) {
         var utteranceDownloadOptions = {
           text: currentTab === 'SSML' ? $('#ssmlArea').val(): $('#textArea').val(),
-      voice: voice,
-      download: true
+          voice: voice,
+          download: true
         };
         synthesizeRequest(utteranceDownloadOptions);
       }
@@ -210,15 +190,13 @@ $(document).ready(function() {
 
       $('#textArea').focus();
       if (validText(voice, textArea.val())) {
-
         var utteranceOptions = {
           text: currentTab === 'SSML' ? $('#ssmlArea').val(): $('#textArea').val(),
-      voice: voice,
-      sessionPermissions: JSON.parse(localStorage.getItem('sessionPermissions')) ? 0 : 1
+          voice: voice,
+          sessionPermissions: JSON.parse(localStorage.getItem('sessionPermissions')) ? 0 : 1
         };
 
         synthesizeRequest(utteranceOptions, audio);
-
       }
       return false;
     });
@@ -230,11 +208,11 @@ $(document).ready(function() {
      */
     function containsAllLatin1(str) {
       return  /^[A-z\u00C0-\u00ff\s?@¿''\.,-\/#!$%\^&\*;:{}=\-_`~()0-9]+$/.test(str);
-    }     
+    }
 
     /**
     * Check that the text contains Japanese characters only
-    * @return true if the string contains only Japanese characters   
+    * @return true if the string contains only Japanese characters
     */
     function containsAllJapanese(str) {
        return str.match(/^[\u3000-\u303f\u3040-\u309f\u30a0-\u30ff\uff00-\uff9f\u4e00-\u9faf\u3400-\u4dbf]+$/);
@@ -249,21 +227,19 @@ $(document).ready(function() {
         showError('Please enter the text you would like to synthesize in the text window.');
         return false;
       }
-      
+
       // check text validity based on language
       if (voice.substr(0,5) == 'ja-JP') {
          if (!containsAllJapanese(text)) {
             showError('Language not supported. Please use only Japanese characters');
             return false;
-         }     	
+         }
       } else {
          if (!containsAllLatin1(text)) {
             showError('Language not supported. Please use only ISO 8859 characters');
             return false;
-         }      	
+         }
       }
-
-      console.log("->voice: " + voice);      
       return true;
     }
   }
