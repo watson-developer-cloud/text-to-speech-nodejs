@@ -24,6 +24,14 @@ var express    = require('express'),
   bodyParser   = require('body-parser');
 
 module.exports = function (app) {
+  app.enable('trust proxy');
+
+  var env = process.env.NODE_ENV || 'development';
+  if ('production' === env) {
+    console.log('redirect http to https');
+    app.use(secure());
+    app.use(errorhandler());
+  }
 
   // Configure Express
   app.use(bodyParser.urlencoded({ extended: true }));
@@ -34,14 +42,8 @@ module.exports = function (app) {
 
   app.use(favicon(__dirname + '/../public/images/favicon.ico'));
 
-  var env = process.env.NODE_ENV || 'development';
-  if ('production' === env) {
-    app.use(errorhandler());
-    app.use(secure());
-  }
 
   var rateLimit = require('express-rate-limit');
-  app.enable('trust proxy');
   var limiter = rateLimit({
     windowMs: 20 * 1000, // seconds
     delayMs: 0,
