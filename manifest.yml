@@ -7,6 +7,6 @@ applications:
 - services:
   - text-to-speech-service-standard
   name: text-to-speech-demo
-  command: node app.js
   path: .
   memory: 512M
+  instances: 3
