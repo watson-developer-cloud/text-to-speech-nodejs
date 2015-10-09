@@ -1,6 +1,6 @@
 # Text to Speech Nodejs Starter Application
 
-  The IBM Watson [Text to Speech][service_url] service is designed for streaming, low latency, synthesis of audio from text. It is the inverse of the automatic speech recognition. The TTS service can be accessed via a REST interface or directly via TCP.
+  The IBM Watson [Text to Speech][service_url] service is designed for streaming, low latency, synthesis of audio from text. It is the inverse of the automatic speech recognition.
 
 Give it a try! Click the button below to fork into IBM DevOps Services and deploy your own copy of this application on Bluemix.
 
@@ -34,7 +34,7 @@ Give it a try! Click the button below to fork into IBM DevOps Services and deplo
 
 5. Create the Text to Speech service in Bluemix.
   ```sh
-  $ cf create-service text_to_speech standard text-to-speech-service
+  $ cf create-service text_to_speech standard text-to-speech-service-standard
   ```
 
 6. Push it live!
@@ -63,7 +63,7 @@ Give it a try! Click the button below to fork into IBM DevOps Services and deplo
             "username": "<username>"
           },
         "label": "text_to_speech",
-        "name": "text-to-speech-service",
+        "name": "text-to-speech-service-standard",
         "plan": "free"
      }]
     }
