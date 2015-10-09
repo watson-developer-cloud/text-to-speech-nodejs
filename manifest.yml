@@ -1,11 +1,11 @@
 ---
 declared-services:
-  text-to-speech-service-standard:
+  text-to-speech-service:
     label: text_to_speech
     plan: standard
 applications:
 - services:
-  - text-to-speech-service-standard
+  - text-to-speech-service
   name: text-to-speech-demo
   path: .
   memory: 512M
