@@ -22,15 +22,16 @@ $(document).ready(function() {
   function showError(msg) {
     console.error('Error: ', msg);
     var errorAlert = $('.error-row');
-    errorAlert.hide();
+    errorAlert.css('visibility','hidden');
     errorAlert.css('background-color', '#d74108');
     errorAlert.css('color', 'white');
     var errorMessage = $('#errorMessage');
     errorMessage.text(msg);
-    errorAlert.show();
+    errorAlert.css('visibility','');
+
     $('#errorClose').click(function(e) {
       e.preventDefault();
-      errorAlert.hide();
+      errorAlert.css('visibility','hidden');
       return false;
     });
   }
@@ -162,13 +163,20 @@ $(document).ready(function() {
       $('.ie-speak .arrow-box').show();
     }
 
-    $('.audio').on('error', function () {
-      showError('Error processing the request');
+    $('.audio').on('error', function (err) {
+      console.log(err);
+      $.get('/ping').always(function (response) {
+        var error =  'Error processing the request';
+        if (response.responseJSON && response.responseJSON.error) {
+          error = response.responseJSON.error;
+        }
+          showError(error);
+      });
     });
 
     $('.audio').on('loadeddata', function () {
       $('.result').show();
-      $('.error-row').hide();
+      $('.error-row').css('visibility','hidden');
     });
 
     $('.download-button').click(function() {
@@ -219,7 +227,7 @@ $(document).ready(function() {
     }
 
     function validText(voice, text) {
-      $('.error-row').hide();
+      $('.error-row').css('visibility','hidden');
       $('.errorMsg').text('');
       $('.latin').hide();
 
