@@ -34,7 +34,7 @@ Give it a try! Click the button below to fork into IBM DevOps Services and deplo
 
 5. Create the Text to Speech service in Bluemix.
   ```sh
-  $ cf create-service text_to_speech standard text-to-speech-service
+  $ cf create-service text_to_speech standard text-to-speech-service-standard
   ```
 
 6. Push it live!
@@ -63,7 +63,7 @@ Give it a try! Click the button below to fork into IBM DevOps Services and deplo
             "username": "<username>"
           },
         "label": "text_to_speech",
-        "name": "text-to-speech-service",
+        "name": "text-to-speech-service-standard",
         "plan": "free"
      }]
     }

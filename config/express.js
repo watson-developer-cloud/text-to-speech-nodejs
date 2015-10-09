@@ -20,6 +20,7 @@
 var express    = require('express'),
   favicon      = require('serve-favicon'),
   errorhandler = require('errorhandler'),
+  secure       = require('express-secure-only'),
   bodyParser   = require('body-parser');
 
 module.exports = function (app) {
@@ -33,9 +34,10 @@ module.exports = function (app) {
 
   app.use(favicon(__dirname + '/../public/images/favicon.ico'));
 
-  // Add error handling in dev
-  if (!process.env.VCAP_SERVICES) {
+  var env = process.env.NODE_ENV || 'development';
+  if ('production' === env) {
     app.use(errorhandler());
+    app.use(secure());
   }
 
   var rateLimit = require('express-rate-limit');
@@ -43,7 +45,7 @@ module.exports = function (app) {
   var limiter = rateLimit({
     windowMs: 20 * 1000, // seconds
     delayMs: 0,
-    max: 4,
+    max: 3,
     global: false
   });
 

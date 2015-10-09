@@ -24,9 +24,6 @@ select.custom-select {
 .error-row {
   padding-left: 1em;
   padding-right: 1em;
-  display: none;
-  background-color: #d74108;
-  color: white;
 }
 
 .error-row a {
