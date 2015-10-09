@@ -165,7 +165,7 @@ $(document).ready(function() {
 
     $('.audio').on('error', function (err) {
       console.log(err);
-      $.get('/ping').always(function (response) {
+      $.get('/api/ping').always(function (response) {
         var error =  'Error processing the request';
         if (response.responseJSON && response.responseJSON.error) {
           error = response.responseJSON.error;
