@@ -82,7 +82,6 @@ $(document).ready(function() {
     var LANGUAGE_TABLE = {
       'en-US': 'English (en-US)',
       'en-GB': 'English (en-GB)',
-      'ja-JP': 'Japanese (ja-JP)',
       'es-US': 'Spanish (es-US)',
       'de-DE': 'German (de-DE)',
       'fr-FR': 'French (fr-FR)',
@@ -142,10 +141,6 @@ $(document).ready(function() {
           case 'it':
             $('#textArea').val(italianText);
             $('#ssmlArea').val(italianSSML);
-            break;
-          case 'ja':
-            $('#textArea').val(japaneseText);
-            $('#ssmlArea').val(japaneseSSML);
             break;
           default:
             $('#textArea').val(englishText);
@@ -218,14 +213,6 @@ $(document).ready(function() {
       return  /^[A-z\u00C0-\u00ff\s?@¿''\.,-\/#!$%\^&\*;:{}=\-_`~()0-9]+$/.test(str);
     }
 
-    /**
-    * Check that the text contains Japanese characters only
-    * @return true if the string contains only Japanese characters
-    */
-    function containsAllJapanese(str) {
-       return str.match(/^[\u3000-\u303f\u3040-\u309f\u30a0-\u30ff\uff00-\uff9f\u4e00-\u9faf\u3400-\u4dbf]+$/);
-    }
-
     function validText(voice, text) {
       $('.error-row').css('visibility','hidden');
       $('.errorMsg').text('');
@@ -236,17 +223,9 @@ $(document).ready(function() {
         return false;
       }
 
-      // check text validity based on language
-      if (voice.substr(0,5) == 'ja-JP') {
-         if (!containsAllJapanese(text)) {
-            showError('Language not supported. Please use only Japanese characters');
-            return false;
-         }
-      } else {
-         if (!containsAllLatin1(text)) {
-            showError('Language not supported. Please use only ISO 8859 characters');
-            return false;
-         }
+      if (!containsAllLatin1(text)) {
+        showError('Language not supported. Please use only ISO 8859 characters');
+        return false;
       }
       return true;
     }
