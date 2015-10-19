@@ -63,7 +63,7 @@ $(document).ready(function() {
   var voices = SPEECH_SYNTHESIS_VOICES.voices;
   showVoices(voices);
 
-  var voice = 'en-US_MichaelVoice';
+  var voice = 'en-US_AllisonVoice';
 
   function showVoices(voices) {
 

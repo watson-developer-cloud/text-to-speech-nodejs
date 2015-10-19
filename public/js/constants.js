@@ -33,13 +33,6 @@ window.SPEECH_SYNTHESIS_VOICES = {
       "description": "English language with US dialect, female.  Higher-quality uncompressed Lisa voice."
     },
     {
-      "url": "https://stream.watsonplatform.net/text-to-speech/api/v1/voices/en-US_MichaelVoice",
-      "gender": "male",
-      "name": "en-US_MichaelVoice",
-      "language": "en-US",
-      "description": "English language with US dialect, male voice.  The voice used by Watson Jeopardy system."
-    },
-    {
       "url": "https://stream.watsonplatform.net/text-to-speech/api/v1/voices/en-GB_KateVoice",
       "gender": "female",
       "name": "en-GB_KateVoice",
