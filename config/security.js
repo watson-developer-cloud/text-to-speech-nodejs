@@ -24,24 +24,19 @@ var secure  = require('express-secure-only'),
 module.exports = function (app) {
   app.enable('trust proxy');
 
-  // redirects http to https
-  if (process.env.NODE_ENV === 'production') {
-    app.use(secure());
-  }
+  // 1. redirects http to https
+  app.use(secure());
 
-  // use the default helmet
-  // see: https://www.npmjs.com/package/helmet
-  console.log('activating helmet');
+  // 2. helmet with defaults
   app.use(helmet());
 
-  var limiter = rateLimit({
+  // 3. rate-limit to /api*
+  var limiter = ;
+  app.use('/api', rateLimit({
     windowMs: 20 * 1000, // seconds
     delayMs: 0,
     max: 3,
     global: false
-  });
-
-  // apply to all requests that begin with /api
-  app.use('/api', limiter);
+  }));
 
 };
