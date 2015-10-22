@@ -160,11 +160,7 @@ $(document).ready(function() {
 
     $('.audio').on('error', function (err) {
       $.get('/api/synthesize?text=test').always(function (response) {
-        var error =  'Error processing the request';
-        if (response.responseJSON && response.responseJSON.error) {
-          error = response.responseJSON.error;
-        }
-          showError(error);
+        showError(response.responseText || 'Error processing the request');
       });
     });
 

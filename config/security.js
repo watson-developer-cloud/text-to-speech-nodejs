@@ -34,8 +34,7 @@ module.exports = function (app) {
   app.use('/api/', rateLimit({
     windowMs: 20 * 1000, // seconds
     delayMs: 0,
-    max: 3,
-    global: false
+    max: 3
   }));
 
 };
