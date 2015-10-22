@@ -209,7 +209,7 @@ $(document).ready(function() {
      * @return true if the string is latin-1
      */
     function containsAllLatin1(str) {
-      return  /^[A-z\u00C0-\u00ff\s?@¿''\.,-\/#!$%\^&\*;:{}=\-_`~()0-9]+$/.test(str);
+      return  /^[A-z\u00C0-\u00ff\s?@¿''"\.,-\/#!$%\^&\*;:{}=\-_`~()0-9]+$/.test(str);
     }
 
     function validText(voice, text) {
