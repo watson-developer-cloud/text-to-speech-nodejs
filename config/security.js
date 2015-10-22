@@ -30,9 +30,8 @@ module.exports = function (app) {
   // 2. helmet with defaults
   app.use(helmet());
 
-  // 3. rate-limit to /api*
-  var limiter = ;
-  app.use('/api', rateLimit({
+  // 3. rate-limit to /api/
+  app.use('/api/', rateLimit({
     windowMs: 20 * 1000, // seconds
     delayMs: 0,
     max: 3,
