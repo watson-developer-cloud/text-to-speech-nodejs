@@ -191,9 +191,10 @@ $(document).ready(function() {
       $('.result').hide();
 
       $('#textArea').focus();
-      if (validText(voice, textArea.val())) {
+      var text = currentTab === 'SSML' ? $('#ssmlArea').val() : $('#textArea').val();
+      if (validText(voice, text)) {
         var utteranceOptions = {
-          text: currentTab === 'SSML' ? $('#ssmlArea').val(): $('#textArea').val(),
+          text: text,
           voice: voice,
           sessionPermissions: JSON.parse(localStorage.getItem('sessionPermissions')) ? 0 : 1
         };
@@ -209,7 +210,7 @@ $(document).ready(function() {
      * @return true if the string is latin-1
      */
     function containsAllLatin1(str) {
-      return  /^[A-z\u00C0-\u00ff\s?@¿''"\.,-\/#!$%\^&\*;:{}=\-_`~()0-9]+$/.test(str);
+      return  /^[A-z\u00C0-\u00ff\s?@¿''"<>\.,-\/#!$%\^&\*;:{}=\-_`~()0-9]+$/.test(str);
     }
 
     function validText(voice, text) {
