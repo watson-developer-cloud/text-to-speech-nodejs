@@ -63,7 +63,7 @@ $(document).ready(function() {
   var voices = SPEECH_SYNTHESIS_VOICES.voices;
   showVoices(voices);
 
-  var voice = 'en-US_MichaelVoice';
+  var voice = 'en-US_AllisonVoice';
 
   function showVoices(voices) {
 
@@ -159,8 +159,7 @@ $(document).ready(function() {
     }
 
     $('.audio').on('error', function (err) {
-      console.log(err);
-      $.get('/ping').always(function (response) {
+      $.get('/api/synthesize?text=test').always(function (response) {
         var error =  'Error processing the request';
         if (response.responseJSON && response.responseJSON.error) {
           error = response.responseJSON.error;

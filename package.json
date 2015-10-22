@@ -4,10 +4,10 @@
   "description": "A sample nodejs app for Bluemix that use the Text to Speech service",
   "dependencies": {
     "body-parser": "~1.14.1",
-    "errorhandler": "~1.4.2",
     "express": "~4.13.3",
-    "forever": "~0.15.1",
-    "serve-favicon": "^2.3.0",
+    "express-rate-limit": "^2.0.2",
+    "express-secure-only": "^0.2.1",
+    "helmet": "^0.12.0",
     "watson-developer-cloud": "^0.10.6"
   },
   "repository": {
@@ -26,6 +26,6 @@
     "url": "https://github.com/watson-developer-cloud/text-to-speech-nodejs/issues"
   },
   "scripts": {
-    "start": "forever app.js"
+    "start": "node app.js"
   }
 }

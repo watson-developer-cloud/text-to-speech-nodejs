@@ -20,6 +20,7 @@ var express    = require('express'),
   app          = express(),
   watson       = require('watson-developer-cloud');
 
+
 // Bootstrap application settings
 require('./config/express')(app);
 
@@ -43,6 +44,7 @@ app.get('/api/synthesize', function(req, res, next) {
   transcript.pipe(res);
 });
 
+// Return the list of voices
 // app.get('/api/voices', function(req, res, next) {
 //   textToSpeech.voices(function (error, voices) {
 //     if (error)

@@ -6,8 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Text to Speech</title>
     <link href="css/watson-bootstrap-style.css" rel="stylesheet">
-    <link href="css/browser-compatibility.css" rel="stylesheet">
-    <link href="css/demo-tts.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
     <link rel="shortcut icon" href="images/favicon.ico" />
   </head>
   <body>
@@ -45,21 +44,22 @@
 
         <div class="col-lg-10 col-md-10 col-xs-12">
           <h1>Text to Speech</h1>
-          <p>The Text to Speech service understands text and natural language to generate synthesized audio output complete with appropriate cadence and intonation. It is available in 10 voices across 5 languages.</p>
+          <p>
+            The Text to Speech service understands text and natural language to generate synthesized audio output complete with appropriate cadence and intonation.
+            It is available in 10 voices across 5 languages.
+          </p>
           <p><img src="images/link.svg" class="glyph"><strong>Resources:</strong></br>
           <div class="resources">
             <a href="http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/text-to-speech/api/">API Reference</a>
             <a href="http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/doc/text-to-speech/">Documentation</a>
+            <a href="https://bluemix.net/deploy?repository=https://github.com/watson-developer-cloud/text-to-speech-nodejs.git">Fork and Deploy on Bluemix</a>
             <a href="https://github.com/watson-developer-cloud/text-to-speech-nodejs">Fork on Github</a>
           </div><!-- .resources -->
           </p>
         </div><!-- .col-lg-10 -->
       </div><!-- .container -->
     </div><!-- .header -->
-
-
     <!-- main content-->
-
     <div class="container">
 
       <!-- First section -->
@@ -74,7 +74,6 @@
             The audio is returned in the Ogg Opus format which can be played using <a href="http://www.videolan.org/vlc/index.html">VLC</a> and Audacity players.</p>
         </div><!-- .col-lg-8 -->
         <div class="col-lg-4 col-md-12 col-sm-12">
-
           <div class="opt-box">
             <h6><strong>Would you like to help make this service better?</strong><br><br>
               <div class="form-group opt-box-input">
@@ -85,7 +84,6 @@
               </div>
             </h6>
           </div>
-
         </div>
       </div>
       <div class="row">
@@ -93,7 +91,7 @@
         <div class="col-lg-4 col-md-6 col-sm-12">
           <div class="dropdown">
             <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
-            <span id="dropdownMenuDefault" class="dropdown-text">English (en-US): Michael (male)</span>
+            <span id="dropdownMenuDefault" class="dropdown-text">English (en-US): Allison (female)</span>
             <span class="caret"></span>
             </button>
             <ul id="dropdownMenuList" class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
@@ -105,15 +103,10 @@
 
       <!-- Tab panes -->
       <div class="row">
-
         <div class="col-lg-12 col-md-12 col-sm-12">
-
           <div class="well">
-
             <form class="form-horizontal">
-
               <div role="tabpanel">
-
                 <!-- Nav tabs -->
                 <ul class="nav nav-tabs" role="tablist">
                   <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Text</a></li>
@@ -122,7 +115,6 @@
                 <div class="hr-tab"></div>
 
                 <fieldset>
-
                   <div class="row error-row">
                     <div class="col-lg-12">
                       <div id="errorAlert" >
@@ -185,11 +177,9 @@
 
     </div><!-- /.container -->
 
-
     <!-- js files -->
     <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-    <script> (typeof $().emulateTransitionEnd == 'function')|| document.write('<script src="js/bootstrap-3.3.5.min.js"><\/script>')</script>
     <script src="js/constants.js"></script>
     <script src="js/demo.js"></script>
     <script>

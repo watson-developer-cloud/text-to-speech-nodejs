@@ -1,11 +1,13 @@
 ---
 declared-services:
-  text-to-speech-service-standard:
+  text-to-speech-service:
     label: text_to_speech
     plan: standard
 applications:
 - services:
   - text-to-speech-service-standard
-  name: text-to-speech-nodejs
+  name: text-to-speech-demo
   path: .
   memory: 768M
+  env:
+    NODE_ENV: production
