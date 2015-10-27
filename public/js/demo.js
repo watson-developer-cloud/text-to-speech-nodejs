@@ -200,15 +200,6 @@ $(document).ready(function() {
       return false;
     });
 
-    /**
-     * Check that the text doesn't contains non latin-1 characters.
-     * @param  String  The string to test
-     * @return true if the string is latin-1
-     */
-    function containsAllLatin1(str) {
-      return  /^[A-z\u00C0-\u00ff\s?@¿''"<>\.,-\/#!$%\^&\*;:{}=\-_`~()0-9]+$/.test(str);
-    }
-
     function validText(voice, text) {
       $('.error-row').css('visibility','hidden');
       $('.errorMsg').text('');
@@ -219,10 +210,6 @@ $(document).ready(function() {
         return false;
       }
 
-      if (!containsAllLatin1(text)) {
-        showError('Language not supported. Please use only ISO 8859 characters');
-        return false;
-      }
       return true;
     }
   }
