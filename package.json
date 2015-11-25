@@ -8,7 +8,7 @@
     "express-rate-limit": "^2.0.2",
     "express-secure-only": "^0.2.1",
     "helmet": "^0.14.0",
-    "watson-developer-cloud": "^0.10.6"
+    "watson-developer-cloud": "^1.0.4"
   },
   "repository": {
     "type": "git",
