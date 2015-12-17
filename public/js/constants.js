@@ -8,7 +8,7 @@ var spanishText = "Consciente de su patrimonio espiritual y moral, la Unión est
     germanText = "In dem Bewusstsein ihres geistig-religiösen und sittlichen Erbes gründet sich die Union auf die unteilbaren und universellen Werte der Würde des Menschen, der Freiheit, der Gleichheit und der Solidarität. Sie beruht auf den Grundsätzen der Demokratie und der Rechtsstaatlichkeit. Sie stellt den Menschen in den Mittelpunkt ihres Handelns, indem sie die Unionsbürgerschaft und einen Raum der Freiheit, der Sicherheit und des Rechts begründet.",
     italianText = "Consapevole del suo patrimonio spirituale e morale, l'Unione si fonda sui valori indivisibili e universali della dignità umana, della libertà, dell'uguaglianza e della solidarietà; essa si basa sul principio della democrazia e sul principio dello Stato di diritto. Pone la persona al centro della sua azione istituendo la cittadinanza dell'Unione e creando uno spazio di libertà, sicurezza e giustizia.",
     japaneseText = "精神的、そして道徳的な遺産を意識的に受け継いで、人間の尊厳、自由、平等、連帯の不可分で普遍的な価値を大前提として連合は設立される。すなわち、連合は民主主義と法治の原則に立脚する。連合は市民権を確立し、自由と安全、正義が確保された地域を創造することによって、その組織活動の中心に個人を置く。",
-    brazilianPortuguese = "Consciente do seu patrimônio espiritual e moral, a União é fundamentada nos valores indivisíveis e universais da dignidade humana, liberdade, igualdade e solidariedade; é baseada nos princípios da democracia e estado de direito. Ela coloca o indivíduo no centro de suas ações, ao instituir a cidadania da União e ao criar um espaço de liberdade, segurança e justiça.";    
+    brazilianPortugueseText = "Consciente do seu patrimônio espiritual e moral, a União é fundamentada nos valores indivisíveis e universais da dignidade humana, liberdade, igualdade e solidariedade; é baseada nos princípios da democracia e estado de direito. Ela coloca o indivíduo no centro de suas ações, ao instituir a cidadania da União e ao criar um espaço de liberdade, segurança e justiça.";    
 
 // Sample text values with SSML
 var spanishSSML = "Spanish SSML is not presently supported",
@@ -21,83 +21,101 @@ var spanishSSML = "Spanish SSML is not presently supported",
 
 window.SPEECH_SYNTHESIS_VOICES = {
     voices: [
-
     {
-      "url": "https://stream.watsonplatform.net/text-to-speech/api/v1/voices/en-US_AllisonVoice",
-        "gender": "female",
-        "name": "en-US_AllisonVoice",
-        "language": "en-US",
-        "description": "English language with US dialect, female.  Higher-quality uncompressed Allison voice."
+        "name": "en-US_AllisonVoice", 
+        "language": "en-US", 
+        "customizable": true, 
+        "gender": "female", 
+        "url": "https://stream.watsonplatform.net/text-to-speech/api/v1/voices/en-US_AllisonVoice", 
+        "description": "Allison: American English female voice."
     },
     {
-      "url": "https://stream.watsonplatform.net/text-to-speech/api/v1/voices/en-US_LisaVoice",
-      "gender": "female",
-      "name": "en-US_LisaVoice",
-      "language": "en-US",
-      "description": "English language with US dialect, female.  Higher-quality uncompressed Lisa voice."
+        "name": "en-US_LisaVoice", 
+        "language": "en-US", 
+        "customizable": true, 
+        "gender": "female", 
+        "url": "https://stream.watsonplatform.net/text-to-speech/api/v1/voices/en-US_LisaVoice", 
+        "description": "Lisa: American English female voice."
     },
     {
-      "url": "https://stream.watsonplatform.net/text-to-speech/api/v1/voices/en-GB_KateVoice",
-      "gender": "female",
-      "name": "en-GB_KateVoice",
-      "language": "en-GB",
-      "description": "English language with UK dialect, female.  Higher-quality uncompressed Kate voice."
+        "name": "en-GB_KateVoice", 
+        "language": "en-GB", 
+        "customizable": false, 
+        "gender": "female", 
+        "url": "https://stream.watsonplatform.net/text-to-speech/api/v1/voices/en-GB_KateVoice", 
+        "description": "Kate: British English female voice."
     },
     {
-      "url": "https://stream.watsonplatform.net/text-to-speech/api/v1/voices/fr-FR_ReneeVoice",
-      "gender": "female",
-      "name": "fr-FR_ReneeVoice",
-      "language": "fr-FR",
-      "description": "French language with French dialect, female.  Higher-quality uncompressed Renee voice."
+        "name": "fr-FR_ReneeVoice", 
+        "language": "fr-FR", 
+        "customizable": false, 
+        "gender": "female", 
+        "url": "https://stream.watsonplatform.net/text-to-speech/api/v1/voices/fr-FR_ReneeVoice", 
+        "description": "Renee: French (français) female voice."
+    }, 
+    {
+        "name": "de-DE_BirgitVoice", 
+        "language": "de-DE", 
+        "customizable": false, 
+        "gender": "female", 
+        "url": "https://stream.watsonplatform.net/text-to-speech/api/v1/voices/de-DE_BirgitVoice", 
+        "description": "Birgit: Standard German of Germany (Standarddeutsch) female voice."
     },
     {
-      "url": "https://stream.watsonplatform.net/text-to-speech/api/v1/voices/de-DE_BirgitVoice",
-      "gender": "female",
-      "name": "de-DE_BirgitVoice",
-      "language": "de-DE",
-      "description": "German language with German dialect, female.  Higher-quality uncompressed Birgit voice."
+        "name": "de-DE_DieterVoice", 
+        "language": "de-DE", 
+        "customizable": false, 
+        "gender": "male", 
+        "url": "https://stream.watsonplatform.net/text-to-speech/api/v1/voices/de-DE_DieterVoice", 
+        "description": "Dieter: Standard German of Germany (Standarddeutsch) male voice."
     },
     {
-      "url": "https://stream.watsonplatform.net/text-to-speech/api/v1/voices/de-DE_DieterVoice",
-      "gender": "male",
-      "name": "de-DE_DieterVoice",
-      "language": "de-DE",
-      "description": "German language with German dialect, male.  Higher-quality uncompressed Dieter voice."
+        "name": "it-IT_FrancescaVoice", 
+        "language": "it-IT", 
+        "customizable": false, 
+        "gender": "female", 
+        "url": "https://stream.watsonplatform.net/text-to-speech/api/v1/voices/it-IT_FrancescaVoice", 
+        "description": "Francesca: Italian (italiano) female voice."
     },
     {
-      "url": "https://stream.watsonplatform.net/text-to-speech/api/v1/voices/it-IT_FrancescaVoice",
-      "gender": "female",
-      "name": "it-IT_FrancescaVoice",
-      "language": "it-IT",
-      "description": "Italian language with Italian dialect, female.  Higher-quality uncompressed Francesca voice."
+        "name": "ja-JP_EmiVoice", 
+        "language": "ja-JP", 
+        "customizable": false, 
+        "gender": "female", 
+        "url": "https://stream.watsonplatform.net/text-to-speech/api/v1/voices/ja-JP_EmiVoice", 
+        "description": "Emi: Japanese (日本語) female voice."
+    }, 
+    {
+        "name": "pt-BR_IsabelaVoice", 
+        "language": "pt-BR", 
+        "customizable": false, 
+        "gender": "female", 
+        "url": "https://stream.watsonplatform.net/text-to-speech/api/v1/voices/pt-BR_IsabelaVoice", 
+        "description": "Isabela: Brazilian Portuguese (português brasileiro) female voice."
     },
     {
-      "url": "https://stream.watsonplatform.net/text-to-speech/api/v1/voices/ja-JP_EmiVoice", 
-      "gender": "female", 
-      "name": "ja-JP_EmiVoice", 
-      "language": "ja-JP", 
-      "description": "Japanese language, female.  Higher-quality uncompressed Emi voice."
-    },    
-    {
-      "url": "https://stream.watsonplatform.net/text-to-speech/api/v1/voices/es-ES_EnriqueVoice",
-      "gender": "male",
-      "name": "es-ES_EnriqueVoice",
-      "language": "es-ES",
-      "description": "LLSS Spanish Male Language with Castilian dialect. Enrique talent"
+        "name": "es-ES_EnriqueVoice", 
+        "language": "es-ES", 
+        "customizable": false, 
+        "gender": "male", 
+        "url": "https://stream.watsonplatform.net/text-to-speech/api/v1/voices/es-ES_EnriqueVoice", 
+        "description": "Enrique: Castilian Spanish (español castellano) male voice."
     },
     {
-      "url": "https://stream.watsonplatform.net/text-to-speech/api/v1/voices/es-ES_LauraVoice",
-      "gender": "female",
-      "name": "es-ES_LauraVoice",
-      "language": "es-ES",
-      "description": "LLSS Spanish female Language with Castilian dialect. Laura talent"
+        "name": "es-ES_LauraVoice", 
+        "language": "es-ES", 
+        "customizable": false, 
+        "gender": "female", 
+        "url": "https://stream.watsonplatform.net/text-to-speech/api/v1/voices/es-ES_LauraVoice", 
+        "description": "Laura: Castilian Spanish (español castellano) female voice."
     },
     {
-      "url": "https://stream.watsonplatform.net/text-to-speech/api/v1/voices/es-US_SofiaVoice",
-      "gender": "female",
-      "name": "es-US_SofiaVoice",
-      "language": "es-US",
-      "description": "Spanish language with US dialect, female.  Higher-quality uncompressed Sofia voice."
-    }
+        "name": "es-US_SofiaVoice", 
+        "language": "es-US", 
+        "customizable": false, 
+        "gender": "female", 
+        "url": "https://stream.watsonplatform.net/text-to-speech/api/v1/voices/es-US_SofiaVoice", 
+        "description": "Sofia: North American Spanish (español norteamericano) female voice."
+    } 
   ]
 }

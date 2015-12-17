@@ -80,14 +80,15 @@ $(document).ready(function() {
     });
 
     var LANGUAGE_TABLE = {
-      'en-US': 'English (en-US)',
-      'en-GB': 'English (en-GB)',
+      'en-US': 'American English (en-US)',
+      'en-GB': 'British English (en-GB)',
       'ja-JP': 'Japanese (ja-JP)',
-      'es-US': 'Spanish (es-US)',
+      'es-US': 'North American Spanish (es-US)',
       'de-DE': 'German (de-DE)',
       'fr-FR': 'French (fr-FR)',
       'it-IT': 'Italian (it-IT)',
-      'es-ES': 'Spanish (es-ES)'
+      'pt-BR': 'Brazilian Portuguese (pt-BR)',
+      'es-ES': 'Castilian Spanish (es-ES)'
     };
 
     $.each(voices, function(idx, voice) {
@@ -146,6 +147,10 @@ $(document).ready(function() {
           case 'ja':
             $('#textArea').val(japaneseText);
             $('#ssmlArea').val(japaneseSSML);
+            break;
+          case 'pt':
+            $('#textArea').val(brazilianPortugueseText);
+            $('#ssmlArea').val(brazilianPortugueseSSML);
             break;
           default:
             $('#textArea').val(englishText);

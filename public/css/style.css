@@ -35,6 +35,10 @@ select.custom-select {
   width: 99%;
 }
 
+.dropdown {
+  width: 125% !important;
+}
+
 .service-icon {
   width: 100%;
 }
