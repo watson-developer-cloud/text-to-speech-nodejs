@@ -6,7 +6,7 @@ declared-services:
 applications:
 - services:
   - text-to-speech-service
-  name: text-to-speech-demo
+  name: text-to-speech-demo-lr
   path: .
   memory: 768M
   env:
