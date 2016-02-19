@@ -154,21 +154,21 @@ $(document).ready(function() {
             $('#ssmlArea').val(brazilianPortugueseSSML);
             break;
           case 'en':
-			if(voice === 'en-US_AllisonVoice') {
-				$('#ssml_caption').text('Expressive SSML');
-				$('#textArea').val(englishExpressiveText);
-				$('#ssmlArea').val(englishExpresiveSSML);
-			}
-			else {
-				$('#textArea').val(englishText);
-				var en_accent = voice.substring(0, 5);
-				if(en_accent === 'en-US') {
-					$('#ssmlArea').val(usEnglishSSML);
-				}
-				else if(en_accent === 'en-GB') {
-					$('#ssmlArea').val(ukEnglishSSML);
-				}
-			}
+            if(voice === 'en-US_AllisonVoice') {
+              $('#ssml_caption').text('Expressive SSML');
+              $('#textArea').val(englishExpressiveText);
+              $('#ssmlArea').val(englishExpresiveSSML);
+            }
+            else {
+              $('#textArea').val(englishText);
+              var en_accent = voice.substring(0, 5);
+              if(en_accent === 'en-US') {
+                $('#ssmlArea').val(usEnglishSSML);
+              }
+              else if(en_accent === 'en-GB') {
+                $('#ssmlArea').val(ukEnglishSSML);
+              }
+            }
             break;
         }
     });
