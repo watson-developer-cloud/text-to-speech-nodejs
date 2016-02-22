@@ -32,7 +32,18 @@ select.custom-select {
 }
 
 #dropdownMenuList {
-  width: 99%;
+  width: 118%;
+}
+
+.dropdown-menu > li > a {
+	display: block;
+    padding: 3px 20px;
+    clear: both;
+    font-weight: normal;
+    line-height: 1.428571429;
+    color: #333333;
+    white-space: nowrap;
+    text-decoration: none;
 }
 
 .dropdown {

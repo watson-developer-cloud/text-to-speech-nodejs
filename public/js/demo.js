@@ -111,8 +111,8 @@ $(document).ready(function() {
 
     var textChanged = false;
 
-    $('#textArea').val(englishText);
-    $('#ssmlArea').val(englishSSML);
+    $('#textArea').val(englishExpressiveText);
+    $('#ssmlArea').val(englishExpresiveSSML);
 
     $('#textArea').change(function(){
       textChanged = true;
@@ -125,7 +125,8 @@ $(document).ready(function() {
       voice = $(evt.target).data('voice');
       $('#dropdownMenuDefault').empty().text(newVoiceDescription);
       $('#dropdownMenu1').dropdown('toggle');
-
+	  $('#ssml_caption').text('SSML');
+	  
       var lang = voice.substring(0, 2);
         switch(lang) {
           case 'es':
@@ -152,9 +153,22 @@ $(document).ready(function() {
             $('#textArea').val(brazilianPortugueseText);
             $('#ssmlArea').val(brazilianPortugueseSSML);
             break;
-          default:
-            $('#textArea').val(englishText);
-            $('#ssmlArea').val(englishSSML);
+          case 'en':
+            if(voice === 'en-US_AllisonVoice') {
+              $('#ssml_caption').text('Expressive SSML');
+              $('#textArea').val(englishExpressiveText);
+              $('#ssmlArea').val(englishExpresiveSSML);
+            }
+            else {
+              $('#textArea').val(englishText);
+              var en_accent = voice.substring(0, 5);
+              if(en_accent === 'en-US') {
+                $('#ssmlArea').val(usEnglishSSML);
+              }
+              else if(en_accent === 'en-GB') {
+                $('#ssmlArea').val(ukEnglishSSML);
+              }
+            }
             break;
         }
     });
@@ -183,7 +197,7 @@ $(document).ready(function() {
       textArea.focus();
       if (validText(voice, textArea.val())) {
         var utteranceDownloadOptions = {
-          text: currentTab === 'SSML' ? $('#ssmlArea').val(): $('#textArea').val(),
+          text: currentTab === 'SSML' || currentTab === 'Expressive SSML' ? $('#ssmlArea').val(): $('#textArea').val(),
           voice: voice,
           download: true
         };
@@ -197,7 +211,7 @@ $(document).ready(function() {
       $('.result').hide();
 
       $('#textArea').focus();
-      var text = currentTab === 'SSML' ? $('#ssmlArea').val() : $('#textArea').val();
+      var text = currentTab === 'SSML' || currentTab === 'Expressive SSML' ? $('#ssmlArea').val() : $('#textArea').val();
       if (validText(voice, text)) {
         var utteranceOptions = {
           text: text,
