@@ -183,7 +183,7 @@ $(document).ready(function() {
           case 'es':
             $('#textArea').val(spanishText);
             $('#ssmlArea').val(spanishSSML);
-            if(currentTab == "SSML") disableButtons();
+            if(currentTab == "SSML" || currentTab == "Expressive SSML") disableButtons();
             break;
           case 'fr':
             $('#textArea').val(frenchText);
@@ -196,17 +196,17 @@ $(document).ready(function() {
           case 'it':
             $('#textArea').val(italianText);
             $('#ssmlArea').val(italianSSML);
-            if(currentTab == "SSML") disableButtons();
+            if(currentTab == "SSML" || currentTab == "Expressive SSML") disableButtons();
             break;
           case 'ja':
             $('#textArea').val(japaneseText);
             $('#ssmlArea').val(japaneseSSML);
-            if(currentTab == "SSML") disableButtons();
+            if(currentTab == "SSML" || currentTab == "Expressive SSML") disableButtons();
             break;
           case 'pt':
             $('#textArea').val(brazilianPortugueseText);
             $('#ssmlArea').val(brazilianPortugueseSSML);
-            if(currentTab == "SSML") disableButtons();
+            if(currentTab == "SSML" || currentTab == "Expressive SSML") disableButtons();
             break;
           case 'en':
             if(voice === 'en-US_AllisonVoice') {
