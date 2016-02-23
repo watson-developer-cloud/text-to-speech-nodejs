@@ -18,7 +18,6 @@
 'use strict';
 
 $(document).ready(function() {
-
   function showError(msg) {
     console.error('Error: ', msg);
     var errorAlert = $('.error-row');
@@ -36,6 +35,17 @@ $(document).ready(function() {
     });
   }
 
+  var silentAudio = new Audio();
+  silentAudio.muted = true;
+  silentAudio.oncanplaythrough = function () {
+    var audio = $('.audio').get(0);
+    audio.play();
+    audio.controls = true;
+    $('.result').show();
+    $('.error-row').css('visibility','hidden');
+    silentAudio.pause();
+  }
+  
   function synthesizeRequest(options, audio) {
     var sessionPermissions = JSON.parse(localStorage.getItem('sessionPermissions')) ? 0 : 1;
     var downloadURL = '/api/synthesize' +
@@ -51,11 +61,14 @@ $(document).ready(function() {
     audio.pause();
     try {
       audio.currentTime = 0;
-    } catch(ex) {
+    } 
+    catch(ex) {
       // ignore. Firefox just freaks out here for no apparent reason.
     }
     audio.src = downloadURL;
-    audio.play();
+    enableButtons(true);
+    silentAudio.src = downloadURL;
+    silentAudio.play();
     return true;
   }
 
@@ -65,6 +78,26 @@ $(document).ready(function() {
 
   var voice = 'en-US_AllisonVoice';
 
+  function isSSMLSupported() {
+    if($('#ssmlArea').val() == italianSSML ||
+       $('#ssmlArea').val() == japaneseSSML ||
+       $('#ssmlArea').val() == brazilianPortugueseSSML ||
+       $('#ssmlArea').val() == spanishSSML) {
+      return false;
+    }
+    return true;
+  }
+  
+  function disableButtons() {
+    $('.download-button').prop('disabled', true);
+    $('.speak-button').prop('disabled', true);
+  }
+  
+  function enableButtons() {
+    $('.download-button').prop('disabled', false);
+    $('.speak-button').prop('disabled', false);
+  }
+  
   function showVoices(voices) {
 
     var currentTab = 'Text';
@@ -77,6 +110,14 @@ $(document).ready(function() {
 
     $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
       currentTab = $(e.target).text();
+      audio.src = "";
+      audio.controls = false;
+      if(currentTab == "SSML" && isSSMLSupported() == false) {
+        disableButtons();
+      }
+      else {
+        enableButtons();
+      }
     });
 
     var LANGUAGE_TABLE = {
@@ -125,13 +166,17 @@ $(document).ready(function() {
       voice = $(evt.target).data('voice');
       $('#dropdownMenuDefault').empty().text(newVoiceDescription);
       $('#dropdownMenu1').dropdown('toggle');
-	  $('#ssml_caption').text('SSML');
-	  
+      $('#ssml_caption').text('SSML');
+      audio.src = ""; // to stop currently playing audio
+      audio.controls = false; // to hide the player
+      enableButtons();
+ 
       var lang = voice.substring(0, 2);
         switch(lang) {
           case 'es':
             $('#textArea').val(spanishText);
             $('#ssmlArea').val(spanishSSML);
+            if(currentTab == "SSML") disableButtons();
             break;
           case 'fr':
             $('#textArea').val(frenchText);
@@ -144,14 +189,17 @@ $(document).ready(function() {
           case 'it':
             $('#textArea').val(italianText);
             $('#ssmlArea').val(italianSSML);
+            if(currentTab == "SSML") disableButtons();
             break;
           case 'ja':
             $('#textArea').val(japaneseText);
             $('#ssmlArea').val(japaneseSSML);
+            if(currentTab == "SSML") disableButtons();
             break;
           case 'pt':
             $('#textArea').val(brazilianPortugueseText);
             $('#ssmlArea').val(brazilianPortugueseSSML);
+            if(currentTab == "SSML") disableButtons();
             break;
           case 'en':
             if(voice === 'en-US_AllisonVoice') {
@@ -183,16 +231,21 @@ $(document).ready(function() {
     }
 
     $('.audio').on('error', function (err) {
+      if(this.src == this.baseURI) {
+        console.log('audio.src was reset');
+        return;
+      }
       $.get('/api/synthesize?text=test').always(function (response) {
         showError(response.responseText || 'Error processing the request');
       });
     });
 
-    $('.audio').on('loadeddata', function () {
-      $('.result').show();
-      $('.error-row').css('visibility','hidden');
-    });
-
+    //$('.audio').on('loadeddata', function () {
+    //  console.log('loadeddata');
+    //  $('.result').show();
+    //  $('.error-row').css('visibility','hidden');
+    //});
+    
     $('.download-button').click(function() {
       textArea.focus();
       if (validText(voice, textArea.val())) {
