@@ -43,6 +43,7 @@ $(document).ready(function() {
     audio.controls = true;
     $('.result').show();
     $('.error-row').css('visibility','hidden');
+    $('html, body').animate({scrollTop: $(".audio").offset().top}, 500);
     silentAudio.pause();
   }
   
