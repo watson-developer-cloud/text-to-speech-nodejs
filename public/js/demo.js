@@ -31,6 +31,8 @@ $(document).ready(function() {
     $('#errorClose').click(function(e) {
       e.preventDefault();
       errorAlert.css('visibility','hidden');
+      $('body').css('cursor', 'default');
+      $('.speak-button').css('cursor', 'pointer');
       return false;
     });
   }
