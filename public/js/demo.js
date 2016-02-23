@@ -44,6 +44,8 @@ $(document).ready(function() {
     $('.result').show();
     $('.error-row').css('visibility','hidden');
     $('html, body').animate({scrollTop: $(".audio").offset().top}, 500);
+    $('body').css('cursor', 'default');
+    $('.speak-button').css('cursor', 'pointer');
     silentAudio.pause();
   }
   
@@ -60,8 +62,10 @@ $(document).ready(function() {
       return true;
     }
     audio.pause();
+    silentAudio.pause();
     try {
       audio.currentTime = 0;
+      silentAudio.currentTime = 0;
     } 
     catch(ex) {
       // ignore. Firefox just freaks out here for no apparent reason.
@@ -70,6 +74,8 @@ $(document).ready(function() {
     enableButtons(true);
     silentAudio.src = downloadURL;
     silentAudio.play();
+    $('body').css('cursor', 'wait');
+    $('.speak-button').css('cursor', 'wait');
     return true;
   }
 
