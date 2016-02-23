@@ -37,6 +37,25 @@ $(document).ready(function() {
     });
   }
 
+  function onCanplaythrough() {
+    console.log("onCanplaythrough");
+    var audio = $('.audio').get(0);
+    audio.removeEventListener("canplaythrough", onCanplaythrough); 
+    try {
+      audio.currentTime = 0;
+    } 
+    catch(ex) {
+      // ignore. Firefox just freaks out here for no apparent reason.
+    }
+    audio.controls = true;
+    audio.muted = false;
+    $('.result').show();
+    $('.error-row').css('visibility','hidden');
+    $('html, body').animate({scrollTop: $(".audio").offset().top}, 500);
+    $('body').css('cursor', 'default');
+    $('.speak-button').css('cursor', 'pointer');
+  }
+  
   function synthesizeRequest(options, audio) {
     var sessionPermissions = JSON.parse(localStorage.getItem('sessionPermissions')) ? 0 : 1;
     var downloadURL = '/api/synthesize' +
@@ -58,6 +77,8 @@ $(document).ready(function() {
     }
     audio.src = downloadURL;
     enableButtons(true);
+    audio.addEventListener("canplaythrough", onCanplaythrough);
+    audio.muted = true;
     audio.play();
     $('body').css('cursor', 'wait');
     $('.speak-button').css('cursor', 'wait');
@@ -232,15 +253,15 @@ $(document).ready(function() {
       });
     });
 
-    $('.audio').on('canplaythrough', function () {
-      console.log('canplaythrough');
-      audio.controls = true;
-      $('.result').show();
-      $('.error-row').css('visibility','hidden');
-      $('html, body').animate({scrollTop: $(".audio").offset().top}, 500);
-      $('body').css('cursor', 'default');
-      $('.speak-button').css('cursor', 'pointer');
-    });
+  //  $('.audio').on('canplaythrough', function () {
+  //    console.log('canplaythrough');
+  //    audio.controls = true;
+  //    $('.result').show();
+  //    $('.error-row').css('visibility','hidden');
+  //    $('html, body').animate({scrollTop: $(".audio").offset().top}, 500);
+  //    $('body').css('cursor', 'default');
+  //    $('.speak-button').css('cursor', 'pointer');
+  //  });
     
     $('.download-button').click(function() {
       textArea.focus();
