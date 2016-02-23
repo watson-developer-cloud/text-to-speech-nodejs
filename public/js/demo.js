@@ -35,20 +35,6 @@ $(document).ready(function() {
     });
   }
 
-  var silentAudio = new Audio();
-  silentAudio.muted = true;
-  silentAudio.oncanplaythrough = function () {
-    var audio = $('.audio').get(0);
-    audio.play();
-    audio.controls = true;
-    $('.result').show();
-    $('.error-row').css('visibility','hidden');
-    $('html, body').animate({scrollTop: $(".audio").offset().top}, 500);
-    $('body').css('cursor', 'default');
-    $('.speak-button').css('cursor', 'pointer');
-    silentAudio.pause();
-  }
-  
   function synthesizeRequest(options, audio) {
     var sessionPermissions = JSON.parse(localStorage.getItem('sessionPermissions')) ? 0 : 1;
     var downloadURL = '/api/synthesize' +
@@ -62,18 +48,15 @@ $(document).ready(function() {
       return true;
     }
     audio.pause();
-    silentAudio.pause();
     try {
       audio.currentTime = 0;
-      silentAudio.currentTime = 0;
     } 
     catch(ex) {
       // ignore. Firefox just freaks out here for no apparent reason.
     }
     audio.src = downloadURL;
     enableButtons(true);
-    silentAudio.src = downloadURL;
-    silentAudio.play();
+    audio.play();
     $('body').css('cursor', 'wait');
     $('.speak-button').css('cursor', 'wait');
     return true;
@@ -247,11 +230,15 @@ $(document).ready(function() {
       });
     });
 
-    //$('.audio').on('loadeddata', function () {
-    //  console.log('loadeddata');
-    //  $('.result').show();
-    //  $('.error-row').css('visibility','hidden');
-    //});
+    $('.audio').on('canplaythrough', function () {
+      console.log('canplaythrough');
+      audio.controls = true;
+      $('.result').show();
+      $('.error-row').css('visibility','hidden');
+      $('html, body').animate({scrollTop: $(".audio").offset().top}, 500);
+      $('body').css('cursor', 'default');
+      $('.speak-button').css('cursor', 'pointer');
+    });
     
     $('.download-button').click(function() {
       textArea.focus();
