@@ -38,12 +38,12 @@ $(document).ready(function() {
   }
 
   function onCanplaythrough() {
-    console.log("onCanplaythrough");
+    console.log('onCanplaythrough');
     var audio = $('.audio').get(0);
-    audio.removeEventListener("canplaythrough", onCanplaythrough); 
+    audio.removeEventListener('canplaythrough', onCanplaythrough);
     try {
       audio.currentTime = 0;
-    } 
+    }
     catch(ex) {
       // ignore. Firefox just freaks out here for no apparent reason.
     }
@@ -51,11 +51,11 @@ $(document).ready(function() {
     audio.muted = false;
     $('.result').show();
     $('.error-row').css('visibility','hidden');
-    $('html, body').animate({scrollTop: $(".audio").offset().top}, 500);
+    $('html, body').animate({scrollTop: $('.audio').offset().top}, 500);
     $('body').css('cursor', 'default');
     $('.speak-button').css('cursor', 'pointer');
   }
-  
+
   function synthesizeRequest(options, audio) {
     var sessionPermissions = JSON.parse(localStorage.getItem('sessionPermissions')) ? 0 : 1;
     var downloadURL = '/api/synthesize' +
@@ -71,7 +71,7 @@ $(document).ready(function() {
     audio.pause();
     audio.src = downloadURL;
     enableButtons(true);
-    audio.addEventListener("canplaythrough", onCanplaythrough);
+    audio.addEventListener('canplaythrough', onCanplaythrough);
     audio.muted = true;
     audio.play();
     $('body').css('cursor', 'wait');
@@ -94,17 +94,17 @@ $(document).ready(function() {
     }
     return true;
   }
-  
+
   function disableButtons() {
     $('.download-button').prop('disabled', true);
     $('.speak-button').prop('disabled', true);
   }
-  
+
   function enableButtons() {
     $('.download-button').prop('disabled', false);
     $('.speak-button').prop('disabled', false);
   }
-  
+
   function showVoices(voices) {
 
     var currentTab = 'Text';
@@ -117,9 +117,9 @@ $(document).ready(function() {
 
     $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
       currentTab = $(e.target).text();
-      audio.src = "";
+      audio.src = '';
       audio.controls = false;
-      if(currentTab == "SSML" && isSSMLSupported() == false) {
+      if(currentTab === 'SSML' && isSSMLSupported() === false) {
         disableButtons();
       }
       else {
@@ -174,16 +174,16 @@ $(document).ready(function() {
       $('#dropdownMenuDefault').empty().text(newVoiceDescription);
       $('#dropdownMenu1').dropdown('toggle');
       $('#ssml_caption').text('SSML');
-      audio.src = ""; // to stop currently playing audio
+      audio.src = ''; // to stop currently playing audio
       audio.controls = false; // to hide the player
       enableButtons();
- 
+
       var lang = voice.substring(0, 2);
         switch(lang) {
           case 'es':
             $('#textArea').val(spanishText);
             $('#ssmlArea').val(spanishSSML);
-            if(currentTab == "SSML" || currentTab == "Expressive SSML") disableButtons();
+            if(currentTab == 'SSML' || currentTab == 'Expressive SSML') disableButtons();
             break;
           case 'fr':
             $('#textArea').val(frenchText);
@@ -196,17 +196,17 @@ $(document).ready(function() {
           case 'it':
             $('#textArea').val(italianText);
             $('#ssmlArea').val(italianSSML);
-            if(currentTab == "SSML" || currentTab == "Expressive SSML") disableButtons();
+            if(currentTab === 'SSML' || currentTab === 'Expressive SSML') disableButtons();
             break;
           case 'ja':
             $('#textArea').val(japaneseText);
             $('#ssmlArea').val(japaneseSSML);
-            if(currentTab == "SSML" || currentTab == "Expressive SSML") disableButtons();
+            if(currentTab === 'SSML' || currentTab === 'Expressive SSML') disableButtons();
             break;
           case 'pt':
             $('#textArea').val(brazilianPortugueseText);
             $('#ssmlArea').val(brazilianPortugueseSSML);
-            if(currentTab == "SSML" || currentTab == "Expressive SSML") disableButtons();
+            if(currentTab === 'SSML' || currentTab === 'Expressive SSML') disableButtons();
             break;
           case 'en':
             if(voice === 'en-US_AllisonVoice') {
@@ -238,7 +238,7 @@ $(document).ready(function() {
     }
 
     $('.audio').on('error', function (err) {
-      if(this.src == this.baseURI) {
+      if(this.src === this.baseURI) {
         console.log('audio.src was reset');
         return;
       }
