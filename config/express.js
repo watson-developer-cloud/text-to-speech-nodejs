@@ -22,8 +22,8 @@ var express    = require('express'),
 
 module.exports = function (app) {
 
-  // Only loaded when SECURE_EXPRESS is `true`
-  if (process.env.SECURE_EXPRESS)
+  // Only loaded when running in Bluemix
+  if (process.env.VCAP_APPLICATION)
     require('./security')(app);
 
   // Configure Express

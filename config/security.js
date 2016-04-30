@@ -30,6 +30,12 @@ module.exports = function (app) {
   // 2. helmet with defaults
   app.use(helmet());
 
+  // Allow from a specific host:
+  app.use(helmet.frameguard({
+    action: 'allow-from',
+    domain: 'https://watson-experience.mybluemix.net/'
+  }));
+
   // 3. rate-limit to /api/
   app.use('/api/', rateLimit({
     windowMs: 20 * 1000, // seconds
