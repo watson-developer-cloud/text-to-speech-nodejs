@@ -1,6 +1,7 @@
 language: node_js
 node_js:
 - 4
+sudo: true
 env:
   global:
   - CF_APP=text-to-speech-demo
