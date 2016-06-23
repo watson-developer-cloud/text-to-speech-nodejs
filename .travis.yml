@@ -1,0 +1,17 @@
+language: node_js
+node_js:
+- 4
+env:
+  global:
+  - CF_APP=speech-to-text-demo
+  - CF_API=https://api.ng.bluemix.net
+  - CF_USERNAME=nfriedly@us.ibm.com
+  - CF_ORGANIZATION=WatsonPlatformServices
+  - CF_SPACE=demos
+  - secure: "PrNPVUKGF5IqSDFZ4W4EApiad6mK5Au85O3ovRzs9dkK1ZsEUEgVVsxr8SdC5oWOKnQu1cDTlNNtp6iKZq9PTWmuLuJpIqkMqIkbJlkR1AOcEqwUb/nkxqgw41E7Hi5JLsM/2RE0xqSKfKtS6zKcs0Nx0cSLStseSzSX4pjLywE="
+before_deploy: npm install -g cf-blue-green
+deploy:
+  provider: script
+  script: cf-blue-green-travis
+  on:
+    branch: master
