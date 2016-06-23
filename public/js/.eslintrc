@@ -1,0 +1,29 @@
+{
+  "env": {
+    "browser": true
+  },
+  "parserOptions": {
+    "ecmaFeatures": {
+      "globalReturn": false
+    }
+  },
+  "globals": {
+    "spanishText": true,
+    "frenchText": true,
+    "englishExpressiveText": true,
+    "englishText": true,
+    "germanText": true,
+    "italianText": true,
+    "japaneseText": true,
+    "brazilianPortugueseText": true,
+    "spanishSSML": true,
+    "frenchSSML": true,
+    "englishExpresiveSSML": true,
+    "usEnglishSSML": true,
+    "ukEnglishSSML": true,
+    "germanSSML": true,
+    "italianSSML": true,
+    "japaneseSSML": true,
+    "brazilianPortugueseSSML": true
+  }
+}

@@ -157,15 +157,16 @@ $(document).ready(function() {
     var audio = $('.audio').get(0),
         textArea = $('#textArea');
 
-    var textChanged = false;
+    //var textChanged = false;
 
     $('#textArea').val(englishExpressiveText);
     $('#ssmlArea').val(englishExpresiveSSML);
 
-    $('#textArea').change(function(){
-      textChanged = true;
-    });
+    // $('#textArea').change(function(){
+    //   textChanged = true;
+    // });
 
+    // eslint-disable-next-line complexity
     $('#dropdownMenuList').click(function(evt) {
       evt.preventDefault();
       evt.stopPropagation();
@@ -237,7 +238,7 @@ $(document).ready(function() {
       $('.ie-speak .arrow-box').show();
     }
 
-    $('.audio').on('error', function (err) {
+    $('.audio').on('error', function (/*err*/) {
       if(this.src === this.baseURI) {
         console.log('audio.src was reset');
         return;
@@ -282,9 +283,9 @@ $(document).ready(function() {
     * Check that the text contains Japanese characters only
     * @return true if the string contains only Japanese characters
     */
-    function containsAllJapanese(str) {
-       return str.match(/^[\u3000-\u303f\u3040-\u309f\u30a0-\u30ff\uff00-\uff9f\u4e00-\u9faf\u3400-\u4dbf]+$/);
-    }
+    // function containsAllJapanese(str) {
+    //    return str.match(/^[\u3000-\u303f\u3040-\u309f\u30a0-\u30ff\uff00-\uff9f\u4e00-\u9faf\u3400-\u4dbf]+$/);
+    // }
 
     function validText(voice, text) {
       $('.error-row').css('visibility','hidden');

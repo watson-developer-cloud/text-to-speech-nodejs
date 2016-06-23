@@ -59,7 +59,7 @@ This is a very basic browser sniffer.
 	if (userAgent.indexOf(ie10) > -1) {
 		classes += ie10_class + ' ';
 	}
-	if (!!navigator.userAgent.match(/Trident.*rv\:11\./)) {
+	if (navigator.userAgent.match(/Trident.*rv\:11\./)) {
 		classes += ie_class + ' ' + ie11_class + ' ';
 	}
 	if (userAgent.indexOf(safari) > -1 && userAgent.indexOf(chrome) === -1) {

@@ -26,6 +26,12 @@
     "url": "https://github.com/watson-developer-cloud/text-to-speech-nodejs/issues"
   },
   "scripts": {
-    "start": "node app.js"
+    "start": "node app.js",
+    "lint": "eslint .",
+    "autofix": "eslint --fix .",
+    "test": "npm run lint"
+  },
+  "devDependencies": {
+    "eslint": "^2.13.1"
   }
 }

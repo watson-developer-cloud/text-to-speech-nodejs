@@ -54,8 +54,6 @@ app.get('/api/synthesize', function(req, res, next) {
 //   });
 // });
 
-// error-handler settings
-require('./config/error-handler')(app);
 
 var port = process.env.VCAP_APP_PORT || 3000;
 app.listen(port);
