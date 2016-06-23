@@ -3,7 +3,7 @@ node_js:
 - 4
 env:
   global:
-  - CF_APP=speech-to-text-demo
+  - CF_APP=text-to-speech-demo
   - CF_API=https://api.ng.bluemix.net
   - CF_USERNAME=nfriedly@us.ibm.com
   - CF_ORGANIZATION=WatsonPlatformServices
