@@ -86,10 +86,7 @@ $(document).ready(function() {
   var voice = 'en-US_AllisonVoice';
 
   function isSSMLSupported() {
-    if($('#ssmlArea').val() == italianSSML ||
-       $('#ssmlArea').val() == japaneseSSML ||
-       $('#ssmlArea').val() == brazilianPortugueseSSML ||
-       $('#ssmlArea').val() == spanishSSML) {
+    if($('#ssmlArea').val() == japaneseSSML) {
       return false;
     }
     return true;
@@ -184,7 +181,6 @@ $(document).ready(function() {
           case 'es':
             $('#textArea').val(spanishText);
             $('#ssmlArea').val(spanishSSML);
-            if(currentTab == 'SSML' || currentTab == 'Expressive SSML') disableButtons();
             break;
           case 'fr':
             $('#textArea').val(frenchText);
@@ -197,17 +193,15 @@ $(document).ready(function() {
           case 'it':
             $('#textArea').val(italianText);
             $('#ssmlArea').val(italianSSML);
-            if(currentTab === 'SSML' || currentTab === 'Expressive SSML') disableButtons();
             break;
           case 'ja':
             $('#textArea').val(japaneseText);
             $('#ssmlArea').val(japaneseSSML);
-            if(currentTab === 'SSML' || currentTab === 'Expressive SSML') disableButtons();
+            if (currentTab === 'SSML' || currentTab === 'Expressive SSML') disableButtons();
             break;
           case 'pt':
             $('#textArea').val(brazilianPortugueseText);
             $('#ssmlArea').val(brazilianPortugueseSSML);
-            if(currentTab === 'SSML' || currentTab === 'Expressive SSML') disableButtons();
             break;
           case 'en':
             if(voice === 'en-US_AllisonVoice') {
