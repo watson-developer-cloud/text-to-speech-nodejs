@@ -3,7 +3,7 @@
   "version": "1.1.5",
   "description": "A sample nodejs app for Bluemix that use the Text to Speech service",
   "dependencies": {
-    "body-parser": "~1.14.1",
+    "body-parser": "~1.15.0",
     "express": "~4.13.3",
     "express-rate-limit": "^2.0.2",
     "express-secure-only": "^0.2.1",
