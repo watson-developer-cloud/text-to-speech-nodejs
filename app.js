@@ -27,33 +27,23 @@ require('./config/express')(app);
 // For local development, replace username and password
 var textToSpeech = watson.text_to_speech({
   version: 'v1',
-  username: '<username>',
-  password: '<password>'
+  "password": "D36gqexZ1Hxl",
+  "username": "b5be35d1-223e-42a1-bf3c-652678e7217c"
+//  username: '<username>',
+//  password: '<password>'
 });
 
 app.get('/api/synthesize', function(req, res, next) {
-  var transcript = textToSpeech.synthesize(req.query);
-  transcript.on('response', function(response) {
-    if (req.query.download) {
-      response.headers['content-disposition'] = 'attachment; filename=transcript.ogg';
-    }
-  });
-  transcript.on('error', function(error) {
-    next(error);
-  });
-  transcript.pipe(res);
+  let transcript = textToSpeech.synthesize(req.query, function(err,utterance) {
+    if (err) {
+      next(err);
+    } else {
+      if (req.query.download) {
+	res.header['content-disposition'] = 'attachment; filename=transcript.ogg';
+      }
+      res.send(utterance);
+    }});
 });
-
-// Return the list of voices
-// app.get('/api/voices', function(req, res, next) {
-//   textToSpeech.voices(function (error, voices) {
-//     if (error)
-//       next(error);
-//     else
-//       res.json(voices);
-//   });
-// });
-
 
 var port = process.env.VCAP_APP_PORT || 3000;
 app.listen(port);
