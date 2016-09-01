@@ -32,15 +32,19 @@ var textToSpeech = watson.text_to_speech({
 });
 
 app.get('/api/synthesize', function(req, res, next) {
-  let transcript = textToSpeech.synthesize(req.query, function(err,utterance) {
-    if (err) {
-      next(err);
-    } else {
+  textToSpeech.synthesize(req.query, function(err,utterance) {
+    if (err === null) {
       if (req.query.download) {
 	res.header['content-disposition'] = 'attachment; filename=transcript.ogg';
       }
       res.send(utterance);
-    }});
+    }
+    else {
+      return next(err);
+    }
+    return 1;
+  });
+
 });
 
 var port = process.env.VCAP_APP_PORT || 3000;
