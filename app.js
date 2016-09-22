@@ -29,6 +29,7 @@ var textToSpeech = watson.text_to_speech({
   version: 'v1',
   username: '<username>',
   password: '<password>'
+  url: 'https://stream.watsonplatform.net/text-to-speech/api',
 });
 
 app.get('/api/synthesize', function(req, res, next) {

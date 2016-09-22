@@ -46,8 +46,8 @@
           <h1>Text to Speech</h1>
           <p>
             The Text to Speech service understands text and natural language to generate synthesized audio output complete with appropriate cadence and intonation.
-            It is available in 13 voices across 7 languages. Select voices now offer <a href="http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/doc/text-to-speech/using.shtml#expressive">Expressive Synthesis</a>.
-		  </p>
+            It is available in 13 voices across 7 languages. Select voices now offer <a href="http://www.ibm.com/watson/developercloud/doc/text-to-speech/http.shtml#expressive">Expressive Synthesis</a> and <a href="http://www.ibm.com/watson/developercloud/doc/text-to-speech/http.shtml#transformation">Voice Transformation</a> features.
+          </p>
           <p><img src="images/link.svg" class="glyph"><strong>Resources:</strong></br>
           <div class="resources">
             <a href="http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/text-to-speech/api/">API Reference</a>
@@ -88,10 +88,10 @@
       </div>
       <div class="row">
         <!--Drop down menus-->
-        <div class="col-lg-4 col-md-6 col-sm-12">
+        <div class="col-lg-5 col-md-10 col-sm-22">
           <div class="dropdown">
             <button class="btn btn-default dropdown-toggle" type="button" style="width: 120%;" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
-            <span id="dropdownMenuDefault" class="dropdown-text">American English (en-US): Allison (female, expressive)</span>
+            <span id="dropdownMenuDefault" class="dropdown-text">American English (en-US): Allison (female, expressive, transformable)</span>
             <span class="caret" style="position:absolute;left:112%;"></span>
             </button>
             <ul id="dropdownMenuList" class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
@@ -111,6 +111,7 @@
                 <ul class="nav nav-tabs" role="tablist">
                   <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Text</a></li>
                   <li role="presentation"><a id="ssml_caption" href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Expressive SSML</a></li>
+                  <li role="presentation"><a id="voice_transformation_caption" href="#profile-vt" aria-controls="profile-vt" role="tab" data-toggle="tab">Voice Transformation SSML</a></li>
                 </ul>
                 <div class="hr-tab"></div>
 
@@ -128,11 +129,13 @@
                     <div class="col-lg-12 col-md-12 col-sm-12">
                       <div class="tab-content">
                         <div role="tabpanel" class="tab-pane active" id="home">
-                          <textarea id="textArea" spellcheck="false">Enter up to 1000 characters...</textarea>
+                          <textarea id="textArea" spellcheck="false">Enter up to 1000 characters...</textarea> 
                         </div>
-
                         <div role="tabpanel" class="tab-pane" id="profile">
                           <textarea id="ssmlArea" spellcheck="false">Sample SSML Text</textarea>
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="profile-vt">
+                          <textarea id="ssmlVoiceTransformationArea" spellcheck="false">Sample Voice Transformation SSML text</textarea>
                         </div><!-- END tab panel -->
                       </div><!-- END content -->
                     </div><!-- .col-lg-12 -->

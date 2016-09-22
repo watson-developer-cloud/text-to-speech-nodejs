@@ -86,7 +86,15 @@ $(document).ready(function() {
   var voice = 'en-US_AllisonVoice';
 
   function isSSMLSupported() {
-    if($('#ssmlArea').val() == japaneseSSML) {
+    //if($('#ssmlArea').val() == japaneseSSML) {
+    //  return false;
+    //}
+    // currently all voices support SSML input
+    return true;
+  }
+
+  function isVoiceTransformationSSMLSupported() {
+    if (voice != 'en-US_AllisonVoice') {
       return false;
     }
     return true;
@@ -116,10 +124,16 @@ $(document).ready(function() {
       currentTab = $(e.target).text();
       audio.src = '';
       audio.controls = false;
-      if(currentTab === 'SSML' && isSSMLSupported() === false) {
+      if (currentTab === 'SSML' && isSSMLSupported() === false) {
+        disableButtons();
+      }
+      if (currentTab === 'Voice Transformation SSML' && isVoiceTransformationSSMLSupported() === false) {
+          console.log("going to disable!")
         disableButtons();
       }
       else {
+          console.log("going to enable! '" + currentTab + "'")
+ 
         enableButtons();
       }
     });
@@ -158,6 +172,7 @@ $(document).ready(function() {
 
     $('#textArea').val(englishExpressiveText);
     $('#ssmlArea').val(englishExpresiveSSML);
+    $('#ssmlVoiceTransformationArea').val(usEnglishVoiceTransformationSSML);
 
     // $('#textArea').change(function(){
     //   textChanged = true;
@@ -181,43 +196,58 @@ $(document).ready(function() {
           case 'es':
             $('#textArea').val(spanishText);
             $('#ssmlArea').val(spanishSSML);
+            $('#ssmlVoiceTransformationArea').val(spanishVoiceTransformationSSML);
+            if (currentTab === 'Voice Transformation SSML') disableButtons();
             break;
           case 'fr':
             $('#textArea').val(frenchText);
             $('#ssmlArea').val(frenchSSML);
+            $('#ssmlVoiceTransformationArea').val(frenchVoiceTransformationSSML);
+            if (currentTab === 'Voice Transformation SSML') disableButtons();
             break;
           case 'de':
             $('#textArea').val(germanText);
             $('#ssmlArea').val(germanSSML);
+            $('#ssmlVoiceTransformationArea').val(germanVoiceTransformationSSML);
+            if (currentTab === 'Voice Transformation SSML') disableButtons();
             break;
           case 'it':
             $('#textArea').val(italianText);
             $('#ssmlArea').val(italianSSML);
+            $('#ssmlVoiceTransformationArea').val(italianVoiceTransformationSSML);
+            if (currentTab === 'Voice Transformation SSML') disableButtons();
             break;
           case 'ja':
             $('#textArea').val(japaneseText);
             $('#ssmlArea').val(japaneseSSML);
-            if (currentTab === 'SSML' || currentTab === 'Expressive SSML') disableButtons();
+            $('#ssmlVoiceTransformationArea').val(japaneseVoiceTransformationSSML);
+            if (currentTab === 'Voice Transformation SSML') disableButtons();
             break;
           case 'pt':
             $('#textArea').val(brazilianPortugueseText);
             $('#ssmlArea').val(brazilianPortugueseSSML);
+            $('#ssmlVoiceTransformationArea').val(brazilianPortugueseVoiceTransformationSSML);
+            if (currentTab === 'Voice Transformation SSML') disableButtons();
             break;
           case 'en':
             if(voice === 'en-US_AllisonVoice') {
               $('#ssml_caption').text('Expressive SSML');
               $('#textArea').val(englishExpressiveText);
               $('#ssmlArea').val(englishExpresiveSSML);
+              $('#ssmlVoiceTransformationArea').val(usEnglishVoiceTransformationSSML);
             }
             else {
               $('#textArea').val(englishText);
               var en_accent = voice.substring(0, 5);
               if(en_accent === 'en-US') {
                 $('#ssmlArea').val(usEnglishSSML);
+                $('#ssmlVoiceTransformationArea').val(voiceTransformationUnsupported);
               }
               else if(en_accent === 'en-GB') {
                 $('#ssmlArea').val(ukEnglishSSML);
+                $('#ssmlVoiceTransformationArea').val(voiceTransformationUnsupported);
               }
+              if (currentTab === 'Voice Transformation SSML') disableButtons();
             }
             break;
         }
@@ -244,9 +274,17 @@ $(document).ready(function() {
 
     $('.download-button').click(function() {
       textArea.focus();
+      var text;
+      if (currentTab === 'SSML' || currentTab === 'Expressive SSML')
+	 text = $('#ssmlArea').val();
+      else if (currentTab === 'Voice Transformation SSML')  
+         text = $('#ssmlVoiceTransformationArea').val()  
+      else
+	 text = $('#textArea').val()  
       if (validText(voice, textArea.val())) {
         var utteranceDownloadOptions = {
-          text: currentTab === 'SSML' || currentTab === 'Expressive SSML' ? $('#ssmlArea').val(): $('#textArea').val(),
+          //text: currentTab === 'SSML' || currentTab === 'Expressive SSML' ? $('#ssmlArea').val(): $('#textArea').val(),
+          text: text,
           voice: voice,
           download: true
         };
@@ -260,7 +298,14 @@ $(document).ready(function() {
       $('.result').hide();
 
       $('#textArea').focus();
-      var text = currentTab === 'SSML' || currentTab === 'Expressive SSML' ? $('#ssmlArea').val() : $('#textArea').val();
+      var text;
+      if (currentTab === 'SSML' || currentTab === 'Expressive SSML')
+	 text = $('#ssmlArea').val();
+      else if (currentTab === 'Voice Transformation SSML')  
+         text = $('#ssmlVoiceTransformationArea').val()  
+      else
+	 text = $('#textArea').val()  
+      //var text = currentTab === 'SSML' || currentTab === 'Expressive SSML' ? $('#ssmlArea').val() : $('#textArea').val();
       if (validText(voice, text)) {
         var utteranceOptions = {
           text: text,
