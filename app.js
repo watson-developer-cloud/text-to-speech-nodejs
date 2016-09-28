@@ -28,7 +28,7 @@ require('./config/express')(app);
 var textToSpeech = watson.text_to_speech({
   version: 'v1',
   username: '<username>',
-  password: '<password>'
+  password: '<password>',
   url: 'https://stream.watsonplatform.net/text-to-speech/api',
 });
 
