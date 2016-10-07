@@ -60,8 +60,8 @@ $(document).ready(function() {
     catch(ex) {
       // ignore. Firefox just freaks out here for no apparent reason.
     }
-    audio.controls = true;
     audio.muted = false;
+    audio.autoplay = true;
     $('.result').show();
     $('.error-row').css('visibility','hidden');
     $('html, body').animate({scrollTop: $('.audio').offset().top}, 500);
