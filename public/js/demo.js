@@ -17,6 +17,19 @@
 
 'use strict';
 
+// audio/wav
+// "audio/mpeg;codecs=mp3"
+// "audio/ogg;codecs=opus"
+let canPlayAudioFormat = function(mimeType) {
+  let audio  = document.createElement("audio");
+  if (audio) {
+    return (typeof audio.canPlayType === "function" &&
+    audio.canPlayType(mimeType) !== "");
+  } else {
+    return false
+  }
+};
+
 $(document).ready(function() {
   function showError(msg) {
     console.error('Error: ', msg);
@@ -47,8 +60,8 @@ $(document).ready(function() {
     catch(ex) {
       // ignore. Firefox just freaks out here for no apparent reason.
     }
-    audio.controls = true;
     audio.muted = false;
+    audio.autoplay = true;
     $('.result').show();
     $('.error-row').css('visibility','hidden');
     $('html, body').animate({scrollTop: $('.audio').offset().top}, 500);
@@ -107,7 +120,11 @@ $(document).ready(function() {
 
   function enableButtons() {
     $('.download-button').prop('disabled', false);
-    $('.speak-button').prop('disabled', false);
+    if (canPlayAudioFormat("audio/ogg;codecs=opus")) {
+      $('.speak-button').prop('disabled', false);
+    } else {
+      $('.speak-button').prop('disabled', true);
+    }
   }
 
   function showVoices(voices) {
@@ -154,13 +171,13 @@ $(document).ready(function() {
       var voiceName = voice.name.substring(6, voice.name.length - 5);
       var optionText = LANGUAGE_TABLE[voice.language] + ': ' + voiceName + ' ('  + voice.gender + ')';
       $('#dropdownMenuList').append(
-        $('<li>')
-        .attr('role', 'presentation')
-        .append(
-          $('<a>').attr('role', 'menu-item')
-          .attr('href', '/')
-          .attr('data-voice', voice.name)
-          .append(optionText)
+          $('<li>')
+              .attr('role', 'presentation')
+              .append(
+                  $('<a>').attr('role', 'menu-item')
+                      .attr('href', '/')
+                      .attr('data-voice', voice.name)
+                      .append(optionText)
           )
         );
     });
