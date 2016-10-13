@@ -7,8 +7,15 @@
     "express": "~4.13.3",
     "express-rate-limit": "^2.0.2",
     "express-secure-only": "^0.2.1",
+    "flow": "^0.2.3",
     "helmet": "^2.0.0",
-    "watson-developer-cloud": "^1.0.6"
+    "prismjs": "^1.5.1",
+    "react": "^15.3.2",
+    "react-dom": "^15.3.2",
+    "react-prism": "^4.0.0",
+    "watson-developer-cloud": "^2.4.6",
+    "watson-react-components": "0.0.16",
+    "watson-ui-components": "^0.5.3"
   },
   "repository": {
     "type": "git",
@@ -19,6 +26,10 @@
     {
       "name": "German Attanasio Ruiz",
       "email": "germanatt@us.ibm.com"
+    },
+    {
+      "name": "Joshua B. Smith",
+      "email": "joshua.b.smith@us.ibm.com"
     }
   ],
   "license": "Apache-2.0",
@@ -33,5 +44,16 @@
   },
   "devDependencies": {
     "eslint": "^2.13.1"
+  },
+  "resolutions": {
+    "bytes": "2.4.0",
+    "qs": "6.2.1",
+    "statuses": "1.3.0",
+    "cookie": "0.3.1",
+    "send": "0.13.2",
+    "request": "2.74.0",
+    "assert-plus": "1.0.0",
+    "estraverse": "4.2.0",
+    "acorn": "4.0.3"
   }
 }

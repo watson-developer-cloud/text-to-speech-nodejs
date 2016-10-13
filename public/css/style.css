@@ -32,11 +32,11 @@ select.custom-select {
 }
 
 #dropdownMenuList {
-  width: 118%;
+    width: 118%;
 }
 
 .dropdown-menu > li > a {
-	display: block;
+    display: block;
     padding: 3px 20px;
     clear: both;
     font-weight: normal;
@@ -47,9 +47,30 @@ select.custom-select {
 }
 
 .dropdown {
-  width: 125% !important;
+    width: 125% !important;
 }
 
 .service-icon {
   width: 100%;
+}
+
+@media (max-width: 600px) {
+
+    #dropdownMenuList {
+        width: 80%;
+    }
+
+    .dropdown-menu > li > a {
+        display: block;
+        clear: both;
+        font-weight: normal;
+        line-height: 1.428571429;
+        color: #333333;
+        white-space: nowrap;
+        text-decoration: none;
+    }
+
+    .dropdown {
+        width: 80% !important;
+    }
 }

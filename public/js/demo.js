@@ -171,13 +171,13 @@ $(document).ready(function() {
       var voiceName = voice.name.substring(6, voice.name.length - 5);
       var optionText = LANGUAGE_TABLE[voice.language] + ': ' + voiceName + ' ('  + voice.gender + ')';
       $('#dropdownMenuList').append(
-        $('<li>')
-        .attr('role', 'presentation')
-        .append(
-          $('<a>').attr('role', 'menu-item')
-          .attr('href', '/')
-          .attr('data-voice', voice.name)
-          .append(optionText)
+          $('<li>')
+              .attr('role', 'presentation')
+              .append(
+                  $('<a>').attr('role', 'menu-item')
+                      .attr('href', '/')
+                      .attr('data-voice', voice.name)
+                      .append(optionText)
           )
         );
     });
