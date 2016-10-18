@@ -75,20 +75,20 @@ button#dropdownMenu1 {
 span.caret {
     left: 75% !important;
 }
-.dropdown-text {
-    white-space: initial  !important;
-}
 #dropdownMenuList {
     width: 80%;
 }
 
 }
-@media (max-width: 590px) {
+@media (max-width: 572px) {
   span.caret {
       left: 73% !important;
   }
   #dropdownMenuList {
     width: 80% !important;
     overflow: hidden;
+}
+.dropdown-text {
+    white-space: initial  !important;
 }
 }
