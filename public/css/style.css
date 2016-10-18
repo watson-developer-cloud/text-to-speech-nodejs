@@ -58,10 +58,10 @@ select.custom-select {
   span.caret {
     left: 92% !important;
 }
-button#dropdownMenu1 {
+  button#dropdownMenu1 {
     width: 97% !important;
 }
-#dropdownMenuList {
+  #dropdownMenuList {
     width: 97%;
 }
 }
@@ -69,13 +69,13 @@ button#dropdownMenu1 {
   span.caret {
     left: 97% !important;
 }
-button#dropdownMenu1 {
+  button#dropdownMenu1 {
     width: 80% !important;
 }
-span.caret {
+  span.caret {
     left: 75% !important;
 }
-#dropdownMenuList {
+  #dropdownMenuList {
     width: 80%;
 }
 
@@ -88,7 +88,7 @@ span.caret {
     width: 80% !important;
     overflow: hidden;
 }
-.dropdown-text {
+  .dropdown-text {
     white-space: initial  !important;
 }
 }
