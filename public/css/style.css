@@ -53,3 +53,42 @@ select.custom-select {
 .service-icon {
   width: 100%;
 }
+
+@media (max-width: 1199px) {
+  span.caret {
+    left: 92% !important;
+}
+  button#dropdownMenu1 {
+    width: 97% !important;
+}
+  #dropdownMenuList {
+    width: 97%;
+}
+}
+@media (max-width: 991px) {
+  span.caret {
+    left: 97% !important;
+}
+  button#dropdownMenu1 {
+    width: 80% !important;
+}
+  span.caret {
+    left: 75% !important;
+}
+  #dropdownMenuList {
+    width: 80%;
+}
+
+}
+@media (max-width: 572px) {
+  span.caret {
+      left: 73% !important;
+  }
+  #dropdownMenuList {
+    width: 80% !important;
+    overflow: hidden;
+}
+  .dropdown-text {
+    white-space: initial  !important;
+}
+}
