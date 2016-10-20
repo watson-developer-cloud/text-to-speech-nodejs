@@ -1,5 +1,5 @@
-.DS_Store
 node_modules
+coverage
 .env
 *.log
-.idea
+.DS_Store

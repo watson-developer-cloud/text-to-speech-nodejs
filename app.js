@@ -1,5 +1,5 @@
 /**
- * Copyright 2014, 2015 IBM Corp. All Rights Reserved.
+ * Copyright 2015 IBM Corp. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,48 +14,51 @@
  * limitations under the License.
  */
 
-'use strict';
-
-var express    = require('express'),
-  app          = express(),
-  watson       = require('watson-developer-cloud');
-
+const express = require('express');
+const app = express();
+const TextToSpeechV1 = require('watson-developer-cloud/text-to-speech/v1');
 
 // Bootstrap application settings
 require('./config/express')(app);
 
-// For local development, replace username and password
-var textToSpeech = watson.text_to_speech({
-  version: 'v1',
-  "url": "https://stream.watsonplatform.net/text-to-speech/api",
-  "password": "D36gqexZ1Hxl",
-  "username": "b5be35d1-223e-42a1-bf3c-652678e7217c"
+const textToSpeech = new TextToSpeechV1({
+  // If unspecified here, the TEXT_TO_SPEECH_USERNAME and
+  // TEXT_TO_SPEECH_PASSWORD env properties will be checked
+  // After that, the SDK will fall back to the bluemix-provided VCAP_SERVICES environment property
+  // username: '<username>',
+  // password: '<password>',
 });
 
-app.get('/api/synthesize', function(req, res, next) {
-  var transcript = textToSpeech.synthesize(req.query);
-  transcript.on('response', function(response) {
+app.get('/', (req, res) => {
+  res.render('index');
+});
+
+/**
+ * Pipe the synthesize method
+ */
+app.get('/api/synthesize', (req, res, next) => {
+  const transcript = textToSpeech.synthesize(req.query);
+  transcript.on('response', (response) => {
     if (req.query.download) {
+      // eslint-disable-next-line
       response.headers['content-disposition'] = 'attachment; filename=transcript.ogg';
     }
   });
-  transcript.on('error', function(error) {
-    next(error);
-  });
+  transcript.on('error', next);
   transcript.pipe(res);
 });
 
 // Return the list of voices
-// app.get('/api/voices', function(req, res, next) {
-//   textToSpeech.voices(function (error, voices) {
-//     if (error)
-//       next(error);
-//     else
-//       res.json(voices);
-//   });
-// });
+app.get('/api/voices', (req, res, next) => {
+  textToSpeech.voices(null, (error, voices) => {
+    if (error) {
+      return next(error);
+    }
+    res.json(voices);
+  });
+});
 
+// error-handler settings
+require('./config/error-handler')(app);
 
-var port = process.env.VCAP_APP_PORT || 3000;
-app.listen(port);
-console.log('listening at:', port);
+module.exports = app;

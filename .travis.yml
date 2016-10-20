@@ -1,18 +1,22 @@
 language: node_js
-node_js:
-- 4
 sudo: true
+node_js: stable
+script:
+- npm test
 env:
   global:
   - CF_APP=text-to-speech-demo
   - CF_API=https://api.ng.bluemix.net
-  - CF_USERNAME=nfriedly@us.ibm.com
   - CF_ORGANIZATION=WatsonPlatformServices
   - CF_SPACE=demos
-  - secure: "PrNPVUKGF5IqSDFZ4W4EApiad6mK5Au85O3ovRzs9dkK1ZsEUEgVVsxr8SdC5oWOKnQu1cDTlNNtp6iKZq9PTWmuLuJpIqkMqIkbJlkR1AOcEqwUb/nkxqgw41E7Hi5JLsM/2RE0xqSKfKtS6zKcs0Nx0cSLStseSzSX4pjLywE="
 before_deploy: npm install -g cf-blue-green
 deploy:
   provider: script
-  script: cf-blue-green-travis
+  script:
+    - cf-blue-green-travis
   on:
     branch: master
+    repo: watson-developer-cloud/text-to-speech-nodejs
+  skip_cleanup: true
+notifications:
+  email: false

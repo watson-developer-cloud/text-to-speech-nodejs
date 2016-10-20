@@ -14,33 +14,65 @@
  * limitations under the License.
  */
 
-'use strict';
 
 // security.js
-var secure  = require('express-secure-only'),
-  rateLimit = require('express-rate-limit'),
-  helmet    = require('helmet');
+const secure = require('express-secure-only');
+const rateLimit = require('express-rate-limit');
+const helmet = require('helmet');
 
 module.exports = function (app) {
-  app.enable('trust proxy');
-
   // 1. redirects http to https
   app.use(secure());
 
-  // 2. helmet with defaults
-  app.use(helmet());
+  // 2. helmet with custom CSP header
+  const cspReportUrl = '/report-csp-violation';
+  app.use(helmet({
+    contentSecurityPolicy: {
+      // Specify directives as normal.
+      directives: {
+        defaultSrc: ["'self'"], // default value for unspecified directives that end in -src
+        scriptSrc: ["'self'", 'www.google-analytics.com'], // jquery cdn, etc. try to avid "'unsafe-inline'"
+        styleSrc: ["'self'", "'unsafe-inline'"], // no inline css
+        imgSrc: ["'self'", 'www.google-analytics.com'], // should be "'self'" and possibly 'data:' for most apps
+        frameAncestors: [], // parent iframes
+        formAction: ["'self'"], // where can forms submit to
+        reportUri: cspReportUrl,
+      },
 
-  // Allow from a specific host:
-  app.use(helmet.frameguard({
-    action: 'allow-from',
-    domain: 'https://watson-experience.mybluemix.net/'
+      // Set to true if you only want browsers to report errors, not block them.
+      // You may also set this to a function(req, res) in order to decide dynamically
+      // whether to use reportOnly mode, e.g., to allow for a dynamic kill switch.
+      reportOnly: false,
+
+      // Set to true if you want to blindly set all headers: Content-Security-Policy,
+      // X-WebKit-CSP, and X-Content-Security-Policy.
+      setAllHeaders: false,
+
+      // Set to true if you want to disable CSP on Android where it can be buggy.
+      disableAndroid: false,
+
+      // Set to false if you want to completely disable any user-agent sniffing.
+      // This may make the headers less compatible but it will be much faster.
+      // This defaults to `true`.
+      browserSniff: true,
+    },
   }));
+  // endpoint to report CSP violations
+  app.post(cspReportUrl, (req, res) => {
+    // eslint-disable-next-line no-console
+    console.log('Content Security Policy Violation:\n', req.body);
+    res.status(204).send(); // 204 = No Content
+  });
 
-  // 3. rate-limit to /api/
-  app.use('/api/', rateLimit({
-    windowMs: 20 * 1000, // seconds
+  // 4. rate limiting
+  const limiter = rateLimit({
+    windowMs: 60 * 1000, // seconds
     delayMs: 0,
-    max: 3
-  }));
-
+    max: 10,
+    message: JSON.stringify({
+      error: 'Too many requests, please try again in 30 seconds.',
+      code: 429,
+    }),
+  });
+  app.use('/api/', limiter);
 };

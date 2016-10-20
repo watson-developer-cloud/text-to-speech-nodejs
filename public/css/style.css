@@ -1,76 +1,26 @@
-.btn-secondary {
-  width:100%;
+
+.textarea {
+  width: 100%;
+  border: 0px;
+  min-height: 300px;
+}
+
+.tab-panels--tab-content {
+  padding: 1rem;
 }
 
 .speak-button {
-  color: #e0e0e0; /*gray10*/
+  margin-left: 1rem;
 }
 
-input[type="radio"], input[type="checkbox"] {
-  margin: 1em 1em 1em 0;
-  margin-top: 1px \9;
-  line-height: normal;
+.base--select {
+  max-width: 100%;
+}
+.reset-button {
+  margin-left: 0.5rem;
+  cursor: pointer;
 }
 
-
-select.custom-select {
-  /* overflow: hidden; */
-  height: 3.5em;
-  border: 0;
-  background-color: white;
-  outline: 2px solid #c7c7c7;
-}
-
-.error-row {
-  padding-left: 1em;
-  padding-right: 1em;
-}
-
-.error-row a {
-  color: white;
-  margin-bottom: 0.2em;
-}
-
-#dropdownMenuList {
-    width: 118%;
-}
-
-.dropdown-menu > li > a {
-    display: block;
-    padding: 3px 20px;
-    clear: both;
-    font-weight: normal;
-    line-height: 1.428571429;
-    color: #333333;
-    white-space: nowrap;
-    text-decoration: none;
-}
-
-.dropdown {
-    width: 125% !important;
-}
-
-.service-icon {
-  width: 100%;
-}
-
-@media (max-width: 600px) {
-
-    #dropdownMenuList {
-        width: 80%;
-    }
-
-    .dropdown-menu > li > a {
-        display: block;
-        clear: both;
-        font-weight: normal;
-        line-height: 1.428571429;
-        color: #333333;
-        white-space: nowrap;
-        text-decoration: none;
-    }
-
-    .dropdown {
-        width: 80% !important;
-    }
+.reset-container {
+  text-align: right;
 }
