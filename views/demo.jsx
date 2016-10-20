@@ -31,29 +31,12 @@ export default React.createClass({
   },
 
   onDownload() {
-    const voice = this.state.voice;
-
-    window.location.href = downloadURL;
-    return true;
+    console.log(synthesizeUrl, 'download');
 
   },
 
   onSpeak() {
     console.log('speak');
-synthesizeUrl
-
-   if (options.download) {
-     downloadURL += ;
-     window.location.href = downloadURL;
-     return true;
-   }
-   audio.pause();
-   audio.src = downloadURL;
-   enableButtons(true);
-   audio.addEventListener('canplaythrough', onCanplaythrough);
-   audio.muted = true;
-   audio.play();
-
   },
 
   onResetClick() {
