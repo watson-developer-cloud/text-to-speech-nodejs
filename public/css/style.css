@@ -13,6 +13,12 @@
   margin-left: 1rem;
 }
 
+.speak-button[disabled], .speak-button[disabled]:hover {
+  color: grey;
+  border: 2px solid grey;
+  transition: 0s;
+}
+
 .base--select {
   max-width: 100%;
 }

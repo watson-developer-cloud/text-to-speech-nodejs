@@ -38,7 +38,17 @@ class ConditionalSpeakButton extends React.Component {
         Speak
       </button>);
     } else {
-      return (<div style={{display: 'none'}}></div>);
+      return (
+          <span>
+            <button
+                onClick={this.props.onClick}
+                className="base--button speak-button speak-disabled"
+                title="Only available on Chrome and Firefox"
+                disabled={true}
+            >
+              Speak
+            </button>
+          </span>);
     }
   }
 }
@@ -74,6 +84,7 @@ export default React.createClass({
 
   onSpeak() {
     console.log('speak');
+    fetch()
   },
 
   onResetClick() {
@@ -167,7 +178,7 @@ export default React.createClass({
             </button>
             <ConditionalSpeakButton onClick={this.onSpeak}/>
 
-            <p className="speak-browser">Only on Chrome and Firefox</p>
+
           </div>
           <div className="audioplayer-container">
             <audio id="audio" className="audio" controls="">
