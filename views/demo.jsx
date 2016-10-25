@@ -6,6 +6,43 @@ import voices from '../voices';
 
 const synthesizeUrl = `/api/synthesize?voice={voice}&text={encodeURIComponent(text)}`;
 
+// audio/wav
+// "audio/mpeg;codecs=mp3"
+// "audio/ogg;codecs=opus"
+
+let canPlayAudioFormat = function(mimeType) {
+  let audio = document.createElement("audio");
+  if (audio) {
+    return (typeof audio.canPlayType === "function" &&
+    audio.canPlayType(mimeType) !== "");
+  } else {
+    return false
+  }
+};
+
+class ConditionalSpeakButton extends React.Component {
+  componentDidMount() {
+    if (canPlayAudioFormat("audio/ogg;codecs=opus")) {
+      this.setState({canPlay: true});
+    } else {
+      this.setState({canPlay: false});
+    }
+  }
+
+  render() {
+    if (this.state && this.state.canPlay) {
+      return (<button
+          onClick={this.props.onClick}
+          className="base--button speak-button"
+      >
+        Speak
+      </button>);
+    } else {
+      return (<div style={{display: 'none'}}></div>);
+    }
+  }
+}
+
 export default React.createClass({
 
   getInitialState() {
@@ -46,6 +83,7 @@ export default React.createClass({
       text: currentVoice.demo.text,
       ssml: currentVoice.demo.ssml,
       ssml_voice: currentVoice.demo.ssml_voice,
+      spoken: null
     });
   },
 
@@ -127,12 +165,8 @@ export default React.createClass({
             >
               Download
             </button>
-            <button
-              onClick={this.onSpeak}
-              className="base--button speak-button"
-            >
-              Speak
-            </button>
+            <ConditionalSpeakButton onClick={this.onSpeak}/>
+
             <p className="speak-browser">Only on Chrome and Firefox</p>
           </div>
           <div className="audioplayer-container">
