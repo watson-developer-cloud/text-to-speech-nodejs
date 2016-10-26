@@ -13,6 +13,10 @@
   margin-left: 1rem;
 }
 
+.speak-button:focus, .download-button:focus {
+  outline: none;
+}
+
 .speak-button[disabled], .speak-button[disabled]:hover {
   color: grey;
   border: 2px solid grey;
@@ -29,4 +33,30 @@
 
 .reset-container {
   text-align: right;
+  width: 50%;
+}
+
+.audio {
+  width: 100%;
+  margin: 1rem;
+  transition: 2s;
+  opacity: 0;
+}
+
+.buttons-container {
+  width: 50%;
+}
+
+.errorMessage {
+  text-align: center;
+  font-size: large;
+  color: red;
+  background: lightgrey;
+  border-radius: 10%;
+  border: 1px solid red;
+  -webkit-transition: opacity 1s;
+  -moz-transition: opacity 1s;
+  -ms-transition: opacity 1s;
+  -o-transition: opacity 1s;
+  transition: opacity 1s;
 }

@@ -4,7 +4,7 @@ import { Icon, Tabs, Pane } from 'watson-react-components';
 
 import voices from '../voices';
 
-const synthesizeUrl = `/api/synthesize?voice={voice}&text={encodeURIComponent(text)}`;
+const synthesizeUrl = `/api/synthesize?voice={this.state.voice.name}&text={encodeURIComponent(this.state.text)}`;
 
 // audio/wav
 // "audio/mpeg;codecs=mp3"
@@ -62,29 +62,75 @@ export default React.createClass({
       text: voices[3].demo.text, // default text
       ssml: voices[3].demo.ssml, // SSML text
       voice_ssml: voices[3].demo.voice_ssml, // Voice SSML text, only Allison supports this
+      current_tab: 0,
+      loading: false
     };
   },
 
+  onTabChange(idx) {
+    this.setState({current_tab: idx});
+  },
+
   onTextChange(event) {
-    this.setState({ text: event.target.value });
+    this.setState({ text: event.target.value, ssml: "", voice_ssml: "" });
   },
 
   onSsmlChange(event) {
-    this.setState({ ssml: event.target.value });
+    this.setState({ ssml: event.target.value, text: "", voice_ssml: "" });
   },
 
   onVoiceSsmlChange(event) {
-    this.setState({ voice_ssml: event.target.value });
+    this.setState({ voice_ssml: event.target.value, ssml: "", text: "" });
+  },
+
+  setupParamsFromState(do_download) {
+    let params = new URLSearchParams();
+    if (this.state && this.state.current_tab === 0) {
+      params.set('text', this.state.text);
+      params.set('voice', this.state.voice.name);
+      params.set('download', do_download);
+    } else if (this.state && this.state.current_tab === 1) {
+      params.set('text', this.state.ssml);
+      params.set('voice', this.state.voice.name);
+      params.set('download', do_download);
+    } else if (this.state && this.state.current_tab === 2) {
+      params.set('text', this.state.voice_ssml);
+      params.set('voice', this.state.voice.name);
+      params.set('download', do_download);
+    }
+    return params
   },
 
   onDownload() {
-    console.log(synthesizeUrl, 'download');
-
+    let params = this.setupParamsFromState(true);
+    window.location.href = `/api/synthesize?${params.toString()}`
   },
 
   onSpeak() {
-    console.log('speak');
-    fetch()
+    let params = this.setupParamsFromState(true);
+    this.setState({loading: true});
+    fetch(`/api/synthesize?${params.toString()}`).then((response) => {
+      if (response.ok) {
+        response.blob().then((blob) => {
+          let url = window.URL.createObjectURL(blob);
+          let audio = document.getElementById('audio');
+          this.setState({loading: false});
+
+          audio.setAttribute('src',url);
+          audio.setAttribute('type',"audio/ogg;codecs=opus");
+          audio.style.opacity = 1.0;
+        });
+      } else {
+        this.setState({loading: false});
+        audio.style.opacity = 0.0;
+        response.json().then((json) => {
+          this.setState({error: json});
+          setTimeout(function() {
+            this.setState({error: null});
+          }.bind(this), 5000);
+        });
+      }
+    })
   },
 
   onResetClick() {
@@ -138,7 +184,7 @@ export default React.createClass({
             </select>
           </div>
 
-          <Tabs selected={0}>
+          <Tabs selected={0} onChange={this.onTabChange}>
             <Pane label="Text">
               <textarea
                 onChange={this.onTextChange}
@@ -165,25 +211,32 @@ export default React.createClass({
               />
             </Pane>
           </Tabs>
-          <div className="reset-container">
-            <Icon type="reset" />
-            <a className="base--a reset-button" onClick={this.onResetClick}>Reset</a>
-          </div>
-          <div className="buttons-container">
-            <button
-              onClick={this.onDownload}
-              className="base--button download-button"
-            >
-              Download
-            </button>
-            <ConditionalSpeakButton onClick={this.onSpeak}/>
+          <div style={{display: "flex", flexDirection: "column", margin: "1rem" }}>
+            <div className="audioplayer-container">
+              <div className="errorMessage" style={{opacity: this.state.error ? 1 : 0}}>
+                {this.state.error ? this.state.error.error : ""}
+              </div>
+              <span id="loader" style={{display: this.state.loading ? "inline" : "none"}}><Icon type="loader"/></span>
+              <audio id="audio" className="audio" controls="controls">
+                Your browser does not support the audio element.
+              </audio>
+            </div>
+            <div style={{display: "flex", flexDirection: "row" }}>
 
-
-          </div>
-          <div className="audioplayer-container">
-            <audio id="audio" className="audio" controls="">
-              Your browser does not support the audio element.
-            </audio>
+              <div className="buttons-container">
+                <button
+                    onClick={this.onDownload}
+                    className="base--button download-button"
+                >
+                  Download
+                </button>
+                <ConditionalSpeakButton onClick={this.onSpeak}/>
+              </div>
+              <div className="reset-container">
+                <Icon type="reset" />
+                <a className="base--a reset-button" onClick={this.onResetClick}>Reset</a>
+              </div>
+            </div>
           </div>
         </div>
       </section>

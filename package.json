@@ -40,7 +40,7 @@
     "react-prism": "^3.2.2",
     "uglifyify": "^3.0.3",
     "watson-developer-cloud": "^2.4.2",
-    "watson-react-components": "^0.0.16",
+    "watson-react-components": "^0.0.18",
     "watson-ui-components": "^0.5.3"
   },
   "scripts": {
