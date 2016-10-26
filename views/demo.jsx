@@ -117,6 +117,7 @@ export default React.createClass({
           this.setState({loading: false});
 
           audio.setAttribute('src',url);
+          audio.setAttribute('autoplay','true');
           audio.setAttribute('type',"audio/ogg;codecs=opus");
           audio.style.opacity = 1.0;
         });
