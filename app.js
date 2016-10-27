@@ -41,7 +41,11 @@ app.get('/api/synthesize', (req, res, next) => {
   transcript.on('response', (response) => {
     if (req.query.download) {
       // eslint-disable-next-line
-      response.headers['content-disposition'] = 'attachment; filename=transcript.ogg';
+      if (req.query.accept && req.query.accept == "audio/wav") {
+        response.headers['content-disposition'] = 'attachment; filename=transcript.wav';
+      } else {
+        response.headers['content-disposition'] = 'attachment; filename=transcript.ogg';
+      }
     }
   });
   transcript.on('error', next);
