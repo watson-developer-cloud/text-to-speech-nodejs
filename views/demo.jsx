@@ -4,14 +4,39 @@ import { Icon, Tabs, Pane } from 'watson-react-components';
 
 import voices from '../voices';
 
+import 'whatwg-fetch'
+
 const synthesizeUrl = `/api/synthesize?voice={this.state.voice.name}&text={encodeURIComponent(this.state.text)}`;
+
+
+const getSearchParams = function() {
+
+  if (typeof URLSearchParams === 'function') {
+    return new URLSearchParams();
+  } else {
+    //simple polyfill for URLSearchparams
+    var searchParams = function () {
+    };
+
+    searchParams.prototype.set = function (key, value) {
+      this[key] = value;
+    };
+
+    searchParams.prototype.toString = function () {
+      return Object.keys(this).map(function (v) {
+        return `${encodeURI(v)}=${encodeURI(this[v])}`;
+      }.bind(this)).join("&");
+    };
+    return new searchParams();
+  };
+};
 
 // audio/wav
 // "audio/mpeg;codecs=mp3"
 // "audio/ogg;codecs=opus"
 
 let canPlayAudioFormat = function(mimeType) {
-  let audio = document.createElement("audio");
+  var audio = document.createElement("audio");
   if (audio) {
     return (typeof audio.canPlayType === "function" &&
     audio.canPlayType(mimeType) !== "");
@@ -84,20 +109,23 @@ export default React.createClass({
   },
 
   setupParamsFromState(do_download) {
-    let params = new URLSearchParams();
+    var params = getSearchParams();
     if (this.state && this.state.current_tab === 0) {
       params.set('text', this.state.text);
       params.set('voice', this.state.voice.name);
-      params.set('download', do_download);
     } else if (this.state && this.state.current_tab === 1) {
       params.set('text', this.state.ssml);
       params.set('voice', this.state.voice.name);
-      params.set('download', do_download);
     } else if (this.state && this.state.current_tab === 2) {
       params.set('text', this.state.voice_ssml);
       params.set('voice', this.state.voice.name);
-      params.set('download', do_download);
     }
+    params.set('download', do_download);
+
+    if (!canPlayAudioFormat("audio/ogg;codec=opus") && canPlayAudioFormat("audio/wav")) {
+      params.set('accept', 'audio/wav');
+    }
+
     return params
   },
 
@@ -119,6 +147,7 @@ export default React.createClass({
           audio.setAttribute('src',url);
           audio.setAttribute('autoplay','true');
           audio.setAttribute('type',"audio/ogg;codecs=opus");
+
           audio.style.opacity = 1.0;
         });
       } else {
