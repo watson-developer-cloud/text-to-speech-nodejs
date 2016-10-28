@@ -26,6 +26,8 @@ function Layout(props) {
         <Header
           mainBreadcrumbs="Text to Speech"
           mainBreadcrumbsUrl="http://www.ibm.com/watson/developercloud/text-to-speech.html"
+          subBreadcrumbs="Text to Speech Demo"
+          subBreadcrumbsUrl="https://text-to-speech-demo.mybluemix.net"
         />
         <Jumbotron
           serviceName="Text to Speech"

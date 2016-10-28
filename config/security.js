@@ -17,17 +17,17 @@
 
 // security.js
 const secure = require('express-secure-only');
+const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
 
 module.exports = function (app) {
-  // 1. redirects http to https
   app.use(secure());
+  app.use(helmet());
 
-  // 2. rate limiting
   const limiter = rateLimit({
     windowMs: 60 * 1000, // seconds
     delayMs: 0,
-    max: 10,
+    max: 5,
     message: JSON.stringify({
       error: 'Too many requests, please try again in 30 seconds.',
       code: 429,

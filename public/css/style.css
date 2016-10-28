@@ -39,8 +39,14 @@
 .audio {
   width: 100%;
   margin: 1rem;
-  transition: 2s;
-  opacity: 0;
+}
+
+.controls-container {
+  display: flex;
+}
+
+.output-container {
+  margin-bottom: 4rem;
 }
 
 .buttons-container {
@@ -49,14 +55,17 @@
 
 .errorMessage {
   text-align: center;
-  font-size: large;
   color: red;
-  background: lightgrey;
-  border-radius: 10%;
-  border: 1px solid red;
-  -webkit-transition: opacity 1s;
-  -moz-transition: opacity 1s;
-  -ms-transition: opacity 1s;
-  -o-transition: opacity 1s;
-  transition: opacity 1s;
+}
+
+.invisible {
+  opacity: 0;
+}
+
+.hidden {
+  display: none;
+}
+
+.text-center {
+  text-align: center;
 }

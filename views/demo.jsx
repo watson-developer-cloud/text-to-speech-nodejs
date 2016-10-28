@@ -1,45 +1,38 @@
 import React from 'react';
-
-import { Icon, Tabs, Pane } from 'watson-react-components';
-
-import voices from '../voices';
-
+import {Icon, Tabs, Pane} from 'watson-react-components';
 import 'whatwg-fetch'
+import voices from '../voices';
 
 const synthesizeUrl = `/api/synthesize?voice={this.state.voice.name}&text={encodeURIComponent(this.state.text)}`;
 
-
-const getSearchParams = function() {
-
+/**
+ * @return {Function} A polyfill for URLSearchParams
+ */
+const getSearchParams = () => {
   if (typeof URLSearchParams === 'function') {
     return new URLSearchParams();
-  } else {
-    //simple polyfill for URLSearchparams
-    var searchParams = function () {
-    };
+  }
+  // simple polyfill for URLSearchparams
+  const searchParams = () => {};
 
-    searchParams.prototype.set = function (key, value) {
-      this[key] = value;
-    };
-
-    searchParams.prototype.toString = function () {
-      return Object.keys(this).map(function (v) {
-        return `${encodeURI(v)}=${encodeURI(this[v])}`;
-      }.bind(this)).join("&");
-    };
-    return new searchParams();
+  searchParams.prototype.set = (key, value) => {
+    this[key] = value;
   };
+
+  searchParams.prototype.toString = () => Object.keys(this).map((v) =>
+    (`${encodeURI(v)}=${encodeURI(this[v])}`), this).join("&");
+  return new searchParams();
 };
 
-// audio/wav
-// "audio/mpeg;codecs=mp3"
-// "audio/ogg;codecs=opus"
-
-let canPlayAudioFormat = function(mimeType) {
-  var audio = document.createElement("audio");
+/**
+ * Validates that the mimetype is: audio/wav, audio/mpeg;codecs=mp3 or audio/ogg;codecs=opus
+ * @param  {String} mimeType The audio mimetype
+ * @return {bool} Returns true if the mimetype can be played.
+ */
+const canPlayAudioFormat = (mimeType) => {
+  var audio = document.createElement('audio');
   if (audio) {
-    return (typeof audio.canPlayType === "function" &&
-    audio.canPlayType(mimeType) !== "");
+    return (typeof audio.canPlayType === 'function' && audio.canPlayType(mimeType) !== '');
   } else {
     return false
   }
@@ -47,7 +40,7 @@ let canPlayAudioFormat = function(mimeType) {
 
 class ConditionalSpeakButton extends React.Component {
   componentDidMount() {
-    if (canPlayAudioFormat("audio/ogg;codecs=opus")) {
+    if (canPlayAudioFormat('audio/ogg;codecs=opus')) {
       this.setState({canPlay: true});
     } else {
       this.setState({canPlay: false});
@@ -56,24 +49,24 @@ class ConditionalSpeakButton extends React.Component {
 
   render() {
     if (this.state && this.state.canPlay) {
-      return (<button
-          onClick={this.props.onClick}
-          className="base--button speak-button"
-      >
-        Speak
-      </button>);
+      return (
+        <button onClick={this.props.onClick} className="base--button speak-button">
+          Speak
+        </button>
+      );
     } else {
       return (
-          <span>
-            <button
-                onClick={this.props.onClick}
-                className="base--button speak-button speak-disabled"
-                title="Only available on Chrome and Firefox"
-                disabled={true}
-            >
-              Speak
-            </button>
-          </span>);
+        <span>
+          <button
+            onClick={this.props.onClick}
+            className="base--button speak-button speak-disabled"
+            title="Only available on Chrome and Firefox"
+            disabled={true}
+          >
+            Speak
+          </button>
+        </span>
+      );
     }
   }
 }
@@ -97,15 +90,15 @@ export default React.createClass({
   },
 
   onTextChange(event) {
-    this.setState({ text: event.target.value, ssml: "", voice_ssml: "" });
+    this.setState({text: event.target.value, ssml: "", voice_ssml: ""});
   },
 
   onSsmlChange(event) {
-    this.setState({ ssml: event.target.value, text: "", voice_ssml: "" });
+    this.setState({ssml: event.target.value, text: "", voice_ssml: ""});
   },
 
   onVoiceSsmlChange(event) {
-    this.setState({ voice_ssml: event.target.value, ssml: "", text: "" });
+    this.setState({voice_ssml: event.target.value, ssml: "", text: ""});
   },
 
   setupParamsFromState(do_download) {
@@ -122,7 +115,7 @@ export default React.createClass({
     }
     params.set('download', do_download);
 
-    if (!canPlayAudioFormat("audio/ogg;codec=opus") && canPlayAudioFormat("audio/wav")) {
+    if (!canPlayAudioFormat('audio/ogg;codec=opus') && canPlayAudioFormat('audio/wav')) {
       params.set('accept', 'audio/wav');
     }
 
@@ -130,34 +123,31 @@ export default React.createClass({
   },
 
   onDownload() {
-    let params = this.setupParamsFromState(true);
+    const params = this.setupParamsFromState(true);
     window.location.href = `/api/synthesize?${params.toString()}`
   },
 
   onSpeak() {
-    let params = this.setupParamsFromState(true);
-    this.setState({loading: true});
+    const params = this.setupParamsFromState(true);
+    const audio = document.getElementById('audio');
+    audio.setAttribute('src', '');
+
+
+    this.setState({ loading: true, hasAudio: false });
     fetch(`/api/synthesize?${params.toString()}`).then((response) => {
       if (response.ok) {
         response.blob().then((blob) => {
-          let url = window.URL.createObjectURL(blob);
-          let audio = document.getElementById('audio');
-          this.setState({loading: false});
+          const url = window.URL.createObjectURL(blob);
+          this.setState({ loading: false, hasAudio: true });
 
-          audio.setAttribute('src',url);
-          audio.setAttribute('autoplay','true');
-          audio.setAttribute('type',"audio/ogg;codecs=opus");
-
-          audio.style.opacity = 1.0;
+          audio.setAttribute('src', url);
+          audio.setAttribute('type', 'audio/ogg;codecs=opus');
         });
       } else {
-        this.setState({loading: false});
-        audio.style.opacity = 0.0;
+        this.setState({ loading: false });
         response.json().then((json) => {
-          this.setState({error: json});
-          setTimeout(function() {
-            this.setState({error: null});
-          }.bind(this), 5000);
+          this.setState({ error: json });
+          setTimeout(() => this.setState({ error: null }), 5000);
         });
       }
     })
@@ -182,7 +172,7 @@ export default React.createClass({
       error: null,
       text: voice.demo.text,
       ssml: voice.demo.ssml,
-      ssml_voice: voice.demo.ssml_voice,
+      ssml_voice: voice.demo.ssml_voice
     });
   },
 
@@ -191,85 +181,52 @@ export default React.createClass({
       <section className="_container _container_large">
         <div className="row">
           <h2 className="base--h2">Input Text</h2>
-          <p className="base--p" >
-            The text language must match the selected voice language: Mixing language
-            (English text with a Spanish male voice) does not produce valid results.
-            The synthesized audio is streamed to the client as it is being produced,
-            using the HTTP chunked encoding. The audio is returned in the Ogg Opus
-            format which can be played using VLC and Audacity players.
+          <p className="base--p">
+            The text language must match the selected voice language: Mixing language (English text with a Spanish male voice) does not produce valid results. The synthesized audio is streamed to the client as it is being produced, using the HTTP chunked encoding. The audio is returned in the Ogg Opus format which can be played using VLC and Audacity players.
           </p>
           <div className="voice-input">
-            <select
-              name="voice"
-              className="base--select"
-              onChange={this.onVoiceChange}
-              value={this.state.voice.name}
-            >
-              {
-                voices.map(voice => (
-                  <option key={voice.name} value={voice.name}>{voice.option}</option>
-                  )
-                )
-              }
+            <select name="voice" className="base--select" onChange={this.onVoiceChange} value={this.state.voice.name}>
+              {voices.map(voice => (
+                <option key={voice.name} value={voice.name}>{voice.option}</option>
+              ))}
             </select>
           </div>
 
           <Tabs selected={0} onChange={this.onTabChange}>
             <Pane label="Text">
-              <textarea
-                onChange={this.onTextChange}
-                className="base--textarea textarea"
-                spellCheck="false"
-                value={this.state.text || ''}
-              />
+              <textarea onChange={this.onTextChange} className="base--textarea textarea" spellCheck="false" value={this.state.text || ''}/>
             </Pane>
             <Pane label="Expressive SSML">
-              <textarea
-                onChange={this.onSsmlChange}
-                className="base--textarea textarea"
-                spellCheck="false"
-                value={this.state.ssml || ''}
-              />
+              <textarea onChange={this.onSsmlChange} className="base--textarea textarea" spellCheck="false" value={this.state.ssml || ''}/>
             </Pane>
             <Pane label="Voice Transformation SSML">
-              <textarea
-                readOnly={!this.state.voice_ssml}
-                onChange={this.onVoiceSsmlChange}
-                className="base--textarea textarea"
-                spellCheck="false"
-                value={this.state.voice_ssml || 'Voice Transformation not currently supported for this language.'}
-              />
+              <textarea readOnly={!this.state.voice_ssml} onChange={this.onVoiceSsmlChange} className="base--textarea textarea" spellCheck="false" value={this.state.voice_ssml || 'Voice Transformation not currently supported for this language.'}/>
             </Pane>
           </Tabs>
-          <div style={{display: "flex", flexDirection: "column", margin: "1rem" }}>
-            <div className="audioplayer-container">
-              <div className="errorMessage" style={{opacity: this.state.error ? 1 : 0}}>
-                {this.state.error ? this.state.error.error : ""}
-              </div>
-              <span id="loader" style={{display: this.state.loading ? "inline" : "none"}}><Icon type="loader"/></span>
-              <audio id="audio" className="audio" controls="controls">
-                Your browser does not support the audio element.
-              </audio>
-            </div>
-            <div style={{display: "flex", flexDirection: "row" }}>
-
+          <div className="output-container">
+            <div className="controls-container">
               <div className="buttons-container">
-                <button
-                    onClick={this.onDownload}
-                    className="base--button download-button"
-                >
-                  Download
-                </button>
-                <ConditionalSpeakButton onClick={this.onSpeak}/>
+                <button onClick={this.onDownload} className="base--button download-button">Download</button>
+                <ConditionalSpeakButton onClick={this.onSpeak} />
               </div>
               <div className="reset-container">
                 <Icon type="reset" />
                 <a className="base--a reset-button" onClick={this.onResetClick}>Reset</a>
               </div>
             </div>
+            <div className={`errorMessage ${this.state.error ? '' : 'hidden'}`}>
+              <Icon type="error" />
+              <p className="base--p service-error--message">{this.state.error ? this.state.error.error : ''}</p>
+            </div>
+            <div className={`text-center loading ${this.state.loading ? '' : 'hidden'}`}>
+              <Icon type="loader" />
+            </div>
+            <audio autoPlay="true" id="audio" className={`audio ${this.state.hasAudio ? '' : 'hidden'}`} controls="controls">
+              Your browser does not support the audio element.
+            </audio>
           </div>
         </div>
       </section>
     );
-  },
+  }
 });

@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
+/* eslint no-param-reassign: "off" */
 const express = require('express');
 const app = express();
 const TextToSpeechV1 = require('watson-developer-cloud/text-to-speech/v1');
@@ -40,8 +40,7 @@ app.get('/api/synthesize', (req, res, next) => {
   const transcript = textToSpeech.synthesize(req.query);
   transcript.on('response', (response) => {
     if (req.query.download) {
-      // eslint-disable-next-line
-      if (req.query.accept && req.query.accept == "audio/wav") {
+      if (req.query.accept && req.query.accept === 'audio/wav') {
         response.headers['content-disposition'] = 'attachment; filename=transcript.wav';
       } else {
         response.headers['content-disposition'] = 'attachment; filename=transcript.ogg';
