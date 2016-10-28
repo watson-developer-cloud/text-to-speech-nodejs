@@ -17,7 +17,7 @@ Give it a try! Click the button below to fork into IBM DevOps Services and deplo
 	```yaml
   applications:
   - services:
-    - my-service-instance
+    - my-text-to-speech
     name: <application-name>
     command: npm start
     path: .
@@ -34,7 +34,7 @@ Give it a try! Click the button below to fork into IBM DevOps Services and deplo
 1. Create the Text to Speech service in Bluemix.
 
 	```sh
-	$ cf create-service text_to_speech standard my-service-instance
+	$ cf create-service text_to_speech standard my-text-to-speech
 	```
 
 1. Push your app to make it live:
@@ -53,7 +53,7 @@ Give it a try! Click the button below to fork into IBM DevOps Services and deplo
 
 1. Configure the code to connect to your service:
 
-	1. Copy the credentials from your `my-service-instance` service in Bluemix. Run the following command:
+	1. Copy the credentials from your `my-text-to-speech` service in Bluemix. Run the following command:
 
 		```sh
 		$ cf env <application-name>
@@ -73,7 +73,7 @@ Give it a try! Click the button below to fork into IBM DevOps Services and deplo
 				  "username": "<username>"
 				}
 				"label": "text-to-speech",
-				"name": "my-service-instance",
+				"name": "my-text-to-speech",
 				"plan": "standard",
 				"tags": [
 				  ...

@@ -1,10 +1,10 @@
 declared-services:
-  text-to-speech-standard:
+  my-text-to-speech:
     label: natural_language_classifier
     plan: standard
 applications:
 - services:
-  - text-to-speech-standard
+  - my-text-to-speech
   name: text-to-speech-demo
   command: npm start
   path: .
