@@ -69,3 +69,23 @@
 .text-center {
   text-align: center;
 }
+
+.base--h2.title {
+  margin-top: 5rem;
+  font-size: 1.5em;
+  color: #965ad0;
+}
+
+.dimmed {
+  opacity: 0.5;
+}
+
+.base--button {
+  background-color: #55306f;
+  color: white;
+  border: 2px solid #55306f;
+}
+
+.voice-input {
+  width: 60%;
+}

@@ -122,12 +122,14 @@ export default React.createClass({
     return params
   },
 
-  onDownload() {
+  onDownload(event) {
+    event.target.blur();
     const params = this.setupParamsFromState(true);
     window.location.href = `/api/synthesize?${params.toString()}`
   },
 
-  onSpeak() {
+  onSpeak(event) {
+    event.target.blur();
     const params = this.setupParamsFromState(true);
     const audio = document.getElementById('audio');
     audio.setAttribute('src', '');
@@ -147,7 +149,7 @@ export default React.createClass({
         this.setState({ loading: false });
         response.json().then((json) => {
           this.setState({ error: json });
-          setTimeout(() => this.setState({ error: null }), 5000);
+          setTimeout(() => this.setState({ error: null, loading: false }), 5000);
         });
       }
     })
@@ -180,7 +182,7 @@ export default React.createClass({
     return (
       <section className="_container _container_large">
         <div className="row">
-          <h2 className="base--h2">Input Text</h2>
+          <h2 className="base--h2 title">Input Text</h2>
           <p className="base--p">
             The text language must match the selected voice language: Mixing language (English text with a Spanish male voice) does not produce valid results. The synthesized audio is streamed to the client as it is being produced, using the HTTP chunked encoding. The audio is returned in the Ogg Opus format which can be played using VLC and Audacity players.
           </p>
@@ -209,7 +211,7 @@ export default React.createClass({
                 <button onClick={this.onDownload} className="base--button download-button">Download</button>
                 <ConditionalSpeakButton onClick={this.onSpeak} />
               </div>
-              <div className="reset-container">
+              <div className={this.state.loading || this.state.hasAudio ? "reset-container" : "reset-container dimmed"}>
                 <Icon type="reset" />
                 <a className="base--a reset-button" onClick={this.onResetClick}>Reset</a>
               </div>
