@@ -44,7 +44,7 @@
   "scripts": {
     "start": "node server.js",
     "test": "npm run lint && npm run smoketest",
-    "integration-test" : "casperjs test ./test/integration/test.*.js",
+    "integration-test" : "npm run lint && casperjs test ./test/integration/test.*.js",
     "smoketest": "istanbul cover ./node_modules/mocha/bin/_mocha",
     "lint": "eslint .",
     "autofix": "eslint --fix .",

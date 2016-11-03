@@ -3,7 +3,7 @@
 casper.test.begin('Text To Speech', 7, function suite(test) {
   const baseHost = 'http://localhost:3000';
 
-  function testForButtons() { 
+  function testForButtons() {
     casper.waitForSelector('div.buttons-container', function () {
       test.assertExists('button.base--button.speak-button', 'displays speak button');
       test.assertExists('button.base--button.download-button', 'displays download button');
@@ -14,7 +14,7 @@ casper.test.begin('Text To Speech', 7, function suite(test) {
 
   function testForSelection() {
     casper.waitForSelector('div.voice-input', function () {
-      test.assertExists('div.voice-input > select.base--select','has voice select');
+      test.assertExists('div.voice-input > select.base--select', 'has voice select');
     });
   }
 
