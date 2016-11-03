@@ -33,7 +33,7 @@
 
 .reset-container {
   text-align: right;
-  width: 50%;
+  width: 25%;
 }
 
 .audio {
@@ -50,7 +50,7 @@
 }
 
 .buttons-container {
-  width: 50%;
+  width: 75%;
 }
 
 .errorMessage {
@@ -80,12 +80,27 @@
   opacity: 0.5;
 }
 
+.reset-container {
+  font-size: smaller;
+}
+
 .base--button {
   background-color: #55306f;
   color: white;
   border: 2px solid #55306f;
+  padding-right: 5rem;
+  padding-left: 5rem;
+  font-size: smaller;
 }
 
 .voice-input {
-  width: 60%;
+  width: 70%;
+  margin-top: 4rem;
+  margin-bottom: 4rem;
 }
+
+div.row {
+  width: 75%;
+}
+
+
