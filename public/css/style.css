@@ -24,7 +24,8 @@
 }
 
 .base--select {
-  max-width: 100%;
+    max-width: 100%;
+    background-image: url(/images/errow.svg);
 }
 .reset-button {
   margin-left: 0.5rem;
