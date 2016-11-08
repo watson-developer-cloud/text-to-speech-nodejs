@@ -50,7 +50,7 @@ class ConditionalSpeakButton extends React.Component {
   render() {
     if (this.state && this.state.canPlay) {
       return (
-        <button onClick={this.props.onClick} className="base--button speak-button">
+        <button onClick={this.props.onClick} className={ this.props.loading ? "base--button speak-button loading" : "base--button speak-button"}>
           Speak
         </button>
       );
@@ -183,7 +183,7 @@ export default React.createClass({
       <section className="_container _container_large">
         <div className="row">
           <h2 className="base--h2 title">Input Text</h2>
-          <p className="base--p">
+          <p className="base--p normalfont">
             The text language must match the selected voice language: Mixing language (English text with a Spanish male voice) does not produce valid results. The synthesized audio is streamed to the client as it is being produced, using the HTTP chunked encoding. The audio is returned in the Ogg Opus format which can be played using VLC and Audacity players.
           </p>
           <div className="voice-input">
@@ -209,7 +209,7 @@ export default React.createClass({
             <div className="controls-container">
               <div className="buttons-container">
                 <button onClick={this.onDownload} className="base--button download-button">Download</button>
-                <ConditionalSpeakButton onClick={this.onSpeak} />
+                <ConditionalSpeakButton loading={this.state.loading} onClick={this.onSpeak} />
               </div>
               <div className={this.state.loading || this.state.hasAudio ? "reset-container" : "reset-container dimmed"}>
                 <Icon type="reset" />

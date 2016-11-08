@@ -13,6 +13,12 @@
   margin-left: 1rem;
 }
 
+.speak-button:hover, .download-button:hover {
+  color: white;
+  background-color: #55306f;
+  border: 2px solid #55306f;
+}
+
 .speak-button:focus, .download-button:focus {
   outline: none;
 }
@@ -27,6 +33,7 @@
     max-width: 100%;
     background-image: url(/images/errow.svg);
 }
+
 .reset-button {
   margin-left: 0.5rem;
   cursor: pointer;
@@ -81,6 +88,11 @@
   opacity: 0.5;
 }
 
+.speak-button.loading {
+    background-color: darkgrey;
+    border: 2px solid darkgrey;
+}
+
 .reset-container {
   font-size: smaller;
 }
@@ -102,6 +114,12 @@
 
 div.row {
   width: 75%;
+}
+
+.normalfont {
+    font-size: 1em;
+    font-weight: 300;
+    font-family: "Helvetica Neue",Helvetica,"Open Sans",Arial,"Lucida Grande",Roboto,sans-serif;
 }
 
 
