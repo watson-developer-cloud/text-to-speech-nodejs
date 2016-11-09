@@ -3,6 +3,8 @@
   width: 100%;
   border: 0px;
   min-height: 300px;
+  resize: none;
+  overflow: scroll;
 }
 
 .tab-panels--tab-content {
