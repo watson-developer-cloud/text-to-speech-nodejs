@@ -156,13 +156,15 @@ export default React.createClass({
   },
 
   onResetClick() {
+    // pause audio, if it's playing. 
+    document.querySelector('audio#audio').pause();
     const currentVoice = this.state.voice;
     this.setState({
       error: null,
+      hasAudio: false,
       text: currentVoice.demo.text,
       ssml: currentVoice.demo.ssml,
       ssml_voice: currentVoice.demo.ssml_voice,
-      spoken: null
     });
   },
 
@@ -211,7 +213,7 @@ export default React.createClass({
                 <button onClick={this.onDownload} className="base--button download-button">Download</button>
                 <ConditionalSpeakButton loading={this.state.loading} onClick={this.onSpeak} />
               </div>
-              <div className={this.state.loading || this.state.hasAudio ? "reset-container" : "reset-container dimmed"}>
+              <div className={!this.state.loading && this.state.hasAudio ? "reset-container" : "reset-container dimmed"}>
                 <Icon type="reset" />
                 <a className="base--a reset-button" onClick={this.onResetClick}>Reset</a>
               </div>
