@@ -124,4 +124,6 @@ div.row {
     font-family: "Helvetica Neue",Helvetica,"Open Sans",Arial,"Lucida Grande",Roboto,sans-serif;
 }
 
-
+ul.tab-panels--tab-list:hover li a.active:not(:hover) {
+  border-bottom: none;
+}
