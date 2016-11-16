@@ -236,4 +236,15 @@ const voices = [
   },
 ];
 
-module.exports = voices;
+const sortedByName = function (rhs, lhs) {
+  let result = -1;
+  if (rhs.name === lhs.name) {
+    result = 0;
+  } else if (rhs.name > lhs.name) {
+    result = 1;
+  }
+  return result;
+};
+
+const sortedvoices = voices.sort(sortedByName);
+module.exports = sortedvoices;
