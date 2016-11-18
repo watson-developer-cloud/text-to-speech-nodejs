@@ -11,16 +11,21 @@ const synthesizeUrl = `/api/synthesize?voice={this.state.voice.name}&text={encod
 const getSearchParams = () => {
   if (typeof URLSearchParams === 'function') {
     return new URLSearchParams();
-  }
-  // simple polyfill for URLSearchparams
-  const searchParams = () => {};
+  } 
 
-  searchParams.prototype.set = (key, value) => {
+  //simple polyfill for URLSearchparams
+  var searchParams = function () {
+  };
+
+  searchParams.prototype.set = function (key, value) {
     this[key] = value;
   };
 
-  searchParams.prototype.toString = () => Object.keys(this).map((v) =>
-    (`${encodeURI(v)}=${encodeURI(this[v])}`), this).join("&");
+  searchParams.prototype.toString = function () {
+    return Object.keys(this).map(function (v) {
+      return `${encodeURI(v)}=${encodeURI(this[v])}`;
+    }.bind(this)).join("&");
+  };
   return new searchParams();
 };
 
@@ -79,7 +84,7 @@ export default React.createClass({
       error: null, // the error from calling /classify
       text: voices[3].demo.text, // default text
       ssml: voices[3].demo.ssml, // SSML text
-      voice_ssml: voices[3].demo.voice_ssml, // Voice SSML text, only Allison supports this
+      voice_ssml: voices[3].demo.voice_ssml === null ? '' : voices[3].demo.voice_ssml, // Voice SSML text, only Allison supports this
       current_tab: 0,
       loading: false
     };
@@ -118,7 +123,7 @@ export default React.createClass({
     if (!canPlayAudioFormat('audio/ogg;codec=opus') && canPlayAudioFormat('audio/wav')) {
       params.set('accept', 'audio/wav');
     }
-
+    console.log(JSON.stringify(params));
     return params
   },
 
@@ -156,7 +161,7 @@ export default React.createClass({
   },
 
   onResetClick() {
-    // pause audio, if it's playing. 
+    // pause audio, if it's playing.
     document.querySelector('audio#audio').pause();
     const currentVoice = this.state.voice;
     this.setState({
