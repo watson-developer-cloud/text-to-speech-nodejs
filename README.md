@@ -53,38 +53,22 @@ Give it a try! Click the button below to fork into IBM DevOps Services and deplo
 
 1. Configure the code to connect to your service:
 
-	1. Copy the credentials from your `my-text-to-speech` service in Bluemix. Run the following command:
+	1. Copy the credentials from your Text to Speech service in Bluemix. Run the following command:
 
 		```sh
-		$ cf env <application-name>
+		$ cf service-key my-text-to-speech Credentials-1
 		```
 
 		Example output:
 
 		```sh
-		System-Provided:
-		{
-		  "VCAP_SERVICES": {
-			"text_to_speech": [
-			  {
-				"credentials": {
-				  "password": "<password>",
-				  "url": "<url>",
-				  "username": "<username>"
-				}
-				"label": "text-to-speech",
-				"name": "my-text-to-speech",
-				"plan": "standard",
-				"tags": [
-				  ...
-				]
-			  }
-			]
-		  }
+        {"password": "<password>",
+		  "url": "<url>",
+		  "username": "<username>"
 		}
 		```
 
-	1. Rename `.env.example` to be `.env` and update it with `username`, `password`, and `Classifier ID`.
+	1. You can add that information to Rename `.env.example` to be `.env` and update it with `username`, `password`.
 
 	```none
   TEXT_TO_SPEECH_USERNAME=
