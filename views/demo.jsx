@@ -55,7 +55,7 @@ class ConditionalSpeakButton extends React.Component {
   render() {
     if (this.state && this.state.canPlay) {
       return (
-        <button onClick={this.props.onClick} className={ this.props.loading ? "base--button speak-button loading" : "base--button speak-button"}>
+        <button disabled={this.props.disabled} onClick={this.props.onClick} className={ this.props.loading ? "base--button speak-button loading" : "base--button speak-button"}>
           Speak
         </button>
       );
@@ -106,6 +106,15 @@ export default React.createClass({
     this.setState({voice_ssml: event.target.value, ssml: "", text: ""});
   },
 
+  downloadAllowed() {
+    return ((this.state.ssml_voice && this.state.current_tab === 2) || (this.state.ssml && this.state.current_tab === 1) || this.state.current_tab === 0);
+  },
+  downloadDisabled() {
+    return !this.downloadAllowed();
+  },
+  speakDisabled() {
+    return this.downloadDisabled();
+  },
   setupParamsFromState(do_download) {
     var params = getSearchParams();
     if (this.state && this.state.current_tab === 0) {
@@ -214,8 +223,8 @@ export default React.createClass({
           <div className="output-container">
             <div className="controls-container">
               <div className="buttons-container">
-                <button onClick={this.onDownload} className="base--button download-button">Download</button>
-                <ConditionalSpeakButton loading={this.state.loading} onClick={this.onSpeak} />
+                <button onClick={this.onDownload} disabled={this.downloadDisabled()} className="base--button download-button">Download</button>
+                <ConditionalSpeakButton loading={this.state.loading} onClick={this.onSpeak} disabled={this.speakDisabled()}/>
               </div>
               <div className={!this.state.loading && this.state.hasAudio ? "reset-container" : "reset-container dimmed"}>
                 <Icon type="reset" />
