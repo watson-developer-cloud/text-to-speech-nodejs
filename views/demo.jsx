@@ -84,7 +84,7 @@ export default React.createClass({
       error: null, // the error from calling /classify
       text: voices[3].demo.text, // default text
       ssml: voices[3].demo.ssml, // SSML text
-      voice_ssml: voices[3].demo.voice_ssml === null ? '' : voices[3].demo.voice_ssml, // Voice SSML text, only Allison supports this
+      ssml_voice: voices[3].demo.voice_ssml, // Voice SSML text, only Allison supports this
       current_tab: 0,
       loading: false
     };
@@ -169,19 +169,18 @@ export default React.createClass({
       hasAudio: false,
       text: currentVoice.demo.text,
       ssml: currentVoice.demo.ssml,
-      ssml_voice: currentVoice.demo.ssml_voice,
+      ssml_voice: currentVoice.demo.voice_ssml,
     });
   },
 
   onVoiceChange(event) {
     const voice = voices[voices.map(v => v.name).indexOf(event.target.value)];
-    console.log(voice.demo.text);
     this.setState({
       voice,
       error: null,
       text: voice.demo.text,
       ssml: voice.demo.ssml,
-      ssml_voice: voice.demo.ssml_voice
+      ssml_voice: voice.demo.voice_ssml
     });
   },
 
@@ -209,7 +208,7 @@ export default React.createClass({
               <textarea onChange={this.onSsmlChange} className="base--textarea textarea" spellCheck="false" value={this.state.ssml || ''}/>
             </Pane>
             <Pane label="Voice Transformation SSML">
-              <textarea readOnly={!this.state.voice_ssml} onChange={this.onVoiceSsmlChange} className="base--textarea textarea" spellCheck="false" value={this.state.voice_ssml || 'Voice Transformation not currently supported for this language.'}/>
+              <textarea readOnly={!this.state.ssml_voice} onChange={this.onVoiceSsmlChange} className="base--textarea textarea" spellCheck="false" value={this.state.ssml_voice || 'Voice Transformation not currently supported for this language.'}/>
             </Pane>
           </Tabs>
           <div className="output-container">
