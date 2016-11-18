@@ -109,7 +109,7 @@
 }
 
 .voice-input {
-  width: 70%;
+  width: 80%;
   margin-top: 4rem;
   margin-bottom: 4rem;
 }
@@ -126,4 +126,8 @@ div.row {
 
 ul.tab-panels--tab-list:hover li a.active:not(:hover) {
   border-bottom: none;
+}
+
+select.base--select::-ms-expand{
+  display:none;
 }
