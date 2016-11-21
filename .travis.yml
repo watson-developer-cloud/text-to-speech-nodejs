@@ -20,7 +20,7 @@ deploy:
   skip_cleanup: true
   provider: script
   script:
-    - CF_APP=text-to-speech-react cf-blue-green-travis
+    - CF_APP=text-to-speech-qa cf-blue-green-travis
   on:
     branch: react-jbs
     repo: watson-developer-cloud/text-to-speech-nodejs
