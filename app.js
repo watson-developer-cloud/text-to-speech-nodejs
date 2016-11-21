@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 /* eslint no-param-reassign: "off" */
+'use strict';
 const express = require('express');
 const app = express();
 const TextToSpeechV1 = require('watson-developer-cloud/text-to-speech/v1');
