@@ -1,8 +1,13 @@
 language: node_js
-sudo: true
-node_js: stable
+dist: trusty
+sudo: required
+node_js: 6
 script:
-- npm run codecov
+- npm run test
+
+cache:
+  directories:
+  - node_modules
 env:
   global:
   - CF_APP=text-to-speech-demo
@@ -13,18 +18,10 @@ before_deploy: npm install -g cf-blue-green
 deploy:
   provider: script
   script:
-    - cf-blue-green-travis
+  - cf-blue-green-travis
   on:
     branch: master
     repo: watson-developer-cloud/text-to-speech-nodejs
   skip_cleanup: true
-  provider: script
-  script:
-    - CF_APP=text-to-speech-qa cf-blue-green-travis
-  on:
-    branch: react-jbs
-    repo: watson-developer-cloud/text-to-speech-nodejs
-  skip_cleanup: true
-
 notifications:
   email: false
