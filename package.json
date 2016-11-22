@@ -4,7 +4,7 @@
   "description": "IBM Watson Text to Speech sample application",
   "engines": {
     "node": ">=6.0",
-    "npm": ">3.0"
+    "npm": ">=3.0"
   },
   "repository": {
     "type": "git",
