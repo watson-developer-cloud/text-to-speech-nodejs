@@ -1,6 +1,6 @@
 declared-services:
   my-text-to-speech:
-    label: natural_language_classifier
+    label: text_to_speech
     plan: standard
 applications:
 - services:
