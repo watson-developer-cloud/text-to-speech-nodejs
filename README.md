@@ -1,103 +1,143 @@
-# Text to Speech Nodejs Starter Application
+# Text to Speech Demo [![Build Status](https://travis-ci.org/watson-developer-cloud/text-to-speech-nodejs.svg?branch=master)](http://travis-ci.org/watson-developer-cloud/text-to-speech-nodejs)
 
-  The IBM Watson [Text to Speech][service_url] service is designed for streaming, low latency, synthesis of audio from text. It is the inverse of the automatic speech recognition.
-
-Give it a try! Click the button below to fork into IBM DevOps Services and deploy your own copy of this application on Bluemix.
+The IBM Watson [Text to Speech][service_url] service is designed for streaming, low latency, synthesis of audio from text. It is the inverse of the automatic speech recognition.
 
 [![Deploy to Bluemix](https://bluemix.net/deploy/button.png)](https://bluemix.net/deploy?repository=https://github.com/watson-developer-cloud/text-to-speech-nodejs)
 
-## Getting Started
+## Getting started
 
-1. Create a Bluemix Account
+1. You need a Bluemix account. If you don't have one, [sign up][sign_up]. Experimental Watson Services are free to use.
 
-    [Sign up][sign_up] in Bluemix, or use an existing account. Watson Services in Beta are free to use.
+1. Download and install the [Cloud-foundry CLI][cloud_foundry] tool if you haven't already.
 
-2. Download and install the [Cloud-foundry CLI][cloud_foundry] tool
+1. Edit the `manifest.yml` file and change `<application-name>` to something unique. The name you use determines the URL of your application. For example, `<application-name>.mybluemix.net`.
 
-3. Edit the `manifest.yml` file and change the `<application-name>` to something unique.
-  ```none
+  ```yaml
   applications:
   - services:
-    - text-to-speech-service
+    - my-service-instance
     name: <application-name>
-    command: node app.js
+    command: npm start
     path: .
-    memory: 256M
+    memory: 512M
   ```
-  The name you use will determinate your application url initially, e.g. `<application-name>.mybluemix.net`.
 
-4. Connect to Bluemix in the command line tool.
+1. Connect to Bluemix with the command line tool.
+
   ```sh
-  $ cf api https://api.ng.bluemix.net
-  $ cf login -u <your user ID>
+  cf api https://api.ng.bluemix.net
+  cf login
   ```
 
-5. Create the Text to Speech service in Bluemix.
-  ```sh
-  $ cf create-service text_to_speech standard text-to-speech-service
+1. Create and retrieve service keys to access the [Text to Speech][service_url] service:
+
+  ```none
+  cf create-service text_to_speech standard my-tts-service
+  cf create-service-key my-tts-service myKey
+  cf service-key my-tts-service myKey
   ```
 
-6. Push it live!
-  ```sh
-  $ cf push
+1. Create a `.env` file in the root directory by copying the sample `.env.example` file using the following command:
+
+  ```none
+  cp .env.example .env
+  ```
+  You will update the `.env` with the information you retrieved in steps 5.
+
+  The `.env` file will look something like the following:
+
+  ```none
+  TEXT_TO_SPEECH_USERNAME=<username>
+  TEXT_TO_SPEECH_PASSWORD=<password>
   ```
 
+1. Install the dependencies you application need:
 
-## Running locally
-  The application uses [Node.js](http://nodejs.org/) and [npm](https://www.npmjs.com/) so you will have to download and install them as part of the steps below.
+  ```none
+  npm install
+  ```
 
-1. Copy the credentials from your `text-to-speech-service` service in Bluemix to `app.js`, you can see the credentials using:
+1. Start the application locally:
 
-    ```sh
-    $ cf env <application-name>
-    ```
-    Example output:
-    ```sh
-    System-Provided:
-    {
-    "VCAP_SERVICES": {
-      "text_to_speech": [{
-          "credentials": {
-            "url": "<url>",
-            "password": "<password>",
-            "username": "<username>"
-          },
-        "label": "text_to_speech",
-        "name": "text-to-speech-service",
-        "plan": "free"
-     }]
-    }
-    }
-    ```
+  ```none
+  npm start
+  ```
 
-    You need to copy `username`, `password` and `url`.
+1. Point your browser to [http://localhost:3000](http://localhost:3000).
 
-2. Install [Node.js](http://nodejs.org/)
-3. Go to the project folder in a terminal and run:
-    `npm install`
-4. Start the application
-5.  `node app.js`
-6. Go to `http://localhost:3000`
+1. **Optional:** Push the application to Bluemix:
+
+  ```none
+  cf push
+  ```
+
+After completing the steps above, you are ready to test your application. Start a browser and enter the URL of your application.
+
+            <your application name>.mybluemix.net
+
+
+For more details about developing applications that use Watson Developer Cloud services in Bluemix, see [Getting started with Watson Developer Cloud and Bluemix][getting_started].
+
 
 ## Troubleshooting
 
-To troubleshoot your Bluemix app the main useful source of information are the logs, to see them, run:
+* The main source of troubleshooting and recovery information is the Bluemix log. To view the log, run the following command:
 
   ```sh
-  $ cf logs <application-name> --recent
+  cf logs <application-name> --recent
   ```
+
+* For more details about the service, see the [documentation][docs] for the Text to Speech service.
+
+
+----
+
+### Directory structure
+
+```none
+.
+├── app.js                      // express routes
+├── config                      // express configuration
+│   ├── error-handler.js
+│   ├── express.js
+│   └── security.js
+├── manifest.yml
+├── package.json
+├── public                      // static resources
+├── server.js                   // entry point
+├── test                        // tests
+└── views                       // react components
+```
 
 ## License
 
-  This sample code is licensed under Apache 2.0. Full license text is available in [LICENSE](LICENSE).
+  This sample code is licensed under Apache 2.0.
 
 ## Contributing
 
-  See [CONTRIBUTING](CONTRIBUTING.md).
+  See [CONTRIBUTING](.github/CONTRIBUTING.md).
 
 ## Open Source @ IBM
   Find more open source projects on the [IBM Github Page](http://ibm.github.io/)
 
-[service_url]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/text-to-speech.html
+## Privacy Notice
+
+Sample web applications that include this package may be configured to track deployments to [IBM Bluemix](https://www.bluemix.net/) and other Cloud Foundry platforms. The following information is sent to a [Deployment Tracker](https://github.com/IBM-Bluemix/cf-deployment-tracker-service) service on each deployment:
+
+* Node.js package version
+* Node.js repository URL
+* Application Name (`application_name`)
+* Space ID (`space_id`)
+* Application Version (`application_version`)
+* Application URIs (`application_uris`)
+* Labels of bound services
+* Number of instances for each bound service and associated plan information
+
+This data is collected from the `package.json` file in the sample application and the `VCAP_APPLICATION` and `VCAP_SERVICES` environment variables in IBM Bluemix and other Cloud Foundry platforms. This data is used by IBM to track metrics around deployments of sample applications to IBM Bluemix to measure the usefulness of our examples, so that we can continuously improve the content we offer to you. Only deployments of sample applications that include code to ping the Deployment Tracker service will be tracked.
+
+[deploy_track_url]: https://github.com/cloudant-labs/deployment-tracker
 [cloud_foundry]: https://github.com/cloudfoundry/cli
-[sign_up]: https://apps.admin.ibmcloud.com/manage/trial/bluemix.html?cm_mmc=WatsonDeveloperCloud-_-LandingSiteGetStarted-_-x-_-CreateAnAccountOnBluemixCLI
+[getting_started]: https://www.ibm.com/watson/developercloud/doc/getting_started/
+[service_url]: http://www.ibm.com/watson/developercloud/text-to-speech.html
+[docs]: http://www.ibm.com/watson/developercloud/text-to-speech/
+[sign_up]: https://console.ng.bluemix.net/registration/

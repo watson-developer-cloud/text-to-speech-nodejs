@@ -13,25 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+ /* eslint no-unused-vars: "off" */
 
-
-// security.js
-const secure = require('express-secure-only');
-const helmet = require('helmet');
-const rateLimit = require('express-rate-limit');
 
 module.exports = function (app) {
-  app.use(secure());
-  app.use(helmet());
-
-  const limiter = rateLimit({
-    windowMs: 60 * 1000, // seconds
-    delayMs: 0,
-    max: 4,
-    message: JSON.stringify({
-      error: 'Too many requests, please try again in 30 seconds.',
-      code: 429,
-    }),
+  // catch 404 and forward to error handler
+  app.use((req, res, next) => {
+    const err = new Error('Not Found');
+    err.code = 404;
+    err.message = 'Not Found';
+    next(err);
   });
-  app.use('/api/', limiter);
+
+  // error handler
+  app.use((err, req, res, next) => {
+    const error = {
+      code: err.code || 500,
+      error: err.error || err.message,
+    };
+    res.status(error.code).json(error);
+  });
 };

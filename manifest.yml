@@ -1,11 +1,11 @@
----
 declared-services:
-  text-to-speech-service:
-    label: text_to_speech
+  my-text-to-speech:
+    label: natural_language_classifier
     plan: standard
 applications:
 - services:
-  - text-to-speech-service
+  - my-text-to-speech
   name: text-to-speech-demo
+  command: npm start
   path: .
-  memory: 768M
+  memory: 512M

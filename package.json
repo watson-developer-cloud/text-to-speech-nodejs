@@ -1,37 +1,73 @@
 {
-  "name": "TextToSpeechNodejsStarterApp",
-  "version": "1.1.5",
-  "description": "A sample nodejs app for Bluemix that use the Text to Speech service",
-  "dependencies": {
-    "body-parser": "~1.14.1",
-    "express": "~4.13.3",
-    "express-rate-limit": "^2.0.2",
-    "express-secure-only": "^0.2.1",
-    "helmet": "^2.0.0",
-    "watson-developer-cloud": "^1.0.6"
+  "name": "text-to-speech-demo",
+  "version": "2.0.0",
+  "description": "IBM Watson Text to Speech sample application",
+  "engines": {
+    "node": ">=6.0",
+    "npm": ">3.0"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/watson-developer-cloud/text-to-speech-nodejs.git"
   },
   "author": "IBM Corp.",
-  "contributors": [
-    {
-      "name": "German Attanasio Ruiz",
-      "email": "germanatt@us.ibm.com"
-    }
-  ],
   "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/watson-developer-cloud/text-to-speech-nodejs/issues"
   },
+  "dependencies": {
+    "babel-eslint": "^7.0.0",
+    "babel-preset-es2015": "^6.14.0",
+    "babel-preset-react": "^6.11.1",
+    "babel-register": "^6.16.3",
+    "babelify": "^7.3.0",
+    "body-parser": "^1.15.1",
+    "casperjs": "^1.1.3",
+    "cf-deployment-tracker-client": "^0.1.1",
+    "dotenv": "^2.0.0",
+    "express": "^4.14.0",
+    "express-browserify": "^1.0.2",
+    "express-rate-limit": "^2.3.1",
+    "express-react-views": "^0.10.2",
+    "express-secure-only": "^0.2.1",
+    "helmet": "^3.1.0",
+    "morgan": "^1.7.0",
+    "react": "^15.3.1",
+    "react-addons-pure-render-mixin": "^15.3.2",
+    "react-dom": "^15.3.2",
+    "uglifyify": "^3.0.3",
+    "watson-developer-cloud": "^2.4.2",
+    "watson-react-components": "^0.1.0",
+    "watson-ui-components": "^0.5.3",
+    "whatwg-fetch": "^2.0.1"
+  },
   "scripts": {
-    "start": "node app.js",
+    "start": "node server.js",
+    "test-integration": "casperjs test ./test/integration/test.*.js",
+    "test-integration-runner": "NODE_ENV=test node casper-runner.js",
+    "test": "npm run lint && npm run test-unit && npm run test-integration-runner",
+    "test-unit": "istanbul cover ./node_modules/mocha/bin/_mocha test/unit",
     "lint": "eslint .",
     "autofix": "eslint --fix .",
-    "test": "npm run lint"
+    "codecov": "npm run test && (codecov || true)"
   },
   "devDependencies": {
-    "eslint": "^2.13.1"
+    "casperjs": "^1.1.3",
+    "codecov": "^1.0.1",
+    "eslint": "^3.3.1",
+    "eslint-config-airbnb": "^10.0.1",
+    "eslint-plugin-import": "^1.15.0",
+    "eslint-plugin-jsx-a11y": "^2.1.0",
+    "eslint-plugin-react": "^6.3.0",
+    "istanbul": "^0.4.2",
+    "mocha": "^3.1.0",
+    "phantomjs-prebuilt": "^2.1.13",
+    "supertest": "^2.0.0"
+  },
+  "babel": {
+    "presets": [
+      "es2015",
+      "react"
+    ]
   }
 }

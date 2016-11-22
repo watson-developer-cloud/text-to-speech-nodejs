@@ -14,24 +14,19 @@
  * limitations under the License.
  */
 
+const path = require('path');
+// load default variables for testing
+require('dotenv').config({ path: path.join(__dirname, '../../.env.example') });
 
-// security.js
-const secure = require('express-secure-only');
-const helmet = require('helmet');
-const rateLimit = require('express-rate-limit');
+const app = require('../../app');
+const request = require('supertest');
 
-module.exports = function (app) {
-  app.use(secure());
-  app.use(helmet());
+describe('express', () => {
+  it('load home page when GET /', () =>
+    request(app).get('/').expect(200)
+  );
 
-  const limiter = rateLimit({
-    windowMs: 60 * 1000, // seconds
-    delayMs: 0,
-    max: 4,
-    message: JSON.stringify({
-      error: 'Too many requests, please try again in 30 seconds.',
-      code: 429,
-    }),
-  });
-  app.use('/api/', limiter);
-};
+  it('404 when page not found', () =>
+    request(app).get('/foo/bar').expect(404)
+  );
+});

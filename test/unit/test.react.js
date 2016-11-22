@@ -13,25 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+const assert = require('assert');
+const React = require('react');
+const ReactDOMServer = require('react-dom/server');
+require('babel-register');
 
-
-// security.js
-const secure = require('express-secure-only');
-const helmet = require('helmet');
-const rateLimit = require('express-rate-limit');
-
-module.exports = function (app) {
-  app.use(secure());
-  app.use(helmet());
-
-  const limiter = rateLimit({
-    windowMs: 60 * 1000, // seconds
-    delayMs: 0,
-    max: 4,
-    message: JSON.stringify({
-      error: 'Too many requests, please try again in 30 seconds.',
-      code: 429,
-    }),
+describe('react', () => {
+  it('should render some html', () => {
+    const index = require('../../views/index.jsx').default;
+    const element = React.createElement(index, null);
+    const result = ReactDOMServer.renderToString(element);
+    assert(result);
+    assert.equal(result.substr(0, 5), '<html');
   });
-  app.use('/api/', limiter);
-};
+});
