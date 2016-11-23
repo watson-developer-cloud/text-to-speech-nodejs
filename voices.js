@@ -86,7 +86,7 @@ const voices = [
     demo: {
       text: US_TEXT,
       ssml: US_SSML,
-      voice_ssml: US_VOICE_SSML,
+      ssml_voice: US_VOICE_SSML,
     },
     description: 'Allison: American English female voice.',
   }, {

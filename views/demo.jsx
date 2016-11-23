@@ -84,7 +84,7 @@ export default React.createClass({
       error: null, // the error from calling /classify
       text: voices[3].demo.text, // default text
       ssml: voices[3].demo.ssml, // SSML text
-      ssml_voice: voices[3].demo.voice_ssml, // Voice SSML text, only Allison supports this
+      ssml_voice: voices[3].demo.ssml_voice, // Voice SSML text, only Allison supports this
       current_tab: 0,
       loading: false
     };
@@ -95,15 +95,15 @@ export default React.createClass({
   },
 
   onTextChange(event) {
-    this.setState({text: event.target.value, ssml: "", voice_ssml: ""});
+    this.setState({text: event.target.value, ssml: "", ssml_voice: ""});
   },
 
   onSsmlChange(event) {
-    this.setState({ssml: event.target.value, text: "", voice_ssml: ""});
+    this.setState({ssml: event.target.value, text: "", ssml_voice: ""});
   },
 
   onVoiceSsmlChange(event) {
-    this.setState({voice_ssml: event.target.value, ssml: "", text: ""});
+    this.setState({ssml_voice: event.target.value, ssml: "", text: ""});
   },
 
   downloadAllowed() {
@@ -124,7 +124,7 @@ export default React.createClass({
       params.set('text', this.state.ssml);
       params.set('voice', this.state.voice.name);
     } else if (this.state && this.state.current_tab === 2) {
-      params.set('text', this.state.voice_ssml);
+      params.set('text', this.state.ssml_voice);
       params.set('voice', this.state.voice.name);
     }
     params.set('download', do_download);
@@ -178,7 +178,7 @@ export default React.createClass({
       hasAudio: false,
       text: currentVoice.demo.text,
       ssml: currentVoice.demo.ssml,
-      ssml_voice: currentVoice.demo.voice_ssml,
+      ssml_voice: currentVoice.demo.ssml_voice,
     });
   },
 
@@ -189,7 +189,7 @@ export default React.createClass({
       error: null,
       text: voice.demo.text,
       ssml: voice.demo.ssml,
-      ssml_voice: voice.demo.voice_ssml
+      ssml_voice: voice.demo.ssml_voice
     });
   },
 
