@@ -17,6 +17,7 @@
 if (!process.env.TEXT_TO_SPEECH_USERNAME) {
   // eslint-disable-next-line
   console.log('Skipping integration tests because TEXT_TO_SPEECH_USERNAME is null');
+  return;
 }
 
 require('dotenv').config();
