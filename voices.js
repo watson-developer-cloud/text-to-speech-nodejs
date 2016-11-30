@@ -41,22 +41,6 @@ const voices = [
     },
     description: 'Isabela: Brazilian Portuguese (português brasileiro) female voice.',
   }, {
-    name: 'en-US_MichaelVoice',
-    language: 'en-US',
-    option: 'American English (en-US): Michael (male)',
-    customizable: true,
-    gender: 'male',
-    url: 'https://stream.watsonplatform.net/text-to-speech/api/v1/voices/en-US_MichaelVoice',
-    supported_features: {
-      voice_transformation: false,
-      custom_pronunciation: true,
-    },
-    demo: {
-      text: US_TEXT,
-      ssml: US_SSML,
-    },
-    description: 'Michael: American English male voice.',
-  }, {
     name: 'ja-JP_EmiVoice',
     language: 'ja-JP',
     option: 'Japanese (ja-JP): Emi (female)',
