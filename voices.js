@@ -77,13 +77,8 @@ const voices = [
     },
     demo: {
       text: US_TEXT,
-<<<<<<< HEAD
       ssml: US_SSML_EXPRESSIVE,
       ssml_voice: US_VOICE_SSML_ALLISON,
-=======
-      ssml: US_SSML,
-      ssml_voice: US_VOICE_SSML,
->>>>>>> 93ef307ef90e51b0b4ab7525e9cf216daf0101ca
     },
     description: 'Allison: American English female voice.',
   }, {
