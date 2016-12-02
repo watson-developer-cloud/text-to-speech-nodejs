@@ -84,7 +84,8 @@ export default React.createClass({
       error: null, // the error from calling /classify
       text: voices[3].demo.text, // default text
       ssml: voices[3].demo.ssml, // SSML text
-      ssml_voice: voices[3].demo.voice_ssml, // Voice SSML text, only Allison supports this
+      ssml_voice: voices[3].demo.ssml_voice, // Voice SSML text, only some voices support this
+      ssmlLabel: "Expressive SSML",
       current_tab: 0,
       loading: false
     };
@@ -95,15 +96,15 @@ export default React.createClass({
   },
 
   onTextChange(event) {
-    this.setState({text: event.target.value, ssml: "", voice_ssml: ""});
+    this.setState({text: event.target.value});
   },
 
   onSsmlChange(event) {
-    this.setState({ssml: event.target.value, text: "", voice_ssml: ""});
+    this.setState({ssml: event.target.value});
   },
 
   onVoiceSsmlChange(event) {
-    this.setState({voice_ssml: event.target.value, ssml: "", text: ""});
+    this.setState({ssml_voice: event.target.value});
   },
 
   downloadAllowed() {
@@ -123,8 +124,9 @@ export default React.createClass({
     } else if (this.state && this.state.current_tab === 1) {
       params.set('text', this.state.ssml);
       params.set('voice', this.state.voice.name);
+      params.set('ssmlLabel', this.state.ssmlLabel);
     } else if (this.state && this.state.current_tab === 2) {
-      params.set('text', this.state.voice_ssml);
+      params.set('text', this.state.ssml_voice);
       params.set('voice', this.state.voice.name);
     }
     params.set('download', do_download);
@@ -178,18 +180,22 @@ export default React.createClass({
       hasAudio: false,
       text: currentVoice.demo.text,
       ssml: currentVoice.demo.ssml,
-      ssml_voice: currentVoice.demo.voice_ssml,
+      ssml_voice: currentVoice.demo.ssml_voice,
     });
   },
 
   onVoiceChange(event) {
     const voice = voices[voices.map(v => v.name).indexOf(event.target.value)];
+    var label = "SSML"
+    if (voice.name === "en-US_AllisonVoice")        
+       label = "Expressive SSML"
     this.setState({
       voice,
       error: null,
       text: voice.demo.text,
       ssml: voice.demo.ssml,
-      ssml_voice: voice.demo.voice_ssml
+      ssml_voice: voice.demo.ssml_voice,
+      ssmlLabel: label
     });
   },
 
@@ -213,7 +219,7 @@ export default React.createClass({
             <Pane label="Text">
               <textarea onChange={this.onTextChange} className="base--textarea textarea" spellCheck="false" value={this.state.text || ''}/>
             </Pane>
-            <Pane label="Expressive SSML">
+            <Pane label={this.state.ssmlLabel}>
               <textarea onChange={this.onSsmlChange} className="base--textarea textarea" spellCheck="false" value={this.state.ssml || ''}/>
             </Pane>
             <Pane label="Voice Transformation SSML">
