@@ -6,7 +6,7 @@ The IBM Watson [Text to Speech][service_url] service is designed for streaming, 
 
 ## Getting started
 
-1. You need a Bluemix account. If you don't have one, [sign up][sign_up]. Experimental Watson Services are free to use.
+1. You need a Bluemix account. If you don't have one, [sign up][sign_up].
 
 1. Download and install the [Cloud-foundry CLI][cloud_foundry] tool if you haven't already.
 

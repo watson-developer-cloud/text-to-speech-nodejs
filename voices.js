@@ -48,24 +48,7 @@ const voices = [
       ssml: PT_SSML,
     },
     description: 'Isabela: Brazilian Portuguese (português brasileiro) female voice.',
-  }/*, {
-    name: 'en-US_MichaelVoice',
-    language: 'en-US',
-    option: 'American English (en-US): Michael (male, transformable)',
-    customizable: true,
-    gender: 'male',
-    url: 'https://stream.watsonplatform.net/text-to-speech/api/v1/voices/en-US_MichaelVoice',
-    supported_features: {
-      voice_transformation: true,
-      custom_pronunciation: true,
-    },
-    demo: {
-      text: US_TEXT,
-      ssml: US_SSML,
-      ssml_voice: US_VOICE_SSML_MICHAEL,
-    },
-    description: 'Michael: American English male voice.',
-  }*/, {
+  }, {
     name: 'ja-JP_EmiVoice',
     language: 'ja-JP',
     option: 'Japanese (ja-JP): Emi (female)',
@@ -94,8 +77,13 @@ const voices = [
     },
     demo: {
       text: US_TEXT,
+<<<<<<< HEAD
       ssml: US_SSML_EXPRESSIVE,
       ssml_voice: US_VOICE_SSML_ALLISON,
+=======
+      ssml: US_SSML,
+      ssml_voice: US_VOICE_SSML,
+>>>>>>> 93ef307ef90e51b0b4ab7525e9cf216daf0101ca
     },
     description: 'Allison: American English female voice.',
   }, {

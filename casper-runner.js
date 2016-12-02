@@ -14,13 +14,15 @@
  * limitations under the License.
  */
 
-const fs = require('fs');
-if (!fs.existsSync('.env')) {
+if (!process.env.TEXT_TO_SPEECH_USERNAME) {
+  // eslint-disable-next-line
+  console.log('Skipping integration tests because TEXT_TO_SPEECH_USERNAME is null');
   return;
 }
-const spawn = require('child_process').spawn;
 
 require('dotenv').config();
+
+const spawn = require('child_process').spawn;
 
 const app = require('./app');
 const port = 3000;
