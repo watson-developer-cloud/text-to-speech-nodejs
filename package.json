@@ -36,9 +36,8 @@
     "react-addons-pure-render-mixin": "^15.3.2",
     "react-dom": "^15.3.2",
     "uglifyify": "^3.0.3",
-    "watson-developer-cloud": "^2.4.2",
-    "watson-react-components": "^0.1.0",
-    "watson-ui-components": "^0.5.3",
+    "watson-developer-cloud": "^2.14.3",
+    "watson-react-components": "^0.3.2",
     "whatwg-fetch": "^2.0.1"
   },
   "scripts": {
@@ -60,7 +59,7 @@
     "eslint-plugin-jsx-a11y": "^2.1.0",
     "eslint-plugin-react": "^6.3.0",
     "istanbul": "^0.4.2",
-    "mocha": "^3.1.0",
+    "mocha": "^3.2.0",
     "phantomjs-prebuilt": "^2.1.13",
     "supertest": "^2.0.0"
   },
