@@ -1,7 +1,4 @@
-declared-services:
-  my-text-to-speech:
-    label: text_to_speech
-    plan: standard
+---
 applications:
 - services:
   - my-text-to-speech
