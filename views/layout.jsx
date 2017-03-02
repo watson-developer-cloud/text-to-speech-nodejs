@@ -26,7 +26,7 @@ function Layout(props) {
         <script type="text/javascript">{`
           window._analytics = { coremetrics: false, optimizely: false, addRoll: false };
         `}</script>
-        <meta name="segment" property="watson-demos" value="speech-to-text-demo" />
+        <meta name="segment" property="watson-demos" value="text-to-speech-demo" />
         <script src={props.bluemixAnalytics} />
         {/* Bluemix Analytics  - end*/}
 
