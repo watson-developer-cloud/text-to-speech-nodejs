@@ -26,7 +26,9 @@ stages:
       application: ${CF_APP}
     script: |-
       #!/bin/bash
+      echo 'in bash'
       node -v
+      npm -v
       cf create-service text_to_speech standard my-text-to-speech
       # Push app
       export CF_APP_NAME="$CF_APP"
