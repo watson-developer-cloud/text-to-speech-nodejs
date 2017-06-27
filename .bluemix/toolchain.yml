@@ -1,0 +1,49 @@
+name: Continuous Delivery Toolchain
+description: "This toolchain includes tools to develop and deploy your app. Depending on your app, when you create the toolchain, the GitHub repository will either be empty or will contain source code from your app.\n\nThis toolchain uses tools that are part of the Continuous Delivery service. If an instance of that service isn't already in your organization, when you click **Create**, it is automatically added at no cost to you. For more information and terms, see the [Bluemix catalog](/catalog/services/continuous-delivery/).\n\nTo get started, click **Create**."
+version: 0.2
+required:
+ - deploy
+ - repo
+
+toolchain:
+  name: <%-bluemix.name%>
+
+# Github repos
+repo:
+  service_id: hostedgit
+  parameters:
+    repo_url: "{{zip_url}}"
+    repo_name: "{{toolchain.name}}" 
+    type: clone
+    has_issues: true
+    enable_traceability: true
+
+# Pipelines
+build:
+  service_id: pipeline
+  parameters:
+    name: "{{name}}"
+    ui-pipeline: true
+    configuration:
+     content: $file(pipeline.yml)
+     env:
+      REPO: "repo"
+      CF_APP: "{{deploy.parameters.app-name}}"
+      CF_SPACE: "{{deploy.parameters.dev-space}}"
+      CF_ORGANIZATION: "{{deploy.parameters.dev-organization}}"
+      CF_REGION_ID: "{{deploy.parameters.dev-region}}"
+     execute: true
+    services: ["repo"]
+  hidden: ["form"]
+
+#Web IDE
+webide:
+  service_id: orion
+
+#Deployment
+deploy:
+  schema:
+    $ref: deploy.json
+  service-category: pipeline
+  parameters:
+    app-name: <%-bluemix.name%>
