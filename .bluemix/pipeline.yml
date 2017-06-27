@@ -26,7 +26,29 @@ stages:
       application: ${CF_APP}
     script: |-
       #!/bin/bash
+      echo 'in bash'
+      export PATH=/opt/IBM/node-v6.7.0/bin:$PATH
+      node -v
+      npm -v
+      export CF_APP_SPACE="$CF_SPACE"
       cf create-service text_to_speech standard my-text-to-speech
+      curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' -d '{ \ 
+        "name": "my-text-to-speech", \ 
+        "codeLanguage": "node", \ 
+        "type": "scaffolder", \ 
+        "projectType": "watson", \ 
+        "server": { \ 
+          "host": "my-text-to-speech-app", \ 
+          "domain": "stage1.mybluemix.net" \ 
+        }, \ 
+        "services": [ \ 
+          { \ 
+            "label": "text-to-speech", \ 
+            "plan": "standard", \ 
+            "name": "my-text-to-speech" \ 
+          } \ 
+        ] \ 
+      }' 'https://dev-console.stage1.bluemix.net/developer/api/spaces/$CF_APP_SPACE/projects/create_project'
       # Push app
       export CF_APP_NAME="$CF_APP"
       cf push "${CF_APP_NAME}"
