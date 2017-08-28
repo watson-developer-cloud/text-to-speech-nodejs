@@ -13,14 +13,33 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/* eslint no-param-reassign: "off" */
 
 const express = require('express');
+
 const app = express();
 const TextToSpeechV1 = require('watson-developer-cloud/text-to-speech/v1');
 
 // Bootstrap application settings
 require('./config/express')(app);
+
+const getFileExtension = (acceptQuery) => {
+  const accept = acceptQuery || '';
+  switch (accept) {
+    case 'audio/ogg;codecs=opus':
+    case 'audio/ogg;codecs=vorbis':
+      return 'ogg';
+    case 'audio/wav':
+      return 'wav';
+    case 'audio/mpeg':
+      return 'mpeg';
+    case 'audio/webm':
+      return 'webm';
+    case 'audio/flac':
+      return 'flac';
+    default:
+      return 'mp3';
+  }
+};
 
 const textToSpeech = new TextToSpeechV1({
   // If unspecified here, the TEXT_TO_SPEECH_USERNAME and
@@ -32,7 +51,7 @@ const textToSpeech = new TextToSpeechV1({
 
 app.get('/', (req, res) => {
   res.render('index', {
-    BLUEMIX_ANALYTICS: process.env.BLUEMIX_ANALYTICS,
+    bluemixAnalytics: !!process.env.BLUEMIX_ANALYTICS,
   });
 });
 
@@ -43,11 +62,7 @@ app.get('/api/synthesize', (req, res, next) => {
   const transcript = textToSpeech.synthesize(req.query);
   transcript.on('response', (response) => {
     if (req.query.download) {
-      if (req.query.accept && req.query.accept === 'audio/wav') {
-        response.headers['content-disposition'] = 'attachment; filename=transcript.wav';
-      } else {
-        response.headers['content-disposition'] = 'attachment; filename=transcript.ogg';
-      }
+      response.headers['content-disposition'] = `attachment; filename=transcript.${getFileExtension(req.query.accept)}`;
     }
   });
   transcript.on('error', next);
@@ -60,7 +75,7 @@ app.get('/api/voices', (req, res, next) => {
     if (error) {
       return next(error);
     }
-    res.json(voices);
+    return res.json(voices);
   });
 });
 

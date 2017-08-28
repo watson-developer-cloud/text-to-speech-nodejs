@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 
-
 // Module dependencies
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -22,7 +21,7 @@ const expressBrowserify = require('express-browserify');
 const path = require('path');
 const morgan = require('morgan');
 
-module.exports = function (app) {
+module.exports = (app) => {
   app.enable('trust proxy');
   app.set('view engine', 'jsx');
   app.engine('jsx', require('express-react-views').createEngine());

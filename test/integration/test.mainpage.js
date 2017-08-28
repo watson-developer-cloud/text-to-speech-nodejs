@@ -1,10 +1,6 @@
 /* eslint no-undef: 0 */
 /* eslint prefer-arrow-callback: 0 */
-/**
-* @file
-*   Testing to verify the Text to Speech demo is working properly
-*/
-
+/* eslint func-names: 0 */
 // Define the suite of tests and give it the following properties:
 // - Title, which shows up before any of the pass/fails.
 // - Number of tests, must be changed as you add tests.

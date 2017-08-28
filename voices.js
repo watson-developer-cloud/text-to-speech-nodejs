@@ -240,7 +240,7 @@ const voices = [
   },
 ];
 
-const sortedByName = function (rhs, lhs) {
+const sortedByName = (rhs, lhs) => {
   let result = -1;
   if (rhs.name === lhs.name) {
     result = 0;

@@ -21,37 +21,29 @@ function Layout(props) {
         <link rel="icon" type="image/x-icon" href="/images/favicon.ico" />
         <link rel="stylesheet" href="/css/watson-react-components.min.css" />
         <link rel="stylesheet" href="/css/style.css" />
-
-        {/* Bluemix Analytics - begin*/}
-        <script type="text/javascript">{`
-          window._analytics = { coremetrics: false, optimizely: false, addRoll: false };
-        `}</script>
-        <meta name="segment" property="watson-demos" value="text-to-speech-demo" />
-        <script src={props.bluemixAnalytics} />
-        {/* Bluemix Analytics  - end*/}
-
       </head>
       <body>
         <Header
           mainBreadcrumbs="Text to Speech"
-          mainBreadcrumbsUrl="http://www.ibm.com/watson/developercloud/text-to-speech.html"
+          mainBreadcrumbsUrl="https://www.ibm.com/watson/services/text-to-speech/"
           subBreadcrumbs="Text to Speech Demo"
           subBreadcrumbsUrl="https://text-to-speech-demo.mybluemix.net"
         />
         <Jumbotron
           serviceName="Text to Speech"
           repository="https://github.com/watson-developer-cloud/text-to-speech-nodejs"
-          documentation="http://www.ibm.com/watson/developercloud/doc/text-to-speech"
+          documentation="https://console.bluemix.net/docs/services/text-to-speech/getting-started.html"
           apiReference="http://www.ibm.com/watson/developercloud/text-to-speech/api/v1/"
-          startInBluemix="https://console.ng.bluemix.net/registration/?target=/catalog/services/text-to-speech/"
-          version="GA" serviceIcon="/images/service-icon.svg"
+          startInBluemix="https://console.bluemix.net/registration/?target=/catalog/services/text-to-speech/"
+          version="GA"
+          serviceIcon="/images/service-icon.svg"
           description={DESCRIPTION}
         />
         <div id="root">
           {props.children}
         </div>
         <script type="text/javascript" src="js/bundle.js" />
-        <script type="text/javascript" src="js/ga.js" />
+        { props.bluemixAnalytics ? <script type="text/javascript" src="js/analytics.js" /> : null }
       </body>
     </html>
   );
@@ -59,7 +51,7 @@ function Layout(props) {
 
 Layout.propTypes = {
   children: React.PropTypes.object.isRequired,
-  bluemixAnalytics: React.PropTypes.string,
+  bluemixAnalytics: React.PropTypes.bool.isRequired,
 };
 
 export default Layout;
