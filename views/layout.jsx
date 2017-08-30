@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Header, Jumbotron } from 'watson-react-components';
 
 // eslint-disable-next-line
@@ -50,8 +51,8 @@ function Layout(props) {
 }
 
 Layout.propTypes = {
-  children: React.PropTypes.object.isRequired,
-  bluemixAnalytics: React.PropTypes.bool.isRequired,
+  children: PropTypes.object.isRequired,
+  bluemixAnalytics: PropTypes.bool.isRequired,
 };
 
 export default Layout;
