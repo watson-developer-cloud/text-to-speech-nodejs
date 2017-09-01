@@ -20,7 +20,7 @@ const secure = require('express-secure-only');
 const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
 
-module.exports = function (app) {
+module.exports = (app) => {
   app.use(secure());
   app.use(helmet());
 

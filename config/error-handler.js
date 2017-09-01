@@ -13,10 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- /* eslint no-unused-vars: "off" */
 
 
-module.exports = function (app) {
+module.exports = (app) => {
   // catch 404 and forward to error handler
   app.use((req, res, next) => {
     const err = new Error('Not Found');
@@ -26,6 +25,7 @@ module.exports = function (app) {
   });
 
   // error handler
+  // eslint-disable-next-line
   app.use((err, req, res, next) => {
     const error = {
       code: err.code || 500,

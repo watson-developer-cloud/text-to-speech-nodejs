@@ -1,0 +1,11 @@
+extends: airbnb
+env:
+  browser: true
+  node: true
+  mocha: true
+rules:
+  global-require: 0
+  no-console: 0
+  react/forbid-prop-types: 1
+  react/no-multi-comp: 0
+  jsx-a11y/media-has-caption: 0

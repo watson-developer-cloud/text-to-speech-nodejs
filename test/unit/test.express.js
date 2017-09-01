@@ -21,14 +21,10 @@ require('dotenv').config({ path: path.join(__dirname, '../../.env.example') });
 const app = require('../../app');
 const request = require('supertest');
 
-describe('express', function () {
+describe('express', function express() {
   this.timeout(10000);
 
-  it('load home page when GET /', () =>
-    request(app).get('/').expect(200)
-  );
+  it('load home page when GET /', () => request(app).get('/').expect(200));
 
-  it('404 when page not found', () =>
-    request(app).get('/foo/bar').expect(404)
-  );
+  it('404 when page not found', () => request(app).get('/foo/bar').expect(404));
 });

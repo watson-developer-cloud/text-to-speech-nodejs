@@ -14,21 +14,19 @@
  * limitations under the License.
  */
 
-if (!process.env.TEXT_TO_SPEECH_USERNAME) {
-  // eslint-disable-next-line
-  console.log('Skipping integration tests because TEXT_TO_SPEECH_USERNAME is null');
-  return;
-}
-
 require('dotenv').config();
 
-const spawn = require('child_process').spawn;
+if (!process.env.TEXT_TO_SPEECH_USERNAME) {
+  console.log('Skipping integration tests because TEXT_TO_SPEECH_USERNAME is null');
+  process.exit(0);
+}
 
+const spawn = require('child_process').spawn;
 const app = require('./app');
+
 const port = 3000;
 
 const server = app.listen(port, () => {
-  // eslint-disable-next-line no-console
   console.log('Server running on port: %d', port);
 
   function kill(code) {
