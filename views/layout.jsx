@@ -35,7 +35,7 @@ function Layout(props) {
           repository="https://github.com/watson-developer-cloud/text-to-speech-nodejs"
           documentation="https://console.bluemix.net/docs/services/text-to-speech/getting-started.html"
           apiReference="http://www.ibm.com/watson/developercloud/text-to-speech/api/v1/"
-          startInBluemix="https://console.bluemix.net/registration/?target=/catalog/services/text-to-speech/"
+          startInBluemix="https://console.bluemix.net/registration?target=%2Fdeveloper%2Fwatson%2Fcreate-project%3Fservices%3Dtext-to-speech%26action%3Dcreate%26cm_mmc%3DOSocial_Tumblr-_-Watson%2BCore_Watson%2BCore%2B-%2BPlatform-_-WW_WW-_-wdc-ref%26cm_mmc%3DOSocial_Tumblr-_-Watson%2BCore_Watson%2BCore%2B-%2BPlatform-_-WW_WW-_-wdc-ref%26cm_mmca1%3D000000OF%26cm_mmca2%3D10000409"
           version="GA"
           serviceIcon="/images/service-icon.svg"
           description={DESCRIPTION}
