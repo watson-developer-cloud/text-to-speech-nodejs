@@ -104,6 +104,11 @@
   margin-bottom: 4rem;
 }
 
+.gdpr-info {
+  font-size: 10pt;
+  margin-top: 1em;
+}
+
 @media (max-width: 888px) {
   .voice-input {
     width: 100%;

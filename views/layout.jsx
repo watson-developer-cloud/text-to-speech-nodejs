@@ -4,6 +4,7 @@ import { Header, Jumbotron } from 'watson-react-components';
 
 // eslint-disable-next-line
 const DESCRIPTION = 'The Text to Speech service understands text and natural language to generate synthesized audio output complete with appropriate cadence and intonation. It is available in 13 voices across 7 languages. Select voices now offer Expressive Synthesis and Voice Transformation features.';
+const GDPR_INFO = 'This system is for demonstration purposes only and is not intended to process Personal Data. No Personal Data is to be entered into this system as it may not have the necessary controls in place to meet the requirements of the General Data Protection Regulation (EU) 2016/679';
 
 function Layout(props) {
   return (
@@ -40,6 +41,9 @@ function Layout(props) {
           serviceIcon="/images/service-icon.svg"
           description={DESCRIPTION}
         />
+        <div className="_container _container_large gdpr-info">
+          {GDPR_INFO}
+        </div>
         <div id="root">
           {props.children}
         </div>
