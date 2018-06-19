@@ -20,7 +20,6 @@ require('babel-register');
 
 // eslint-disable-next-line
 describe('react', function () {
-  this.timeout(10000);
   it('should render some html', () => {
     const index = require('../../views/index.jsx').default;
     const element = React.createElement(index, null);
