@@ -46,8 +46,8 @@
     "test-integration-runner": "NODE_ENV=test node casper-runner.js",
     "test": "npm run lint && npm run test-unit && npm run test-integration-runner",
     "test-unit": "mocha test/unit --exit",
-    "lint": "./node_modules/.bin/eslint .",
-    "autofix": "./node_modules/.bin/eslint --fix .",
+    "lint": "eslint .",
+    "autofix": "eslint --fix .",
     "codecov": "npm run test && (codecov || true)"
   },
   "devDependencies": {
