@@ -13,18 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+const assert = require('assert');
+const React = require('react');
+const ReactDOMServer = require('react-dom/server');
+require('babel-register');
 
-const path = require('path');
-// load default variables for testing
-require('dotenv').config({ path: path.join(__dirname, '../../.env.example') });
-
-const app = require('../../app');
-const request = require('supertest');
-
-describe('express', function express() {
-  this.timeout(10000);
-
-  it('load home page when GET /', () => request(app).get('/').expect(200));
-
-  it('404 when page not found', () => request(app).get('/foo/bar').expect(404));
+// eslint-disable-next-line
+describe('react', function () {
+  it('should render some html', () => {
+    const index = require('../../views/index.jsx').default;
+    const element = React.createElement(index, null);
+    const result = ReactDOMServer.renderToString(element);
+    assert(result);
+    assert.equal(result.substr(0, 5), '<html');
+  });
 });

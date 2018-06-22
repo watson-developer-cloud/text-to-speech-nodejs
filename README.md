@@ -2,8 +2,6 @@
 
 The IBM Watson [Text to Speech][service_url] service is designed for streaming, low latency, synthesis of audio from text. It is the inverse of the automatic speech recognition.
 
-[![Deploy to Bluemix](https://bluemix.net/deploy/button.png)](https://bluemix.net/devops/setup/deploy?repository=https://github.com/watson-developer-cloud/text-to-speech-nodejs)
-
 
 ## Getting started
 
@@ -123,7 +121,7 @@ For more details about developing applications that use Watson Developer Cloud s
 
 
 [cloud_foundry]: https://github.com/cloudfoundry/cli
-[getting_started]: https://www.ibm.com/watson/developercloud/doc/common/index.html
+[getting_started]: https://console.bluemix.net/docs/services/watson/index.html
 [service_url]: https://www.ibm.com/watson/services/text-to-speech/
-[docs]: http://www.ibm.com/watson/developercloud/text-to-speech/
+[docs]: https://www.ibm.com/watson/developercloud/text-to-speech/api/v1/curl.html?curl
 [sign_up]: https://console.bluemix.net/registration/?target=/catalog/services/text-to-speech/

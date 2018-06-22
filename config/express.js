@@ -53,4 +53,3 @@ module.exports = (app) => {
   app.use(express.static(path.join(__dirname, '..', 'node_modules/watson-react-components/dist/')));
   app.use(morgan('dev'));
 };
-
