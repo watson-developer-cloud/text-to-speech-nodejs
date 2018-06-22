@@ -15,11 +15,12 @@
  */
 
 const path = require('path');
+const request = require('supertest');
+
 // load default variables for testing
 require('dotenv').config({ path: path.join(__dirname, '../../.env.example') });
 
 const app = require('../../app');
-const request = require('supertest');
 
 describe('express', function express() { // eslint-disable-line
   it('load home page when GET /', () => request(app).get('/').expect(200));
