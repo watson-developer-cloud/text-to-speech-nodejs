@@ -1,97 +1,101 @@
-# Text to Speech Demo [![Build Status](https://travis-ci.org/watson-developer-cloud/text-to-speech-nodejs.svg?branch=master)](http://travis-ci.org/watson-developer-cloud/text-to-speech-nodejs)
+<h1 align="center" style="border-bottom: none;">🔊 Text to Speech Demo </h1>
+<h3 align="center">Node.js sample applications that shows some of the the IBM Watson Text to Speech service features. </h3>
+<p align="center">
+  <a href="http://travis-ci.org/watson-developer-cloud/text-to-speech-nodejs">
+    <img alt="Travis" src="https://travis-ci.org/watson-developer-cloud/text-to-speech-nodejs.svg?branch=master">
+  </a>
+  <a href="#badge">
+    <img alt="semantic-release" src="https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg">
+  </a>
+</p>
+</p>
 
-The IBM Watson [Text to Speech][service_url] service is designed for streaming, low latency, synthesis of audio from text. It is the inverse of the automatic speech recognition.
+Text to Speech is designed for streaming, low latency, synthesis of audio from text. It is the inverse of the automatic speech recognition.
 
-
-## Getting started
-
-1. You need a Bluemix account. If you don't have one, [sign up][sign_up].
-
-1. Download and install the [Cloud-foundry CLI][cloud_foundry] tool if you haven't already.
-
-1. Edit the `manifest.yml` file and change `<application-name>` to something unique. The name you use determines the URL of your application. For example, `<application-name>.mybluemix.net`.
-
-  ```yaml
-  applications:
-  - services:
-    - my-service-instance
-    name: <application-name>
-    command: npm start
-    path: .
-    memory: 512M
-  ```
-
-1. Connect to Bluemix with the command line tool.
-
-  ```sh
-  cf api https://api.ng.bluemix.net
-  cf login
-  ```
-
-1. Create and retrieve service keys to access the [Text to Speech][service_url] service:
-
-  ```none
-  cf create-service text_to_speech standard my-tts-service
-  cf create-service-key my-tts-service myKey
-  cf service-key my-tts-service myKey
-  ```
-
-1. Create a `.env` file in the root directory by copying the sample `.env.example` file using the following command:
-
-  ```none
-  cp .env.example .env
-  ```
-  You will update the `.env` with the information you retrieved in steps 5.
-
-  The `.env` file will look something like the following:
-
-  ```none
-  TEXT_TO_SPEECH_USERNAME=<username>
-  TEXT_TO_SPEECH_PASSWORD=<password>
-  ```
-
-1. Install the dependencies you application need:
-
-  ```none
-  npm install
-  ```
-
-1. Start the application locally:
-
-  ```none
-  npm start
-  ```
-
-1. Point your browser to [http://localhost:3000](http://localhost:3000).
-
-1. **Optional:** Push the application to Bluemix:
-
-  ```none
-  cf push
-  ```
-
-After completing the steps above, you are ready to test your application. Start a browser and enter the URL of your application.
-
-            <your application name>.mybluemix.net
+You can view a [demo][demo_url] of this app.
 
 
-For more details about developing applications that use Watson Developer Cloud services in Bluemix, see [Getting started with Watson Developer Cloud and Bluemix][getting_started].
+## Prerequisites
+
+1. Sign up for an [IBM Cloud account](https://console.bluemix.net/registration/).
+1. Download the [IBM Cloud CLI](https://console.bluemix.net/docs/cli/index.html#overview).
+1. Create an instance of the Text to Speech service and get your credentials:
+    - Go to the [Text to Speech](https://console.bluemix.net/catalog/services/text-to-speech) page in the IBM Cloud Catalog.
+    - Log in to your IBM Cloud account.
+    - Click **Create**.
+    - Click **Show** to view the service credentials.
+    - Copy the `apikey` value, or copy the `username` and `password` values if your service instance doesn't provide an `apikey`.
+    - Copy the `url` value.
+
+## Configuring the application
+
+1. In the application folder, copy the *.env.example* file and create a file called *.env*
+
+    ```
+    cp .env.example .env
+    ```
+
+2. Open the *.env* file and add the service credentials that you obtained in the previous step.
+
+    Example *.env* file that configures the `apikey` and `url` for a Text to Speech service instance hosted in the US East region:
+
+    ```
+    TEXT_TO_SPEECH_IAM_APIKEY=X4rbi8vwZmKpXfowaS3GAsA7vdy17Qh7km5D6EzKLHL2
+    TEXT_TO_SPEECH_URL=https://stream-wdc.watsonplatform.net/text-to-speech/api
+    ```
+
+    - If your service instance uses `username` and `password` credentials, add the `TEXT_TO_SPEECH_USERNAME` and `TEXT_TO_SPEECH_PASSWORD` variables to the *.env* file.
+
+    Example *.env* file that configures the `username`, `password`, and `url` for a Text to Speech service instance hosted in the Sydney region:
+
+    ```
+    TEXT_TO_SPEECH_USERNAME=522be-7b41-ab44-dec3-g1eab2ha73c6
+    TEXT_TO_SPEECH_PASSWORD=A4Z5BdGENrwu8
+    TEXT_TO_SPEECH_URL=https://gateway-syd.watsonplatform.net/text-to-speech/api
+    ```
+
+## Running locally
+
+1. Install the dependencies
+
+    ```
+    npm install
+    ```
+
+1. Run the application
+
+    ```
+    npm start
+    ```
+
+1. View the application in a browser at `localhost:3000`
+
+## Deploying to IBM Cloud as a Cloud Foundry Application
+
+1. Login to IBM Cloud with the [IBM Cloud CLI](https://console.bluemix.net/docs/cli/index.html#overview)
+
+    ```
+    ibmcloud login
+    ```
+
+1. Target a Cloud Foundry organization and space.
+
+    ```
+    ibmcloud target --cf
+    ```
+
+1. Edit the *manifest.yml* file. Change the **name** field to something unique. For example, `- name: my-app-name`.
+1. Deploy the application
+
+    ```
+    ibmcloud app push
+    ```
+
+1. View the application online at the app URL, for example: https://my-app-name.mybluemix.net
 
 
-## Troubleshooting
 
-* The main source of troubleshooting and recovery information is the Bluemix log. To view the log, run the following command:
-
-  ```sh
-  cf logs <application-name> --recent
-  ```
-
-* For more details about the service, see the [documentation][docs] for the Text to Speech service.
-
-
-----
-
-### Directory structure
+## Directory structure
 
 ```none
 .
@@ -114,14 +118,13 @@ For more details about developing applications that use Watson Developer Cloud s
 
 ## Contributing
 
-  See [CONTRIBUTING](.github/CONTRIBUTING.md).
+  See [CONTRIBUTING](./CONTRIBUTING.md).
 
 ## Open Source @ IBM
   Find more open source projects on the [IBM Github Page](http://ibm.github.io/)
 
 
-[cloud_foundry]: https://github.com/cloudfoundry/cli
-[getting_started]: https://console.bluemix.net/docs/services/watson/index.html
 [service_url]: https://www.ibm.com/watson/services/text-to-speech/
 [docs]: https://www.ibm.com/watson/developercloud/text-to-speech/api/v1/curl.html?curl
 [sign_up]: https://console.bluemix.net/registration/?target=/catalog/services/text-to-speech/
+[demo_url]: https://text-to-speech-demo.ng.bluemix.net

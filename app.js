@@ -1,19 +1,3 @@
-/**
- * Copyright 2015 IBM Corp. All Rights Reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 const express = require('express');
 
 const app = express();
@@ -41,18 +25,23 @@ const getFileExtension = (acceptQuery) => {
   }
 };
 
-const textToSpeech = new TextToSpeechV1({
-  // If unspecified here, the TEXT_TO_SPEECH_USERNAME and
-  // TEXT_TO_SPEECH_PASSWORD env properties will be checked
-  // After that, the SDK will fall back to the bluemix-provided VCAP_SERVICES environment property
-  // username: '<username>',
-  // password: '<password>',
-});
+let textToSpeech;
+
+if (process.env.TEXT_TO_SPEECH_IAM_APIKEY && process.env.TEXT_TO_SPEECH_IAM_APIKEY !== '') {
+  textToSpeech = new TextToSpeechV1({
+    url: process.env.TEXT_TO_SPEECH_IAM_URL || '<url>',
+    iam_apikey: process.env.TEXT_TO_SPEECH_IAM_APIKEY || '<iam_apikey>',
+    iam_url: 'https://iam.bluemix.net/identity/token',
+  });
+} else {
+  textToSpeech = new TextToSpeechV1({
+    username: process.env.TEXT_TO_SPEECH_USERNAME || '<username>',
+    password: process.env.TEXT_TO_SPEECH_PASSWORD || '<password>',
+  });
+}
 
 app.get('/', (req, res) => {
-  res.render('index', {
-    bluemixAnalytics: !!process.env.BLUEMIX_ANALYTICS,
-  });
+  res.render('index');
 });
 
 /**
