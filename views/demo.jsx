@@ -1,3 +1,4 @@
+/* eslint camelcase: off */
 import React, { Component } from 'react';
 import PropType from 'prop-types';
 import { Icon, Tabs, Pane } from 'watson-react-components';
@@ -123,13 +124,13 @@ export default class Demo extends Component {
   onResetClick() {
     // pause audio, if it's playing.
     document.querySelector('audio#audio').pause();
-    const currentVoice = this.state.voice;
+    const { voice } = this.state;
     this.setState({
       error: null,
       hasAudio: false,
-      text: currentVoice.demo.text,
-      ssml: currentVoice.demo.ssml,
-      ssml_voice: currentVoice.demo.ssml_voice,
+      text: voice.demo.text,
+      ssml: voice.demo.ssml,
+      ssml_voice: voice.demo.ssml_voice,
     });
   }
 
@@ -147,17 +148,21 @@ export default class Demo extends Component {
   }
 
   setupParamsFromState(doDownload) {
+    const {
+      text, voice, current_tab, ssmlLabel, ssml_voice, ssml,
+    } = this.state;
+
     const params = getSearchParams();
-    if (this.state && this.state.current_tab === 0) {
-      params.set('text', this.state.text);
-      params.set('voice', this.state.voice.name);
-    } else if (this.state && this.state.current_tab === 1) {
-      params.set('text', this.state.ssml);
-      params.set('voice', this.state.voice.name);
-      params.set('ssmlLabel', this.state.ssmlLabel);
-    } else if (this.state && this.state.current_tab === 2) {
-      params.set('text', this.state.ssml_voice);
-      params.set('voice', this.state.voice.name);
+    if (this.state && current_tab === 0) {
+      params.set('text', text);
+      params.set('voice', voice.name);
+    } else if (this.state && current_tab === 1) {
+      params.set('text', ssml);
+      params.set('voice', voice.name);
+      params.set('ssmlLabel', ssmlLabel);
+    } else if (this.state && current_tab === 2) {
+      params.set('text', ssml_voice);
+      params.set('voice', voice.name);
     }
     params.set('download', doDownload);
 
@@ -181,18 +186,26 @@ export default class Demo extends Component {
   }
 
   downloadAllowed() {
+    const {
+      ssml, ssml_voice, current_tab,
+    } = this.state;
     return (
-      (this.state.ssml_voice && this.state.current_tab === 2) ||
-      (this.state.ssml && this.state.current_tab === 1) ||
-      (this.state.current_tab === 0)
+      (ssml_voice && current_tab === 2)
+      || (ssml && current_tab === 1)
+      || (current_tab === 0)
     );
   }
 
   render() {
+    const {
+      ssml, ssml_voice, voice, loading, hasAudio, ssmlLabel, error, text,
+    } = this.state;
     return (
       <section className="_container _container_large">
         <div className="row">
-          <h2 className="base--h2 title">Input Text</h2>
+          <h2 className="base--h2 title">
+            Input Text
+          </h2>
           <p className="base--p normalfont">
             {TEXT_DESCRIPTION}
           </p>
@@ -201,29 +214,32 @@ export default class Demo extends Component {
               name="voice"
               className="base--select"
               onChange={this.onVoiceChange}
-              value={this.state.voice.name}
+              value={voice.name}
             >
-              {voices.map(voice => (
-                <option key={voice.name} value={voice.name}>{voice.option}</option>
+              {voices.map(v => (
+                <option key={v.name} value={v.name}>
+                  {v.option}
+                </option>
               ))}
             </select>
           </div>
 
           <Tabs selected={0} onChange={this.onTabChange}>
             <Pane label="Text">
-              <textarea onChange={this.onTextChange} className="base--textarea textarea" spellCheck="false" value={this.state.text || ''} />
+              <textarea onChange={this.onTextChange} className="base--textarea textarea" spellCheck="false" value={text || ''} />
             </Pane>
-            <Pane label={this.state.ssmlLabel}>
-              <textarea onChange={this.onSsmlChange} className="base--textarea textarea" spellCheck="false" value={this.state.ssml || ''} />
+            <Pane label={ssmlLabel}>
+              <textarea onChange={this.onSsmlChange} className="base--textarea textarea" spellCheck="false" value={ssml || ''} />
             </Pane>
             <Pane label="Voice Transformation SSML">
-              <textarea readOnly={!this.state.ssml_voice} onChange={this.onVoiceSsmlChange} className="base--textarea textarea" spellCheck="false" value={this.state.ssml_voice || 'Voice Transformation not currently supported for this language.'} />
+              <textarea readOnly={!ssml_voice} onChange={this.onVoiceSsmlChange} className="base--textarea textarea" spellCheck="false" value={ssml_voice || 'Voice Transformation not currently supported for this language.'} />
             </Pane>
           </Tabs>
           <div className="output-container">
             <div className="controls-container">
               <div className="buttons-container">
                 <button
+                  type="button"
                   onClick={this.onDownload}
                   disabled={this.downloadDisabled()}
                   className="base--button download-button"
@@ -231,12 +247,12 @@ export default class Demo extends Component {
                   Download
                 </button>
                 <ConditionalSpeakButton
-                  loading={this.state.loading}
+                  loading={loading}
                   onClick={this.onSpeak}
                   disabled={this.speakDisabled()}
                 />
               </div>
-              <div className={!this.state.loading && this.state.hasAudio ? 'reset-container' : 'reset-container dimmed'}>
+              <div className={!loading && hasAudio ? 'reset-container' : 'reset-container dimmed'}>
                 <Icon type="reset" />
                 <a
                   href="#reset"
@@ -247,14 +263,16 @@ export default class Demo extends Component {
                 </a>
               </div>
             </div>
-            <div className={`errorMessage ${this.state.error ? '' : 'hidden'}`}>
+            <div className={`errorMessage ${error ? '' : 'hidden'}`}>
               <Icon type="error" />
-              <p className="base--p service-error--message">{this.state.error ? this.state.error.error : ''}</p>
+              <p className="base--p service-error--message">
+                {error ? error.error : ''}
+              </p>
             </div>
-            <div className={`text-center loading ${this.state.loading ? '' : 'hidden'}`}>
+            <div className={`text-center loading ${loading ? '' : 'hidden'}`}>
               <Icon type="loader" />
             </div>
-            <audio autoPlay="true" id="audio" className={`audio ${this.state.hasAudio ? '' : 'hidden'}`} controls="controls">
+            <audio autoPlay="true" id="audio" className={`audio ${hasAudio ? '' : 'hidden'}`} controls="controls">
               Your browser does not support the audio element.
             </audio>
           </div>
@@ -265,6 +283,11 @@ export default class Demo extends Component {
 }
 
 class ConditionalSpeakButton extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
+
   componentDidMount() {
     this.checkBrowser();
   }
@@ -274,17 +297,21 @@ class ConditionalSpeakButton extends Component {
   }
 
   render() {
-    return (this.state && this.state.canPlay) ? (
+    const { onClick, loading, disabled } = this.props;
+    const { canPlay } = this.state;
+    return (canPlay) ? (
       <button
-        disabled={this.props.disabled}
-        onClick={this.props.onClick}
-        className={this.props.loading ? 'base--button speak-button loading' : 'base--button speak-button'}
+        type="button"
+        disabled={disabled}
+        onClick={onClick}
+        className={loading ? 'base--button speak-button loading' : 'base--button speak-button'}
       >
         Speak
       </button>
     ) : (
       <button
-        onClick={this.props.onClick}
+        type="button"
+        onClick={onClick}
         className="base--button speak-button speak-disabled"
         title="Only available on Chrome and Firefox"
         disabled
