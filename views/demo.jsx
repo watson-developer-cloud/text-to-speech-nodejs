@@ -187,12 +187,12 @@ export default class Demo extends Component {
 
   downloadAllowed() {
     const {
-      ssml, ssml_voice, current_tab,
+      ssml, ssml_voice, current_tab, text,
     } = this.state;
     return (
       (ssml_voice && current_tab === 2)
       || (ssml && current_tab === 1)
-      || (current_tab === 0)
+      || (current_tab === 0 && text)
     );
   }
 
