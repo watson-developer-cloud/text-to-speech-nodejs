@@ -46,12 +46,12 @@ You can view a [demo][demo_url] of this app.
 
     - If your service instance uses `username` and `password` credentials, add the `TEXT_TO_SPEECH_USERNAME` and `TEXT_TO_SPEECH_PASSWORD` variables to the *.env* file.
 
-    Example *.env* file that configures the `username`, `password`, and `url` for a Text to Speech service instance hosted in the Sydney region:
+    Example *.env* file that configures the `username`, `password`, and `url` for a Text to Speech service instance hosted in the US South region:
 
     ```
     TEXT_TO_SPEECH_USERNAME=522be-7b41-ab44-dec3-g1eab2ha73c6
     TEXT_TO_SPEECH_PASSWORD=A4Z5BdGENrwu8
-    TEXT_TO_SPEECH_URL=https://gateway-syd.watsonplatform.net/text-to-speech/api
+    TEXT_TO_SPEECH_URL=https://stream.watsonplatform.net/text-to-speech/api
     ```
 
 ## Running locally
