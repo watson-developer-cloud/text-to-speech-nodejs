@@ -272,7 +272,7 @@ export default class Demo extends Component {
             <div className={`text-center loading ${loading ? '' : 'hidden'}`}>
               <Icon type="loader" />
             </div>
-            <audio autoPlay="true" id="audio" className={`audio ${hasAudio ? '' : 'hidden'}`} controls="controls">
+            <audio autoPlay id="audio" className={`audio ${hasAudio ? '' : 'hidden'}`} controls="controls">
               Your browser does not support the audio element.
             </audio>
           </div>
