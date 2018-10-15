@@ -29,12 +29,13 @@ let textToSpeech;
 
 if (process.env.TEXT_TO_SPEECH_IAM_APIKEY && process.env.TEXT_TO_SPEECH_IAM_APIKEY !== '') {
   textToSpeech = new TextToSpeechV1({
-    url: process.env.TEXT_TO_SPEECH_IAM_URL || '<url>',
+    url: process.env.TEXT_TO_SPEECH_URL || 'https://stream.watsonplatform.net/text-to-speech/api',
     iam_apikey: process.env.TEXT_TO_SPEECH_IAM_APIKEY || '<iam_apikey>',
     iam_url: 'https://iam.bluemix.net/identity/token',
   });
 } else {
   textToSpeech = new TextToSpeechV1({
+    url: process.env.TEXT_TO_SPEECH_URL || 'https://stream.watsonplatform.net/text-to-speech/api',
     username: process.env.TEXT_TO_SPEECH_USERNAME || '<username>',
     password: process.env.TEXT_TO_SPEECH_PASSWORD || '<password>',
   });
