@@ -232,7 +232,7 @@ export default class Demo extends Component {
               <textarea onChange={this.onSsmlChange} className="base--textarea textarea" spellCheck="false" value={ssml || ''} />
             </Pane>
             <Pane label="Voice Transformation SSML">
-              <textarea readOnly={!ssml_voice} onChange={this.onVoiceSsmlChange} className="base--textarea textarea" spellCheck="false" value={ssml_voice || 'Voice Transformation not currently supported for this language.'} />
+              <textarea readOnly={!ssml_voice} onChange={this.onVoiceSsmlChange} className="base--textarea textarea" spellCheck="false" value={ssml_voice || 'Voice Transformation not currently supported for this voice.'} />
             </Pane>
           </Tabs>
           <div className="output-container">

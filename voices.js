@@ -27,6 +27,8 @@ const US_VOICE_SSML_ALLISON = 'Hello! I\'m Allison, but you can change my voice 
 
 // Sample text values with Voice Transformation SSML (Lisa)
 const US_VOICE_SSML_LISA = 'Hello! I\'m Lisa, but you can change my voice however you wish. <voice-transformation type="Custom" glottal_tension="-80%"> For example, you can make my voice a bit softer, </voice-transformation> <voice-transformation type="Custom" glottal_tension="40%" breathiness="40%"> or a bit strained. </voice-transformation><voice-transformation type="Custom" timbre="Breeze" timbre_extent="60%"> You can alter my voice timbre making me sound like this person, </voice-transformation> <voice-transformation type="Custom" timbre="Sunrise"> or like another person in your different applications. </voice-transformation><voice-transformation type="Custom" breathiness="90%"> You can make my voice more breathy than it is normally. </voice-transformation><voice-transformation type="Young" strength="80%"> I can speak like a young girl. </voice-transformation><voice-transformation type="Custom" pitch="20%" pitch_range="80%" rate="60%" glottal_tension="-80%" timbre="Sunrise"> And you can combine all this with modifications of my speech rate and my tone. </voice-transformation>';
+const US_VOICE_SSML_MICHAEL = 'Hello! I\'m Michael, but you can change my voice however you wish. <voice-transformation type="Custom" glottal_tension="-80%"> For example, you can make my voice a bit softer, </voice-transformation> <voice-transformation type="Custom" glottal_tension="40%" breathiness="40%"> or a bit strained. </voice-transformation><voice-transformation type="Custom" timbre="Breeze" timbre_extent="60%"> You can alter my voice timbre making me sound like this person, </voice-transformation> <voice-transformation type="Custom" timbre="Sunrise"> or like another person in your different applications. </voice-transformation><voice-transformation type="Custom" breathiness="90%"> You can make my voice more breathy than it is normally. </voice-transformation><voice-transformation type="Young" strength="80%"> I can speak like a young boy. </voice-transformation><voice-transformation type="Custom" pitch="20%" pitch_range="80%" rate="60%" glottal_tension="-80%" timbre="Sunrise"> And you can combine all this with modifications of my speech rate and my tone. </voice-transformation>';
+
 
 const voices = [
   {
@@ -62,9 +64,26 @@ const voices = [
     },
     description: 'Emi: Japanese (日本語) female voice.',
   }, {
+    name: 'en-US_MichaelVoice',
+    language: 'en-US',
+    option: 'American English (en-US): Michael (male, transformable)',
+    customizable: true,
+    gender: 'male',
+    url: 'https://gateway-d.watsonplatform.net/text-to-speech/api/v1/voices/en-US_MichaelVoice',
+    supported_features: {
+       voice_transformation: true,
+       custom_pronunciation: true
+    },
+    demo: {
+      text: US_TEXT,
+      ssml: US_SSML,
+      ssml_voice: US_VOICE_SSML_MICHAEL,
+    },
+    description: 'Michael: American English male voice. Dnn technology.',
+ }, {
     name: 'en-US_MichaelV2Voice',
     language: 'en-US',
-    option: 'American English (en-US): Michael (male, expressive, dnn technology)',
+    option: 'American English (en-US): MichaelV2 (male, dnn technology)',
     customizable: true,
     gender: 'male',
     url: 'https://gateway-d.watsonplatform.net/text-to-speech/api/v1/voices/en-US_MichaelV2Voice',
@@ -96,7 +115,7 @@ const voices = [
     description: 'Allison: American English female voice.',
   }, {
     name: 'en-US_AllisonV2Voice',
-    option: 'American English (en-US): Allison (female, expressive, dnn technology)',
+    option: 'American English (en-US): AllisonV2 (female, dnn technology)',
     language: 'en-US',
     customizable: true,
     gender: 'female',
@@ -144,7 +163,7 @@ const voices = [
     description: 'Francesca: Italian (italiano) female voice.',
   }, {
     name: 'it-IT_FrancescaV2Voice',
-    option: 'Italian (it-IT): Francesca (female, dnn technology)',
+    option: 'Italian (it-IT): FrancescaV2 (female, dnn technology)',
     language: 'it-IT',
     customizable: true,
     gender: 'female',
@@ -241,7 +260,7 @@ const voices = [
     description: 'Lisa: American English female voice.',
   },  {
     name: 'en-US_LisaV2Voice',
-    option: 'American English (en-US): Lisa (female, transformable, dnn technology)',
+    option: 'American English (en-US): LisaV2 (female, dnn technology)',
     language: 'en-US',
     customizable: true,
     gender: 'female',
