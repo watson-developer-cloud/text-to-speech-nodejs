@@ -53,7 +53,7 @@ export default class Demo extends Component {
       text: voices[3].demo.text, // default text
       ssml: voices[3].demo.ssml, // SSML text
       ssml_voice: voices[3].demo.ssml_voice, // Voice SSML text, only some voices support this
-      ssmlLabel: 'Expressive SSML',
+      ssmlLabel: 'SSML',
       current_tab: 0,
       loading: false,
     };

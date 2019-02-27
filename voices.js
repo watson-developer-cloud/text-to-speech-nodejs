@@ -37,7 +37,7 @@ const voices = [
     option: 'Brazilian Portuguese (pt-BR): Isabela (female)',
     customizable: true,
     gender: 'female',
-    url: 'https://gateway-d.watsonplatform.net/text-to-speech/api/v1/voices/pt-BR_IsabelaVoice',
+    url: 'https://gateway-s.watsonplatform.net/text-to-speech/api/v1/voices/pt-BR_IsabelaVoice',
     supported_features: {
       voice_transformation: false,
       custom_pronunciation: true,
@@ -53,7 +53,7 @@ const voices = [
     option: 'Japanese (ja-JP): Emi (female)',
     customizable: true,
     gender: 'female',
-    url: 'https://gateway-d.watsonplatform.net/text-to-speech/api/v1/voices/ja-JP_EmiVoice',
+    url: 'https://gateway-s.watsonplatform.net/text-to-speech/api/v1/voices/ja-JP_EmiVoice',
     supported_features: {
       voice_transformation: false,
       custom_pronunciation: true,
@@ -69,7 +69,7 @@ const voices = [
     option: 'American English (en-US): Michael (male, transformable)',
     customizable: true,
     gender: 'male',
-    url: 'https://gateway-d.watsonplatform.net/text-to-speech/api/v1/voices/en-US_MichaelVoice',
+    url: 'https://gateway-s.watsonplatform.net/text-to-speech/api/v1/voices/en-US_MichaelVoice',
     supported_features: {
        voice_transformation: true,
        custom_pronunciation: true
@@ -86,7 +86,7 @@ const voices = [
     option: 'American English (en-US): MichaelV2 (male, dnn technology)',
     customizable: true,
     gender: 'male',
-    url: 'https://gateway-d.watsonplatform.net/text-to-speech/api/v1/voices/en-US_MichaelV2Voice',
+    url: 'https://gateway-s.watsonplatform.net/text-to-speech/api/v1/voices/en-US_MichaelV2Voice',
     supported_features: {
        voice_transformation: false,
        custom_pronunciation: true
@@ -102,7 +102,7 @@ const voices = [
     language: 'en-US',
     customizable: true,
     gender: 'female',
-    url: 'https://gateway-d.watsonplatform.net/text-to-speech/api/v1/voices/en-US_AllisonVoice',
+    url: 'https://gateway-s.watsonplatform.net/text-to-speech/api/v1/voices/en-US_AllisonVoice',
     supported_features: {
       voice_transformation: false,
       custom_pronunciation: true,
@@ -119,7 +119,7 @@ const voices = [
     language: 'en-US',
     customizable: true,
     gender: 'female',
-    url: 'https://gateway-d.watsonplatform.net/text-to-speech/api/v1/voices/en-US_AllisonV2Voice',
+    url: 'https://gateway-s.watsonplatform.net/text-to-speech/api/v1/voices/en-US_AllisonV2Voice',
     supported_features: {
       voice_transformation: false,
       custom_pronunciation: true
@@ -135,7 +135,7 @@ const voices = [
     language: 'fr-FR',
     customizable: true,
     gender: 'female',
-    url: 'https://gateway-d.watsonplatform.net/text-to-speech/api/v1/voices/fr-FR_ReneeVoice',
+    url: 'https://gateway-s.watsonplatform.net/text-to-speech/api/v1/voices/fr-FR_ReneeVoice',
     supported_features: {
       voice_transformation: false,
       custom_pronunciation: true,
@@ -151,7 +151,7 @@ const voices = [
     option: 'Italian (it-IT): Francesca (female)',
     customizable: true,
     gender: 'female',
-    url: 'https://gateway-d.watsonplatform.net/text-to-speech/api/v1/voices/it-IT_FrancescaVoice',
+    url: 'https://gateway-s.watsonplatform.net/text-to-speech/api/v1/voices/it-IT_FrancescaVoice',
     supported_features: {
       voice_transformation: false,
       custom_pronunciation: true,
@@ -167,7 +167,7 @@ const voices = [
     language: 'it-IT',
     customizable: true,
     gender: 'female',
-    url: 'https://gateway-d.watsonplatform.net/text-to-speech/api/v1/voices/it-IT_FrancescaV2Voice',
+    url: 'https://gateway-s.watsonplatform.net/text-to-speech/api/v1/voices/it-IT_FrancescaV2Voice',
     supported_features: {
        voice_transformation: false,
        custom_pronunciation: true
@@ -183,7 +183,7 @@ const voices = [
     option: 'Castilian Spanish (es-ES): Laura (female)',
     customizable: true,
     gender: 'female',
-    url: 'https://gateway-d.watsonplatform.net/text-to-speech/api/v1/voices/es-ES_LauraVoice',
+    url: 'https://gateway-s.watsonplatform.net/text-to-speech/api/v1/voices/es-ES_LauraVoice',
     supported_features: {
       voice_transformation: false,
       custom_pronunciation: true,
@@ -199,7 +199,7 @@ const voices = [
     option: 'German (de-DE): Birgit (female)',
     customizable: true,
     gender: 'female',
-    url: 'https://gateway-d.watsonplatform.net/text-to-speech/api/v1/voices/de-DE_BirgitVoice',
+    url: 'https://gateway-s.watsonplatform.net/text-to-speech/api/v1/voices/de-DE_BirgitVoice',
     supported_features: {
       voice_transformation: false,
       custom_pronunciation: true,
@@ -215,7 +215,7 @@ const voices = [
     language: 'es-ES',
     customizable: true,
     gender: 'male',
-    url: 'https://gateway-d.watsonplatform.net/text-to-speech/api/v1/voices/es-ES_EnriqueVoice',
+    url: 'https://gateway-s.watsonplatform.net/text-to-speech/api/v1/voices/es-ES_EnriqueVoice',
     supported_features: {
       voice_transformation: false,
       custom_pronunciation: true,
@@ -231,7 +231,7 @@ const voices = [
     option: 'German (de-DE): Dieter (male)',
     customizable: true,
     gender: 'male',
-    url: 'https://gateway-d.watsonplatform.net/text-to-speech/api/v1/voices/de-DE_DieterVoice',
+    url: 'https://gateway-s.watsonplatform.net/text-to-speech/api/v1/voices/de-DE_DieterVoice',
     supported_features: {
       voice_transformation: false,
       custom_pronunciation: true,
@@ -247,7 +247,7 @@ const voices = [
     language: 'en-US',
     customizable: true,
     gender: 'female',
-    url: 'https://gateway-d.watsonplatform.net/text-to-speech/api/v1/voices/en-US_LisaVoice',
+    url: 'https://gateway-s.watsonplatform.net/text-to-speech/api/v1/voices/en-US_LisaVoice',
     supported_features: {
       voice_transformation: true,
       custom_pronunciation: true,
@@ -264,7 +264,7 @@ const voices = [
     language: 'en-US',
     customizable: true,
     gender: 'female',
-    url: 'https://gateway-d.watsonplatform.net/text-to-speech/api/v1/voices/en-US_LisaV2Voice',
+    url: 'https://gateway-s.watsonplatform.net/text-to-speech/api/v1/voices/en-US_LisaV2Voice',
     supported_features: {
       voice_transformation: false,
       custom_pronunciation: true,
@@ -280,7 +280,7 @@ const voices = [
     language: 'en-GB',
     customizable: true,
     gender: 'female',
-    url: 'https://gateway-d.watsonplatform.net/text-to-speech/api/v1/voices/en-GB_KateVoice',
+    url: 'https://gateway-s.watsonplatform.net/text-to-speech/api/v1/voices/en-GB_KateVoice',
     supported_features: {
       voice_transformation: false,
       custom_pronunciation: true,
@@ -296,7 +296,7 @@ const voices = [
     option: 'North American Spanish (es-US): Sofia (female)',
     customizable: true,
     gender: 'female',
-    url: 'https://gateway-d.watsonplatform.net/text-to-speech/api/v1/voices/es-US_SofiaVoice',
+    url: 'https://gateway-s.watsonplatform.net/text-to-speech/api/v1/voices/es-US_SofiaVoice',
     supported_features: {
       voice_transformation: false,
       custom_pronunciation: true,
@@ -312,7 +312,7 @@ const voices = [
     option: 'Latin American Spanish (es-LA): Sofia (female)',
     customizable: true,
     gender: 'female',
-    url: 'https://gateway-d.watsonplatform.net/text-to-speech/api/v1/voices/es-LA_SofiaVoice',
+    url: 'https://gateway-s.watsonplatform.net/text-to-speech/api/v1/voices/es-LA_SofiaVoice',
     supported_features: {
       voice_transformation: false,
       custom_pronunciation: true,
