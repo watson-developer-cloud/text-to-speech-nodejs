@@ -71,8 +71,8 @@ const voices = [
     gender: 'male',
     url: 'https://stream.watsonplatform.net/text-to-speech/api/v1/voices/en-US_MichaelVoice',
     supported_features: {
-       voice_transformation: true,
-       custom_pronunciation: true
+      voice_transformation: true,
+      custom_pronunciation: true,
     },
     demo: {
       text: US_TEXT,
@@ -80,7 +80,7 @@ const voices = [
       ssml_voice: US_VOICE_SSML_MICHAEL,
     },
     description: 'Michael: American English male voice. Dnn technology.',
- }, {
+  }, {
     name: 'en-US_MichaelV2Voice',
     language: 'en-US',
     option: 'American English (en-US): MichaelV2 (male, dnn technology)',
@@ -88,15 +88,15 @@ const voices = [
     gender: 'male',
     url: 'https://stream.watsonplatform.net/text-to-speech/api/v1/voices/en-US_MichaelV2Voice',
     supported_features: {
-       voice_transformation: false,
-       custom_pronunciation: true
+      voice_transformation: false,
+      custom_pronunciation: true,
     },
     demo: {
       text: US_TEXT,
-      ssml: US_SSML_DNN
+      ssml: US_SSML_DNN,
     },
     description: 'Michael: American English male voice. Dnn technology.',
- }, {
+  }, {
     name: 'en-US_AllisonVoice',
     option: 'American English (en-US): Allison (female, expressive, transformable)',
     language: 'en-US',
@@ -122,14 +122,14 @@ const voices = [
     url: 'https://stream.watsonplatform.net/text-to-speech/api/v1/voices/en-US_AllisonV2Voice',
     supported_features: {
       voice_transformation: false,
-      custom_pronunciation: true
+      custom_pronunciation: true,
     },
     demo: {
       text: US_TEXT,
-      ssml: US_SSML_DNN
+      ssml: US_SSML_DNN,
     },
-    description: "Allison: American English female voice. Dnn technology."
- }, {
+    description: 'Allison: American English female voice. Dnn technology.',
+  }, {
     name: 'fr-FR_ReneeVoice',
     option: 'French (fr-FR): Renee (female)',
     language: 'fr-FR',
@@ -169,14 +169,14 @@ const voices = [
     gender: 'female',
     url: 'https://stream.watsonplatform.net/text-to-speech/api/v1/voices/it-IT_FrancescaV2Voice',
     supported_features: {
-       voice_transformation: false,
-       custom_pronunciation: true
+      voice_transformation: false,
+      custom_pronunciation: true,
     },
     demo: {
       text: IT_TEXT,
       ssml: IT_SSML_DNN,
     },
-    description: 'Francesca: Italian (italiano) female voice. Dnn technology.'
+    description: 'Francesca: Italian (italiano) female voice. Dnn technology.',
   }, {
     name: 'es-ES_LauraVoice',
     language: 'es-ES',
@@ -258,7 +258,7 @@ const voices = [
       ssml_voice: US_VOICE_SSML_LISA,
     },
     description: 'Lisa: American English female voice.',
-  },  {
+  }, {
     name: 'en-US_LisaV2Voice',
     option: 'American English (en-US): LisaV2 (female, dnn technology)',
     language: 'en-US',
@@ -271,7 +271,7 @@ const voices = [
     },
     demo: {
       text: US_TEXT,
-      ssml: US_SSML_DNN
+      ssml: US_SSML_DNN,
     },
     description: 'Lisa: American English female voice. Dnn technology',
   }, {
