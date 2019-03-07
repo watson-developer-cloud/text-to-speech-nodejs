@@ -48,7 +48,7 @@ casper.test.begin('Text To Speech', 16, function suite(test) {
     });
     casper.then(function () {
       this.click('ul.tab-panels--tab-list li:nth-child(2)');
-      test.assertSelectorHasText('ul.tab-panels--tab-list li:nth-child(2)', 'Expressive SSML');
+      test.assertSelectorHasText('ul.tab-panels--tab-list li:nth-child(2)', 'SSML');
       test.assertHttpStatus(200);
     });
     casper.then(function () {
