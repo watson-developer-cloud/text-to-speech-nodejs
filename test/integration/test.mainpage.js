@@ -67,6 +67,7 @@ casper.test.begin('Text To Speech', 16, function suite(test) {
     testForSelection();
     testForAudio();
     testForTabpanels();
+  });
 
   // This code runs all the tests that we defined above.
   casper.run(function () {
