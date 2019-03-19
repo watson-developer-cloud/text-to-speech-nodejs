@@ -49,14 +49,19 @@ app.get('/', (req, res) => {
  * Pipe the synthesize method
  */
 app.get('/api/v1/synthesize', (req, res, next) => {
-  const transcript = textToSpeech.synthesize(req.query);
-  transcript.on('response', (response) => {
-    if (req.query.download) {
-      response.headers['content-disposition'] = `attachment; filename=transcript.${getFileExtension(req.query.accept)}`;
-    }
-  });
-  transcript.on('error', next);
-  transcript.pipe(res);
+  if (req.query.download
+    && process.env.DOWNLOAD_SECRET && req.query.secret !== process.env.DOWNLOAD_SECRET) {
+    res.status(401).send('Unauthorized');
+  } else {
+    const transcript = textToSpeech.synthesize(req.query);
+    transcript.on('response', (response) => {
+      if (req.query.download) {
+        response.headers['content-disposition'] = `attachment; filename=transcript.${getFileExtension(req.query.accept)}`;
+      }
+    });
+    transcript.on('error', next);
+    transcript.pipe(res);
+  }
 });
 
 // Return the list of voices
