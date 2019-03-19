@@ -242,7 +242,7 @@ export default class Demo extends Component {
                   type="button"
                   onClick={this.onDownload}
                   disabled={this.downloadDisabled()}
-                  className="base--button download-button"
+                  className="base--button download-button hidden"
                 >
                   Download
                 </button>

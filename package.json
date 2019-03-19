@@ -15,29 +15,29 @@
     "url": "https://github.com/watson-developer-cloud/text-to-speech-nodejs/issues"
   },
   "dependencies": {
-    "@babel/core": "^7.3.3",
-    "@babel/preset-env": "^7.3.1",
+    "@babel/core": "^7.3.4",
+    "@babel/preset-env": "^7.3.4",
     "@babel/preset-react": "^7.0.0",
     "@babel/register": "^7.0.0",
     "babel-eslint": "^10.0.1",
     "babelify": "^10.0.0",
     "body-parser": "^1.18.3",
     "casperjs": "^1.1.4",
-    "dotenv": "^6.2.0",
+    "dotenv": "6.2.0",
     "express": "^4.16.4",
-    "express-browserify": "^1.0.2",
-    "express-rate-limit": "^3.3.2",
+    "express-browserify": "^1.0.3",
+    "express-rate-limit": "^3.4.0",
     "express-react-views": "^0.11.0",
     "express-secure-only": "^0.2.1",
-    "helmet": "^3.15.1",
+    "helmet": "^3.16.0",
     "morgan": "^1.9.1",
     "prop-types": "^15.7.2",
-    "react": "^16.8.2",
-    "react-dom": "^16.8.2",
+    "react": "^16.8.4",
+    "react-dom": "^16.8.4",
     "uglifyify": "^5.0.1",
-    "watson-developer-cloud": "^3.18.1",
+    "watson-developer-cloud": "^3.18.2",
     "watson-react-components": "^0.6.19",
-    "whatwg-fetch": "^2.0.4"
+    "whatwg-fetch": "2.0.4"
   },
   "scripts": {
     "start": "node server.js",
@@ -52,14 +52,14 @@
   "devDependencies": {
     "casperjs": "^1.1.4",
     "codecov": "^3.2.0",
-    "eslint": "^5.14.0",
+    "eslint": "^5.15.3",
+    "mocha": "^6.0.2",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-plugin-import": "^2.16.0",
     "eslint-plugin-jsx-a11y": "^6.2.1",
     "eslint-plugin-react": "^7.12.4",
-    "mocha": "^5.2.0",
     "phantomjs-prebuilt": "^2.1.16",
-    "supertest": "^3.4.2"
+    "supertest": "^4.0.2"
   },
   "babel": {
     "presets": [
@@ -75,5 +75,6 @@
   "publishConfig": {
     "registry": "https://registry.npmjs.org/",
     "access": "public"
-  }
+  },
+  "private": true
 }
