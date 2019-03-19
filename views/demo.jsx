@@ -91,7 +91,7 @@ export default class Demo extends Component {
   onDownload(event) {
     event.target.blur();
     const params = this.setupParamsFromState(true);
-    window.location.href = `/api/synthesize?${params.toString()}`;
+    window.location.href = `/api/v1/synthesize?${params.toString()}`;
   }
 
   onSpeak(event) {
@@ -102,7 +102,7 @@ export default class Demo extends Component {
 
 
     this.setState({ loading: true, hasAudio: false });
-    fetch(`/api/synthesize?${params.toString()}`).then((response) => {
+    fetch(`/api/v1/synthesize?${params.toString()}`).then((response) => {
       if (response.ok) {
         response.blob().then((blob) => {
           const url = window.URL.createObjectURL(blob);

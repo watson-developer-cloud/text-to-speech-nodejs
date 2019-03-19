@@ -48,7 +48,7 @@ app.get('/', (req, res) => {
 /**
  * Pipe the synthesize method
  */
-app.get('/api/synthesize', (req, res, next) => {
+app.get('/api/v1/synthesize', (req, res, next) => {
   const transcript = textToSpeech.synthesize(req.query);
   transcript.on('response', (response) => {
     if (req.query.download) {
@@ -60,7 +60,7 @@ app.get('/api/synthesize', (req, res, next) => {
 });
 
 // Return the list of voices
-app.get('/api/voices', (req, res, next) => {
+app.get('/api/v1/voices', (req, res, next) => {
   textToSpeech.voices(null, (error, voices) => {
     if (error) {
       return next(error);
