@@ -365,5 +365,15 @@ const sortedByName = (rhs, lhs) => {
   return result;
 };
 
-const sortedvoices = voices.sort(sortedByName);
+const sortedByOption = (rhs, lhs) => {
+  let result = -1;
+  if (rhs.option === lhs.option) {
+    result = 0;
+  } else if (rhs.option > lhs.option) {
+    result = 1;
+  }
+  return result;
+};
+
+const sortedvoices = voices.sort(sortedByOption);
 module.exports = sortedvoices;
