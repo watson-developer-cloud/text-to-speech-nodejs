@@ -48,11 +48,11 @@ export default class Demo extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      voice: voices[3], // Alisson is the first voice
+      voice: voices[1], // AlissonV2 is the first voice
       error: null, // the error from calling /classify
-      text: voices[3].demo.text, // default text
-      ssml: voices[3].demo.ssml, // SSML text
-      ssml_voice: voices[3].demo.ssml_voice, // Voice SSML text, only some voices support this
+      text: voices[1].demo.text, // default text
+      ssml: voices[1].demo.ssml, // SSML text
+      ssml_voice: voices[1].demo.ssml_voice, // Voice SSML text, only some voices support this
       ssmlLabel: 'SSML',
       current_tab: 0,
       loading: false,
