@@ -43,7 +43,7 @@ casper.test.begin('Text To Speech', 16, function suite(test) {
     casper.then(function () {
       this.click('ul.tab-panels--tab-list li:nth-child(1)');
       test.assertSelectorHasText('ul.tab-panels--tab-list li:nth-child(1)', 'Text');
-      test.assertSelectorHasText('div.tab-panels--tab-content > div > textarea', 'In dem Bewusstsein ihres', 'Text is found');
+      test.assertSelectorHasText('div.tab-panels--tab-content > div > textarea', 'Conscious of its spiritual', 'Text is found');
       test.assertHttpStatus(200);
     });
     casper.then(function () {
