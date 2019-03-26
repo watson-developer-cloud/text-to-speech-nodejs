@@ -357,13 +357,14 @@ const voices = [
 
 const sortedByName = (rhs, lhs) => {
   let result = -1;
-  if (rhs.name === lhs.name) {
+  if (rhs.option === lhs.option) {
     result = 0;
-  } else if (rhs.name > lhs.name) {
+  } else if (rhs.option > lhs.option) {
     result = 1;
   }
   return result;
 };
 
-const sortedvoices = voices.sort(sortedByName);
-module.exports = sortedvoices;
+const sortedVoices = voices.sort(sortedByName);
+
+module.exports = sortedVoices;
