@@ -58,6 +58,8 @@ export default class Demo extends Component {
       loading: false,
     };
 
+    this.audioElementRef = React.createRef();
+
     this.onTabChange = this.onTabChange.bind(this);
     this.onTextChange = this.onTextChange.bind(this);
     this.onSsmlChange = this.onSsmlChange.bind(this);
@@ -66,10 +68,17 @@ export default class Demo extends Component {
     this.onSpeak = this.onSpeak.bind(this);
     this.onResetClick = this.onResetClick.bind(this);
     this.onVoiceChange = this.onVoiceChange.bind(this);
+    this.onAudioLoaded = this.onAudioLoaded.bind(this);
     this.setupParamsFromState = this.setupParamsFromState.bind(this);
     this.downloadDisabled = this.downloadDisabled.bind(this);
     this.speakDisabled = this.speakDisabled.bind(this);
     this.downloadAllowed = this.downloadAllowed.bind(this);
+  }
+
+  componentDidMount() {
+    if (this.audioElementRef.current) {
+      this.audioElementRef.current.addEventListener('play', this.onAudioLoaded);
+    }
   }
 
   onTabChange(idx) {
@@ -88,6 +97,10 @@ export default class Demo extends Component {
     this.setState({ ssml_voice: event.target.value });
   }
 
+  onAudioLoaded() {
+    this.setState({ loading: false, hasAudio: true });
+  }
+
   onDownload(event) {
     event.target.blur();
     const params = this.setupParamsFromState(true);
@@ -97,28 +110,12 @@ export default class Demo extends Component {
   onSpeak(event) {
     event.target.blur();
     const params = this.setupParamsFromState(true);
-    const audio = document.getElementById('audio');
-    audio.setAttribute('src', '');
 
+    const audio = this.audioElementRef.current;
+    audio.setAttribute('type', 'audio/ogg;codecs=opus');
+    audio.setAttribute('src', `/api/v1/synthesize?${params.toString()}`);
 
     this.setState({ loading: true, hasAudio: false });
-    fetch(`/api/v1/synthesize?${params.toString()}`).then((response) => {
-      if (response.ok) {
-        response.blob().then((blob) => {
-          const url = window.URL.createObjectURL(blob);
-          this.setState({ loading: false, hasAudio: true });
-
-          audio.setAttribute('src', url);
-          audio.setAttribute('type', 'audio/ogg;codecs=opus');
-        });
-      } else {
-        this.setState({ loading: false });
-        response.json().then((json) => {
-          this.setState({ error: json });
-          setTimeout(() => this.setState({ error: null, loading: false }), 5000);
-        });
-      }
-    });
   }
 
   onResetClick() {
@@ -272,7 +269,7 @@ export default class Demo extends Component {
             <div className={`text-center loading ${loading ? '' : 'hidden'}`}>
               <Icon type="loader" />
             </div>
-            <audio autoPlay id="audio" className={`audio ${hasAudio ? '' : 'hidden'}`} controls="controls">
+            <audio ref={this.audioElementRef} autoPlay id="audio" className={`audio ${hasAudio ? '' : 'hidden'}`} controls="controls">
               Your browser does not support the audio element.
             </audio>
           </div>
