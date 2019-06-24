@@ -73,11 +73,13 @@ export default class Demo extends Component {
     this.downloadDisabled = this.downloadDisabled.bind(this);
     this.speakDisabled = this.speakDisabled.bind(this);
     this.downloadAllowed = this.downloadAllowed.bind(this);
+    this.handleAudioError = this.handleAudioError.bind(this);
   }
 
   componentDidMount() {
     if (this.audioElementRef.current) {
       this.audioElementRef.current.addEventListener('play', this.onAudioLoaded);
+      this.audioElementRef.current.addEventListener('error', this.handleAudioError);
     }
   }
 
@@ -172,6 +174,12 @@ export default class Demo extends Component {
     }
     console.log(JSON.stringify(params));
     return params;
+  }
+
+  handleAudioError(error) {
+    console.error(error);
+    this.setState({ error: { error: 'Could not play audio' }, loading: false });
+    setTimeout(() => this.setState({ error: null }), 5000);
   }
 
   downloadDisabled() {
