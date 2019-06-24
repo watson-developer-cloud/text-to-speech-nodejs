@@ -83,6 +83,13 @@ export default class Demo extends Component {
     }
   }
 
+  componentWillUnmount() {
+    if (this.audioElementRef.current) {
+      this.audioElementRef.current.removeEventListener('play', this.onAudioLoaded);
+      this.audioElementRef.current.removeEventListener('error', this.handleAudioError);
+    }
+  }
+
   onTabChange(idx) {
     this.setState({ current_tab: idx });
   }
