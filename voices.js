@@ -287,7 +287,7 @@ const voices = [
       ssml: ES_SSML,
     },
     description: 'Enrique: Castilian Spanish (español castellano) male voice.',
-   }, {
+  }, {
     name: 'es-ES_EnriqueV3Voice',
     option: 'Castilian Spanish (es-ES): EnriqueV3 (male, dnn technology)',
     language: 'es-ES',
@@ -416,7 +416,7 @@ const voices = [
       ssml: ES_SSML,
     },
     description: 'Sofia: North American Spanish (español norteamericano) female voice.',
-   }, {
+  }, {
     name: 'es-US_SofiaV3Voice',
     language: 'es-US',
     option: 'North American Spanish (es-US): SofiaV3 (female, dnn technology)',
@@ -466,16 +466,6 @@ const voices = [
     description: 'Sofia: Latin American Spanish (español latinoamericano) female voice. Dnn technology.',
   },
 ];
-
-const sortedByName = (rhs, lhs) => {
-  let result = -1;
-  if (rhs.name === lhs.name) {
-    result = 0;
-  } else if (rhs.name > lhs.name) {
-    result = 1;
-  }
-  return result;
-};
 
 const sortedByOption = (rhs, lhs) => {
   let result = -1;

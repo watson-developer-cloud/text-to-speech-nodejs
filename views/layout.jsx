@@ -5,6 +5,7 @@ import { Header, Jumbotron } from 'watson-react-components';
 // eslint-disable-next-line
 const DESCRIPTION = 'The Text to Speech service understands text and natural language to generate synthesized audio output complete with appropriate cadence and intonation. It is available in 13 voices across 7 languages. Select voices now offer Expressive Synthesis and Voice Transformation features.';
 const GDPR_INFO = 'This system is for demonstration purposes only and is not intended to process Personal Data. No Personal Data is to be entered into this system as it may not have the necessary controls in place to meet the requirements of the General Data Protection Regulation (EU) 2016/679';
+const TERMS_OF_USE_URL = 'https://watson-developer-cloud.github.io/terms?name=Text-to-Speech%20Demo';
 
 function Layout(props) {
   const { children } = props;
@@ -46,6 +47,12 @@ function Layout(props) {
         />
         <div className="_container _container_large gdpr-info">
           {GDPR_INFO}
+        </div>
+        <div className="_container _container_large gdpr-info">
+          By using this application, you agree to the &nbsp;
+          <a target="_blank" rel="noreferrer noopener" href={TERMS_OF_USE_URL}>
+                Terms of Use
+          </a>
         </div>
         <div id="root">
           {children}
