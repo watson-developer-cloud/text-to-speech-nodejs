@@ -46,6 +46,22 @@ const voices = [
     },
     description: 'Isabela: Brazilian Portuguese (português brasileiro) female voice.',
   }, {
+    name: 'pt-BR_IsabelaV3Voice',
+    language: 'pt-BR',
+    option: 'Brazilian Portuguese (pt-BR): IsabelaV3 (female, dnn technology)',
+    customizable: true,
+    gender: 'female',
+    url: 'https://stream.watsonplatform.net/text-to-speech/api/v1/voices/pt-BR_IsabelaV3Voice',
+    supported_features: {
+      voice_transformation: false,
+      custom_pronunciation: true,
+    },
+    demo: {
+      text: PT_TEXT,
+      ssml: PT_SSML,
+    },
+    description: 'Isabela: Brazilian Portuguese (português brasileiro) female voice. Dnn technology.',
+  }, {
     name: 'ja-JP_EmiVoice',
     language: 'ja-JP',
     option: 'Japanese (ja-JP): Emi (female)',
@@ -79,12 +95,12 @@ const voices = [
     },
     description: 'Michael: American English male voice. Dnn technology.',
   }, {
-    name: 'en-US_MichaelV2Voice',
+    name: 'en-US_MichaelV3Voice',
     language: 'en-US',
-    option: 'American English (en-US): MichaelV2 (male, dnn technology)',
+    option: 'American English (en-US): MichaelV3 (male, dnn technology)',
     customizable: true,
     gender: 'male',
-    url: 'https://stream.watsonplatform.net/text-to-speech/api/v1/voices/en-US_MichaelV2Voice',
+    url: 'https://stream.watsonplatform.net/text-to-speech/api/v1/voices/en-US_MichaelV3Voice',
     supported_features: {
       voice_transformation: false,
       custom_pronunciation: true,
@@ -112,12 +128,12 @@ const voices = [
     },
     description: 'Allison: American English female voice.',
   }, {
-    name: 'en-US_AllisonV2Voice',
-    option: 'American English (en-US): AllisonV2 (female, dnn technology)',
+    name: 'en-US_AllisonV3Voice',
+    option: 'American English (en-US): AllisonV3 (female, dnn technology)',
     language: 'en-US',
     customizable: true,
     gender: 'female',
-    url: 'https://stream.watsonplatform.net/text-to-speech/api/v1/voices/en-US_AllisonV2Voice',
+    url: 'https://stream.watsonplatform.net/text-to-speech/api/v1/voices/en-US_AllisonV3Voice',
     supported_features: {
       voice_transformation: false,
       custom_pronunciation: true,
@@ -144,6 +160,22 @@ const voices = [
     },
     description: 'Renee: French (français) female voice.',
   }, {
+    name: 'fr-FR_ReneeV3Voice',
+    option: 'French (fr-FR): ReneeV3 (female, dnn technology)',
+    language: 'fr-FR',
+    customizable: true,
+    gender: 'female',
+    url: 'https://stream.watsonplatform.net/text-to-speech/api/v1/voices/fr-FR_ReneeV3Voice',
+    supported_features: {
+      voice_transformation: false,
+      custom_pronunciation: true,
+    },
+    demo: {
+      text: FR_TEXT,
+      ssml: FR_SSML,
+    },
+    description: 'Renee: French (français) female voice. Dnn technology.',
+  }, {
     name: 'it-IT_FrancescaVoice',
     language: 'it-IT',
     option: 'Italian (it-IT): Francesca (female)',
@@ -160,12 +192,12 @@ const voices = [
     },
     description: 'Francesca: Italian (italiano) female voice.',
   }, {
-    name: 'it-IT_FrancescaV2Voice',
-    option: 'Italian (it-IT): FrancescaV2 (female, dnn technology)',
+    name: 'it-IT_FrancescaV3Voice',
+    option: 'Italian (it-IT): FrancescaV3 (female, dnn technology)',
     language: 'it-IT',
     customizable: true,
     gender: 'female',
-    url: 'https://stream.watsonplatform.net/text-to-speech/api/v1/voices/it-IT_FrancescaV2Voice',
+    url: 'https://stream.watsonplatform.net/text-to-speech/api/v1/voices/it-IT_FrancescaV3Voice',
     supported_features: {
       voice_transformation: false,
       custom_pronunciation: true,
@@ -192,6 +224,22 @@ const voices = [
     },
     description: 'Laura: Castilian Spanish (español castellano) female voice.',
   }, {
+    name: 'es-ES_LauraV3Voice',
+    language: 'es-ES',
+    option: 'Castilian Spanish (es-ES): LauraV3 (female, dnn technology)',
+    customizable: true,
+    gender: 'female',
+    url: 'https://stream.watsonplatform.net/text-to-speech/api/v1/voices/es-ES_LauraV3Voice',
+    supported_features: {
+      voice_transformation: false,
+      custom_pronunciation: true,
+    },
+    demo: {
+      text: ES_TEXT,
+      ssml: ES_SSML,
+    },
+    description: 'Laura: Castilian Spanish (español castellano) female voice. Dnn technology.',
+  }, {
     name: 'de-DE_BirgitVoice',
     language: 'de-DE',
     option: 'German (de-DE): Birgit (female)',
@@ -208,12 +256,12 @@ const voices = [
     },
     description: 'Birgit: Standard German of Germany (Standarddeutsch) female voice.',
   }, {
-    name: 'de-DE_BirgitV2Voice',
+    name: 'de-DE_BirgitV3Voice',
     language: 'de-DE',
-    option: 'German (de-DE): BirgitV2 (female, dnn technology)',
+    option: 'German (de-DE): BirgitV3 (female, dnn technology)',
     customizable: true,
     gender: 'female',
-    url: 'https://stream.watsonplatform.net/text-to-speech/api/v1/voices/de-DE_BirgitV2Voice',
+    url: 'https://stream.watsonplatform.net/text-to-speech/api/v1/voices/de-DE_BirgitV3Voice',
     supported_features: {
       voice_transformation: false,
       custom_pronunciation: true,
@@ -240,6 +288,22 @@ const voices = [
     },
     description: 'Enrique: Castilian Spanish (español castellano) male voice.',
   }, {
+    name: 'es-ES_EnriqueV3Voice',
+    option: 'Castilian Spanish (es-ES): EnriqueV3 (male, dnn technology)',
+    language: 'es-ES',
+    customizable: true,
+    gender: 'male',
+    url: 'https://stream.watsonplatform.net/text-to-speech/api/v1/voices/es-ES_EnriqueV3Voice',
+    supported_features: {
+      voice_transformation: false,
+      custom_pronunciation: true,
+    },
+    demo: {
+      text: ES_TEXT,
+      ssml: ES_SSML,
+    },
+    description: 'Enrique: Castilian Spanish (español castellano) male voice. Dnn technology.',
+  }, {
     name: 'de-DE_DieterVoice',
     language: 'de-DE',
     option: 'German (de-DE): Dieter (male)',
@@ -256,12 +320,12 @@ const voices = [
     },
     description: 'Dieter: Standard German of Germany (Standarddeutsch) male voice.',
   }, {
-    name: 'de-DE_DieterV2Voice',
+    name: 'de-DE_DieterV3Voice',
     language: 'de-DE',
-    option: 'German (de-DE): DieterV2 (male, dnn technology)',
+    option: 'German (de-DE): DieterV3 (male, dnn technology)',
     customizable: true,
     gender: 'male',
-    url: 'https://stream.watsonplatform.net/text-to-speech/api/v1/voices/de-DE_DieterV2Voice',
+    url: 'https://stream.watsonplatform.net/text-to-speech/api/v1/voices/de-DE_DieterV3Voice',
     supported_features: {
       voice_transformation: false,
       custom_pronunciation: true,
@@ -289,12 +353,12 @@ const voices = [
     },
     description: 'Lisa: American English female voice.',
   }, {
-    name: 'en-US_LisaV2Voice',
-    option: 'American English (en-US): LisaV2 (female, dnn technology)',
+    name: 'en-US_LisaV3Voice',
+    option: 'American English (en-US): LisaV3 (female, dnn technology)',
     language: 'en-US',
     customizable: true,
     gender: 'female',
-    url: 'https://stream.watsonplatform.net/text-to-speech/api/v1/voices/en-US_LisaV2Voice',
+    url: 'https://stream.watsonplatform.net/text-to-speech/api/v1/voices/en-US_LisaV3Voice',
     supported_features: {
       voice_transformation: false,
       custom_pronunciation: true,
@@ -321,6 +385,22 @@ const voices = [
     },
     description: 'Kate: British English female voice.',
   }, {
+    name: 'en-GB_KateV3Voice',
+    option: 'British English (en-GB): KateV3 (female, dnn technology)',
+    language: 'en-GB',
+    customizable: true,
+    gender: 'female',
+    url: 'https://stream.watsonplatform.net/text-to-speech/api/v1/voices/en-GB_KateV3Voice',
+    supported_features: {
+      voice_transformation: false,
+      custom_pronunciation: true,
+    },
+    demo: {
+      text: US_TEXT,
+      ssml: US_GB_SSML,
+    },
+    description: 'Kate: British English female voice. Dnn technology.',
+  }, {
     name: 'es-US_SofiaVoice',
     language: 'es-US',
     option: 'North American Spanish (es-US): Sofia (female)',
@@ -337,6 +417,22 @@ const voices = [
     },
     description: 'Sofia: North American Spanish (español norteamericano) female voice.',
   }, {
+    name: 'es-US_SofiaV3Voice',
+    language: 'es-US',
+    option: 'North American Spanish (es-US): SofiaV3 (female, dnn technology)',
+    customizable: true,
+    gender: 'female',
+    url: 'https://stream.watsonplatform.net/text-to-speech/api/v1/voices/es-US_SofiaV3Voice',
+    supported_features: {
+      voice_transformation: false,
+      custom_pronunciation: true,
+    },
+    demo: {
+      text: ES_TEXT,
+      ssml: ES_SSML,
+    },
+    description: 'Sofia: North American Spanish (español norteamericano) female voice. Dnn technology.',
+  }, {
     name: 'es-LA_SofiaVoice',
     language: 'es-LA',
     option: 'Latin American Spanish (es-LA): Sofia (female)',
@@ -352,10 +448,26 @@ const voices = [
       ssml: ES_SSML,
     },
     description: 'Sofia: Latin American Spanish (español latinoamericano) female voice.',
+  }, {
+    name: 'es-LA_SofiaV3Voice',
+    language: 'es-LA',
+    option: 'Latin American Spanish (es-LA): SofiaV3 (female, dnn technology)',
+    customizable: true,
+    gender: 'female',
+    url: 'https://stream.watsonplatform.net/text-to-speech/api/v1/voices/es-LA_SofiaV3Voice',
+    supported_features: {
+      voice_transformation: false,
+      custom_pronunciation: true,
+    },
+    demo: {
+      text: ES_TEXT,
+      ssml: ES_SSML,
+    },
+    description: 'Sofia: Latin American Spanish (español latinoamericano) female voice. Dnn technology.',
   },
 ];
 
-const sortedByName = (rhs, lhs) => {
+const sortedByOption = (rhs, lhs) => {
   let result = -1;
   if (rhs.option === lhs.option) {
     result = 0;
@@ -365,6 +477,5 @@ const sortedByName = (rhs, lhs) => {
   return result;
 };
 
-const sortedVoices = voices.sort(sortedByName);
-
-module.exports = sortedVoices;
+const sortedvoices = voices.sort(sortedByOption);
+module.exports = sortedvoices;
