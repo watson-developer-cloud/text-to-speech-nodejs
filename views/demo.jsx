@@ -221,6 +221,11 @@ export default class Demo extends Component {
           <p className="base--p normalfont">
             {TEXT_DESCRIPTION}
           </p>
+          <p className="base--p normalfont">
+              Try the V3 voices below to experience
+              our latest neural voices, and read all about it in&nbsp;
+            <a target="_blank" rel="noopener noreferrer" href="https://medium.com/ibm-watson/ibm-watson-text-to-speech-neural-voices-added-to-service-e562106ff9c7">this blog.</a>
+          </p>
           <div className="voice-input">
             <select
               name="voice"
