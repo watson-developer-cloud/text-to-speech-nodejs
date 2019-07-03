@@ -7,6 +7,7 @@ import voices from '../voices';
 
 // eslint-disable-next-line
 const TEXT_DESCRIPTION = 'The text language must match the selected voice language: Mixing language (English text with a Spanish male voice) does not produce valid results. The synthesized audio is streamed to the client as it is being produced, using the HTTP chunked encoding. The audio is returned in mp3 format which can be played using VLC and Audacity players.';
+const VOICE_INFORMATION_URL = 'https://medium.com/ibm-watson/ibm-watson-text-to-speech-neural-voices-added-to-service-e562106ff9c7';
 
 /**
  * @return {Function} A polyfill for URLSearchParams
@@ -221,10 +222,15 @@ export default class Demo extends Component {
           <p className="base--p normalfont">
             {TEXT_DESCRIPTION}
           </p>
-          <p className="base--p normalfont">
-              Try the V3 voices below to experience
-              our latest neural voices, and read all about it in&nbsp;
-            <a target="_blank" rel="noopener noreferrer" href="https://medium.com/ibm-watson/ibm-watson-text-to-speech-neural-voices-added-to-service-e562106ff9c7">this blog.</a>
+          <h2 className="base--h2 title">
+            Voice Selection
+          </h2>
+		      <p className="base--p normalfont">
+            For optimal naturalness, select neural voices (V3, enhanced dnn) in the list below.<br/>Please see&nbsp;
+            <a target="_blank" rel="noreferrer noopener" href={VOICE_INFORMATION_URL}>
+              Watson TTS blog
+            </a>
+            &nbsp;for more information.
           </p>
           <div className="voice-input">
             <select
