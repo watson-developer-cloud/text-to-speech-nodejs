@@ -78,6 +78,22 @@ const voices = [
     },
     description: 'Emi: Japanese (日本語) female voice.',
   }, {
+    name: 'ja-JP_EmiV3Voice',
+    language: 'ja-JP',
+    option: 'Japanese (ja-JP): EmiV3 (female, enhanced dnn)',
+    customizable: true,
+    gender: 'female',
+    url: 'https://stream.watsonplatform.net/text-to-speech/api/v1/voices/ja-JP_EmiV3Voice',
+    supported_features: {
+      voice_transformation: false,
+      custom_pronunciation: true,
+    },
+    demo: {
+      text: JP_TEXT,
+      ssml: JP_SSML,
+    },
+    description: 'Emi: Japanese (日本語) female voice. Dnn technology.',
+  }, {
     name: 'en-US_MichaelVoice',
     language: 'en-US',
     option: 'American English (en-US): Michael (male, transformable)',
