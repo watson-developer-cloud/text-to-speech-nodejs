@@ -1,8 +1,6 @@
 ---
 applications:
-- services:
-  - my-text-to-speech
-  name: text-to-speech-demo
+- name: text-to-speech-demo
   command: npm start
   path: .
   memory: 512M

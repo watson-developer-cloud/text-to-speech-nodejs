@@ -24,7 +24,7 @@ You can view a [demo][demo_url] of this app.
     - Log in to your IBM Cloud account.
     - Click **Create**.
     - Click **Show** to view the service credentials.
-    - Copy the `apikey` value, or copy the `username` and `password` values if your service instance doesn't provide an `apikey`.
+    - Copy the `apikey` value.
     - Copy the `url` value.
 
 ## Configuring the application
@@ -42,16 +42,6 @@ You can view a [demo][demo_url] of this app.
     ```
     TEXT_TO_SPEECH_IAM_APIKEY=X4rbi8vwZmKpXfowaS3GAsA7vdy17Qh7km5D6EzKLHL2
     TEXT_TO_SPEECH_URL=https://gateway-wdc.watsonplatform.net/text-to-speech/api
-    ```
-
-    - If your service instance uses `username` and `password` credentials, add the `TEXT_TO_SPEECH_USERNAME` and `TEXT_TO_SPEECH_PASSWORD` variables to the *.env* file.
-
-    Example *.env* file that configures the `username`, `password`, and `url` for a Text to Speech service instance hosted in the US South region:
-
-    ```
-    TEXT_TO_SPEECH_USERNAME=522be-7b41-ab44-dec3-g1eab2ha73c6
-    TEXT_TO_SPEECH_PASSWORD=A4Z5BdGENrwu8
-    TEXT_TO_SPEECH_URL=https://stream.watsonplatform.net/text-to-speech/api
     ```
 
 ## Running locally

@@ -1,7 +1,16 @@
 const express = require('express');
 
 const app = express();
-const TextToSpeechV1 = require('watson-developer-cloud/text-to-speech/v1');
+const TextToSpeechV1 = require('ibm-watson/text-to-speech/v1.js');
+const { IamAuthenticator } = require('ibm-watson/auth');
+
+const textToSpeech = new TextToSpeechV1({
+  version: '2018-04-05',
+  authenticator: new IamAuthenticator({
+    apikey: process.env.TEXT_TO_SPEECH_IAM_APIKEY || 'type-key-here',
+  }),
+  url: process.env.TEXT_TO_SPEECH_URL,
+});
 
 // Bootstrap application settings
 require('./config/express')(app);
@@ -25,22 +34,6 @@ const getFileExtension = (acceptQuery) => {
   }
 };
 
-let textToSpeech;
-
-if (process.env.TEXT_TO_SPEECH_IAM_APIKEY && process.env.TEXT_TO_SPEECH_IAM_APIKEY !== '') {
-  textToSpeech = new TextToSpeechV1({
-    url: process.env.TEXT_TO_SPEECH_URL || 'https://stream.watsonplatform.net/text-to-speech/api',
-    iam_apikey: process.env.TEXT_TO_SPEECH_IAM_APIKEY || '<iam_apikey>',
-    iam_url: 'https://iam.bluemix.net/identity/token',
-  });
-} else {
-  textToSpeech = new TextToSpeechV1({
-    url: process.env.TEXT_TO_SPEECH_URL || 'https://stream.watsonplatform.net/text-to-speech/api',
-    username: process.env.TEXT_TO_SPEECH_USERNAME || '<username>',
-    password: process.env.TEXT_TO_SPEECH_PASSWORD || '<password>',
-  });
-}
-
 app.get('/', (req, res) => {
   res.render('index');
 });
@@ -48,25 +41,30 @@ app.get('/', (req, res) => {
 /**
  * Pipe the synthesize method
  */
-app.get('/api/v1/synthesize', (req, res, next) => {
-  const transcript = textToSpeech.synthesize(req.query);
-  transcript.on('response', (response) => {
-    if (req.query.download) {
-      response.headers['content-disposition'] = `attachment; filename=transcript.${getFileExtension(req.query.accept)}`;
-    }
-  });
-  transcript.on('error', next);
-  transcript.pipe(res);
+app.get('/api/v1/synthesize', async (req, res, next) => {
+  try {
+    const { result } = await textToSpeech.synthesize(req.query);
+    const transcript = result;
+    transcript.on('response', (response) => {
+      if (req.query.download) {
+        response.headers['content-disposition'] = `attachment; filename=transcript.${getFileExtension(req.query.accept)}`;
+      }
+    });
+    transcript.on('error', next);
+    transcript.pipe(res);
+  } catch (error) {
+    res.send(error);
+  }
 });
 
 // Return the list of voices
-app.get('/api/v1/voices', (req, res, next) => {
-  textToSpeech.voices(null, (error, voices) => {
-    if (error) {
-      return next(error);
-    }
-    return res.json(voices);
-  });
+app.get('/api/v1/voices', async (req, res, next) => {
+  try {
+    const { result } = textToSpeech.listVoices();
+    res.json(result);
+  } catch (error) {
+    next(error);
+  }
 });
 
 // error-handler settings
