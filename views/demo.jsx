@@ -7,6 +7,7 @@ import voices from '../voices';
 
 // eslint-disable-next-line
 const TEXT_DESCRIPTION = 'The text language must match the selected voice language: Mixing language (English text with a Spanish male voice) does not produce valid results. The synthesized audio is streamed to the client as it is being produced, using the HTTP chunked encoding. The audio is returned in mp3 format which can be played using VLC and Audacity players.';
+const VOICE_INFORMATION_URL = 'https://medium.com/ibm-watson/ibm-watson-text-to-speech-neural-voices-added-to-service-e562106ff9c7';
 
 /**
  * @return {Function} A polyfill for URLSearchParams
@@ -48,7 +49,7 @@ export default class Demo extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      voice: voices[1], // Alisson is the first voice
+      voice: voices[1], // Allison v3 is the first voice
       error: null, // the error from calling /classify
       text: voices[1].demo.text, // default text
       ssml: voices[1].demo.ssml, // SSML text
@@ -58,6 +59,8 @@ export default class Demo extends Component {
       loading: false,
     };
 
+    this.audioElementRef = React.createRef();
+
     this.onTabChange = this.onTabChange.bind(this);
     this.onTextChange = this.onTextChange.bind(this);
     this.onSsmlChange = this.onSsmlChange.bind(this);
@@ -66,10 +69,26 @@ export default class Demo extends Component {
     this.onSpeak = this.onSpeak.bind(this);
     this.onResetClick = this.onResetClick.bind(this);
     this.onVoiceChange = this.onVoiceChange.bind(this);
+    this.onAudioLoaded = this.onAudioLoaded.bind(this);
     this.setupParamsFromState = this.setupParamsFromState.bind(this);
     this.downloadDisabled = this.downloadDisabled.bind(this);
     this.speakDisabled = this.speakDisabled.bind(this);
     this.downloadAllowed = this.downloadAllowed.bind(this);
+    this.handleAudioError = this.handleAudioError.bind(this);
+  }
+
+  componentDidMount() {
+    if (this.audioElementRef.current) {
+      this.audioElementRef.current.addEventListener('play', this.onAudioLoaded);
+      this.audioElementRef.current.addEventListener('error', this.handleAudioError);
+    }
+  }
+
+  componentWillUnmount() {
+    if (this.audioElementRef.current) {
+      this.audioElementRef.current.removeEventListener('play', this.onAudioLoaded);
+      this.audioElementRef.current.removeEventListener('error', this.handleAudioError);
+    }
   }
 
   onTabChange(idx) {
@@ -88,6 +107,10 @@ export default class Demo extends Component {
     this.setState({ ssml_voice: event.target.value });
   }
 
+  onAudioLoaded() {
+    this.setState({ loading: false, hasAudio: true });
+  }
+
   onDownload(event) {
     event.target.blur();
     const params = this.setupParamsFromState(true);
@@ -97,28 +120,12 @@ export default class Demo extends Component {
   onSpeak(event) {
     event.target.blur();
     const params = this.setupParamsFromState(true);
-    const audio = document.getElementById('audio');
-    audio.setAttribute('src', '');
 
+    const audio = this.audioElementRef.current;
+    audio.setAttribute('type', 'audio/ogg;codecs=opus');
+    audio.setAttribute('src', `/api/v1/synthesize?${params.toString()}`);
 
     this.setState({ loading: true, hasAudio: false });
-    fetch(`/api/v1/synthesize?${params.toString()}`).then((response) => {
-      if (response.ok) {
-        response.blob().then((blob) => {
-          const url = window.URL.createObjectURL(blob);
-          this.setState({ loading: false, hasAudio: true });
-
-          audio.setAttribute('src', url);
-          audio.setAttribute('type', 'audio/ogg;codecs=opus');
-        });
-      } else {
-        this.setState({ loading: false });
-        response.json().then((json) => {
-          this.setState({ error: json });
-          setTimeout(() => this.setState({ error: null, loading: false }), 5000);
-        });
-      }
-    });
   }
 
   onResetClick() {
@@ -177,6 +184,12 @@ export default class Demo extends Component {
     return params;
   }
 
+  handleAudioError(error) {
+    console.error(error);
+    this.setState({ error: { error: 'Could not play audio' }, loading: false });
+    setTimeout(() => this.setState({ error: null }), 5000);
+  }
+
   downloadDisabled() {
     return !this.downloadAllowed();
   }
@@ -208,6 +221,16 @@ export default class Demo extends Component {
           </h2>
           <p className="base--p normalfont">
             {TEXT_DESCRIPTION}
+          </p>
+          <h2 className="base--h2 title">
+            Voice Selection
+          </h2>
+		      <p className="base--p normalfont">
+            For optimal naturalness, select neural voices (V3, enhanced dnn) in the list below.<br/>Please see&nbsp;
+            <a target="_blank" rel="noreferrer noopener" href={VOICE_INFORMATION_URL}>
+              Watson TTS blog
+            </a>
+            &nbsp;for more information.
           </p>
           <div className="voice-input">
             <select
@@ -272,7 +295,7 @@ export default class Demo extends Component {
             <div className={`text-center loading ${loading ? '' : 'hidden'}`}>
               <Icon type="loader" />
             </div>
-            <audio autoPlay id="audio" className={`audio ${hasAudio ? '' : 'hidden'}`} controls="controls">
+            <audio ref={this.audioElementRef} autoPlay id="audio" className={`audio ${hasAudio ? '' : 'hidden'}`} controls="controls">
               Your browser does not support the audio element.
             </audio>
           </div>
