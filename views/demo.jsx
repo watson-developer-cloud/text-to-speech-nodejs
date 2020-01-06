@@ -213,6 +213,9 @@ export default class Demo extends Component {
     const {
       ssml, ssml_voice, voice, loading, hasAudio, ssmlLabel, error, text,
     } = this.state;
+
+    const textDirection = (voice && voice.language === 'ar-AR') ? 'rtl' : 'ltr';
+
     return (
       <section className="_container _container_large">
         <div className="row">
@@ -249,13 +252,13 @@ export default class Demo extends Component {
 
           <Tabs selected={0} onChange={this.onTabChange}>
             <Pane label="Text">
-              <textarea onChange={this.onTextChange} className="base--textarea textarea" spellCheck="false" value={text || ''} />
+              <textarea onChange={this.onTextChange} className="base--textarea textarea" dir={textDirection} spellCheck="false" value={text || ''} />
             </Pane>
             <Pane label={ssmlLabel}>
-              <textarea onChange={this.onSsmlChange} className="base--textarea textarea" spellCheck="false" value={ssml || ''} />
+              <textarea onChange={this.onSsmlChange} className="base--textarea textarea" dir={textDirection} spellCheck="false" value={ssml || ''} />
             </Pane>
             <Pane label="Voice Transformation SSML">
-              <textarea readOnly={!ssml_voice} onChange={this.onVoiceSsmlChange} className="base--textarea textarea" spellCheck="false" value={ssml_voice || 'Voice Transformation not currently supported for this voice.'} />
+              <textarea readOnly={!ssml_voice} onChange={this.onVoiceSsmlChange} dir={textDirection} className="base--textarea textarea" spellCheck="false" value={ssml_voice || 'Voice Transformation not currently supported for this voice.'} />
             </Pane>
           </Tabs>
           <div className="output-container">
