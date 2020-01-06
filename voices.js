@@ -3,9 +3,12 @@ const ES_TEXT = 'Consciente de su patrimonio espiritual y moral, la Unión está
 const FR_TEXT = "Consciente de son patrimoine spirituel et moral, l'Union se fonde sur les valeurs indivisibles et universelles de dignité humaine, de liberté, d'égalité et de solidarité; elle repose sur le principe de la démocratie et le principe de l'État de droit. Elle place la personne au coeur de son action en instituant la citoyenneté de l'Union et en créant un espace de liberté, de sécurité et de justice.";
 const US_TEXT = 'Conscious of its spiritual and moral heritage, the Union is founded on the indivisible, universal values of human dignity, freedom, equality and solidarity; it is based on the principles of democracy and the rule of law. It places the individual at the heart of its activities, by establishing the citizenship of the Union and by creating an area of freedom, security and justice.';
 const DE_TEXT = 'In dem Bewusstsein ihres geistig-religiösen und sittlichen Erbes gründet sich die Union auf die unteilbaren und universellen Werte der Würde des Menschen, der Freiheit, der Gleichheit und der Solidarität. Sie beruht auf den Grundsätzen der Demokratie und der Rechtsstaatlichkeit. Sie stellt den Menschen in den Mittelpunkt ihres Handelns, indem sie die Unionsbürgerschaft und einen Raum der Freiheit, der Sicherheit und des Rechts begründet.';
-const IT_TEXT = "Consapevole del suo patrimonio spirituale e morale, l'Unione si fonda sui valori indivisibili e universali della dignità umana, della libertà, dell'uguaglianza e della solidarietà; essa si basa sul principio della democrazia e sul principio dello Stato di diritto. Pone la persona al centro della sua azione istituendo la cittadinanza dell'Unione e creando uno spazio di libertà, sicurezza e giustizia.";
+const IT_TEXT = 'L\'Unione contribuisce alla salvaguardia e allo sviluppo di questi valori comuni nel rispetto della diversità delle culture e delle tradizioni dei popoli d\'Europa, nonché dell\'identità nazionale degli Stati membri e dell\'ordinamento dei loro pubblici poteri a livello nazionale, regionale e locale; essa si sforza di promuovere uno sviluppo equilibrato e sostenibile e assicura la libera circolazione delle persone, dei servizi, delle merci e dei capitali, nonché la libertà di stabilimento.';
 const JP_TEXT = 'こちらでは配送手続きのご予約・変更を承っております。お客様の会員番号をお願いいたします。会員番号は、０１２３４５６７、ですね。確認いたしました。現在、３月２５日、ご自宅へ配送のご予約を頂いております。それでは、３月２５日、ご自宅へ配送の予定を、３月２６日のご配送に変更いたします。３月２６日は、降雪のため、配送が遅れることがあります。';
 const PT_TEXT = 'Consciente do seu patrimônio espiritual e moral, a União é fundamentada nos valores indivisíveis e universais da dignidade humana, liberdade, igualdade e solidariedade; é baseada nos princípios da democracia e estado de direito. Ela coloca o indivíduo no centro de suas ações, ao instituir a cidadania da União e ao criar um espaço de liberdade, segurança e justiça.';
+const AR_TEXT = 'تقوم خدمة I B M النص إلى خدمة الكلام بتحويل النص المكتوب إلى صوت طبيعي في مجموعة متنوعة من اللغات والأصوات.';
+const CN_TEXT = '基于海量数据的云计算、大数据、人工智能、区块链等新兴技术，正在对商业产生深远的影响。科技变革的步伐持续加速，各行各业的领先企业正在将关键业务应用转移到云端，并积极利用 AI，重塑业务。';
+const NL_TEXT = 'In dem Bewusstsein ihres geistig-religiösen und sittlichen Erbes gründet sich die Union auf die unteilbaren und universellen Werte der Würde des Menschen, der Freiheit, der Gleichheit und der Solidarität. Sie beruht auf den Grundsätzen der Demokratie und der Rechtsstaatlichkeit. Sie stellt den Menschen in den Mittelpunkt ihres Handelns, indem sie die Unionsbürgerschaft und einen Raum der Freiheit, der Sicherheit und des Rechts begründet.';
 
 // Sample text values with SSML
 const ES_SSML = '<p><s>Consciente de su patrimonio espiritual y moral<break time="300ms"/>, la Unión está fundada sobre los valores indivisibles y universales de la dignidad humana, <prosody rate="-15%"> la libertad, la igualdad y la solidaridad, </prosody> y se basa en los principios de la democracia y el Estado de Derecho<break time="500ms"/>.</s> <s><prosody rate="+20%">Al instituir la ciudadanía de la Unión </prosody> y crear un espacio de libertad, seguridad y justicia, sitúa a la persona en el centro de su actuación.</s></p>';
@@ -480,6 +483,96 @@ const voices = [
       ssml: ES_SSML,
     },
     description: 'Sofia: Latin American Spanish (español latinoamericano) female voice. Dnn technology.',
+  }, {
+    name: 'ar-AR_OmarVoice',
+    language: 'ar-AR',
+    option: 'Arabic (ar-AR): Omar (male)',
+    customizable: false,
+    gender: 'male',
+    url: 'https://stream.watsonplatform.net/text-to-speech/api/v1/voices/ar-AR_OmarVoice',
+    supported_features: {
+      voice_transformation: false,
+      custom_pronunciation: false,
+    },
+    demo: {
+      text: AR_TEXT,
+    },
+    description: 'Omar: Arabic male voice. This language is in beta.',
+  }, {
+    name: 'zh-CN_LiNaVoice',
+    language: 'zh-CN',
+    option: 'Chinese, Mandarin (zh-CN): LiNa (female)',
+    customizable: false,
+    gender: 'female',
+    url: 'https://stream.watsonplatform.net/text-to-speech/api/v1/voices/zh-CN_LiNaVoice',
+    supported_features: {
+      voice_transformation: false,
+      custom_pronunciation: false,
+    },
+    demo: {
+      text: CN_TEXT,
+    },
+    description: 'LiNa: Mandarin Chinese voice (female). This language is in beta.',
+  }, {
+    name: 'zh-CN_WangWeiVoice',
+    language: 'zh-CN',
+    option: 'Chinese, Mandarin (zh-CN): WangWei (Male)',
+    customizable: false,
+    gender: 'male',
+    url: 'https://stream.watsonplatform.net/text-to-speech/api/v1/voices/zh-CN_WangWeiVoice',
+    supported_features: {
+      voice_transformation: false,
+      custom_pronunciation: false,
+    },
+    demo: {
+      text: CN_TEXT,
+    },
+    description: 'WangWei: Mandarin Chinese voice (male). This language is in beta.',
+  }, {
+    name: 'zh-CN_ZhangJingVoice',
+    language: 'zh-CN',
+    option: 'Chinese, Mandarin (zh-CN): ZhangJing (female)',
+    customizable: false,
+    gender: 'female',
+    url: 'https://stream.watsonplatform.net/text-to-speech/api/v1/voices/zh-CN_ZhangJingVoice',
+    supported_features: {
+      voice_transformation: false,
+      custom_pronunciation: false,
+    },
+    demo: {
+      text: CN_TEXT,
+    },
+    description: 'ZhangJing: Mandarin Chinese voice (female). This language is in beta.',
+  }, {
+    name: 'nl-NL_EmmaVoice',
+    language: 'nl-NL',
+    option: 'Dutch (nl-NL): Emma (female)',
+    customizable: false,
+    gender: 'female',
+    url: 'https://stream.watsonplatform.net/text-to-speech/api/v1/voices/nl-NL_EmmaVoice',
+    supported_features: {
+      voice_transformation: false,
+      custom_pronunciation: false,
+    },
+    demo: {
+      text: NL_TEXT,
+    },
+    description: 'Emma: Dutch voice (female). This language is in beta.',
+  }, {
+    name: 'nl-NL_LiamVoice',
+    language: 'nl-NL',
+    option: 'Dutch (nl-NL): Liam (male)',
+    customizable: false,
+    gender: 'male',
+    url: 'https://stream.watsonplatform.net/text-to-speech/api/v1/voices/nl-NL_LiamVoice',
+    supported_features: {
+      voice_transformation: false,
+      custom_pronunciation: false,
+    },
+    demo: {
+      text: NL_TEXT,
+    },
+    description: 'Liam: Dutch voice (male). This language is in beta.',
   },
 ];
 
