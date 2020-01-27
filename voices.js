@@ -20,6 +20,9 @@ const DE_SSML = '<p><s>In dem Bewusstsein ihres geistig-religiösen und sittlich
 const IT_SSML = '<p><s>Consapevole del suo patrimonio spirituale e morale<break time="300ms"/>, l\'Unione si fonda sui valori indivisibili e universali della dignità umana, <prosody rate="-15%">della libertà, dell\'uguaglianza e della solidarietà; </prosody> essa si basa sul principio della democrazia e sul principio dello Stato di diritto<break time="500ms"/>.</s><s> Pone la persona al centro della sua azione istituendo la cittadinanza dell\'Unione e creando uno spazio di libertà, sicurezza e giustizia.</s></p>';
 const JP_SSML = '<p><s>こちらでは配送手続きのご予約・変更を承っております。お客様の会員番号をお願いいたします。<break time="1000ms"/>会員番号は、０１２３４５６７、ですね。確認いたしました。現在、３月２５日、ご自宅へ配送のご予約を頂いております。<break time="500ms"/>それでは、３月２５日、ご自宅へ配送の予定を、３月２６日のご配送に変更いたします。３月２６日は、降雪のため、配送が遅れることがあります。</s></p>';
 const PT_SSML = '<p><s>Consciente do seu patrimônio espiritual e moral<break time="300ms"/>, a União é fundamentada nos valores indivisíveis e universais da dignidade humana, <prosody rate="-15%">liberdade, igualdade e solidariedade; </prosody> é baseada nos princípios da democracia e estado de direito<break time="500ms"/>. </s> <s> <prosody rate="+15%">Ela coloca o indivíduo no centro de suas ações, </prosody> ao instituir a cidadania da União e ao criar um espaço de liberdade, segurança e justiça.</s></p>';
+const AR_SSML = 'تقوم خدمة <break time="100ms"/> I <break time="300ms"/> B <break time="300ms"/> M <break time="300ms"/> النص إلى خدمة الكلام بتحويل النص المكتوب إلى صوت طبيعي في مجموعة متنوعة من اللغات والأصوات.';
+const CN_SSML = '基于海量数据的云计算、大数据、人工智能、区块链等新兴技术，正在对商业产生深远的影响。科技变革的步伐 <break time="100ms"/> 持续加速，各行各业的领先企业正在将关键业务应用 <break strength="strong"/> 转移到云端，并积极利用 AI，重塑业务。';
+const NL_SSML = 'De volkeren van Europa hebben besloten een op gemeenschappelijke waarden gegrondveste vreedzame toekomst te delen <break time="100ms"/> door onderling een steeds hechter verbond tot stand te brengen. De Unie, die zich bewust is van haar geestelijke en morele erfgoed, heeft haar grondslag in de ondeelbare en universele waarden van <prosody rate="-8%">menselijke waardigheid en van vrijheid, gelijkheid en solidariteit. </prosody> Zij berust op het beginsel van democratie en het beginsel van de rechtsstaat. De Unie stelt de mens centraal in haar optreden <break time="100ms"/>, door het burgerschap van de Unie in te stellen en een ruimte van vrijheid, veiligheid en recht tot stand te brengen.';
 
 // Sample text values with Voice Transformation SSML (Allison)
 const US_VOICE_SSML_ALLISON = 'Hello! I\'m Allison, but you can change my voice however you wish. <voice-transformation type="Custom" glottal_tension="-80%"> For example, you can make my voice a bit softer, </voice-transformation> <voice-transformation type="Custom" glottal_tension="40%" breathiness="40%"> or a bit strained. </voice-transformation><voice-transformation type="Custom" timbre="Breeze" timbre_extent="60%"> '
@@ -496,6 +499,7 @@ const voices = [
     },
     demo: {
       text: AR_TEXT,
+      ssml: AR_SSML,
     },
     description: 'Omar: Arabic male voice. This language is in beta.',
   }, {
@@ -511,6 +515,7 @@ const voices = [
     },
     demo: {
       text: CN_TEXT,
+      ssml: CN_SSML,
     },
     description: 'LiNa: Mandarin Chinese voice (female). This language is in beta.',
   }, {
@@ -526,6 +531,7 @@ const voices = [
     },
     demo: {
       text: CN_TEXT,
+      ssml: CN_SSML,
     },
     description: 'WangWei: Mandarin Chinese voice (male). This language is in beta.',
   }, {
@@ -541,6 +547,7 @@ const voices = [
     },
     demo: {
       text: CN_TEXT,
+      ssml: CN_SSML,
     },
     description: 'ZhangJing: Mandarin Chinese voice (female). This language is in beta.',
   }, {
@@ -556,6 +563,7 @@ const voices = [
     },
     demo: {
       text: NL_TEXT,
+      ssml: NL_SSML,
     },
     description: 'Emma: Dutch voice (female). This language is in beta.',
   }, {
@@ -571,6 +579,7 @@ const voices = [
     },
     demo: {
       text: NL_TEXT,
+      ssml: NL_SSML,
     },
     description: 'Liam: Dutch voice (male). This language is in beta.',
   },
