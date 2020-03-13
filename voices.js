@@ -294,6 +294,22 @@ const voices = [
     },
     description: 'Birgit: Standard German of Germany (Standarddeutsch) female voice. Dnn technology.',
   }, {
+    name: 'de-DE_ErikaV3Voice',
+    language: 'de-DE',
+    option: 'German (de-DE): ErikaV3 (female, enhanced dnn)',
+    customizable: true,
+    gender: 'female',
+    url: 'https://stream.watsonplatform.net/text-to-speech/api/v1/voices/de-DE_ErikaV3Voice',
+    supported_features: {
+      voice_transformation: false,
+      custom_pronunciation: true,
+    },
+    demo: {
+      text: DE_TEXT,
+      ssml: DE_SSML,
+    },
+    description: 'Erika: Standard German of Germany (Standarddeutsch) female voice. Dnn technology.',
+  }, {
     name: 'es-ES_EnriqueVoice',
     option: 'Castilian Spanish (es-ES): Enrique (male)',
     language: 'es-ES',
@@ -390,6 +406,70 @@ const voices = [
       ssml: US_SSML,
     },
     description: 'Lisa: American English female voice. Dnn technology',
+  }, {
+    name: 'en-US_OliviaV3Voice',
+    option: 'American English (en-US): OliviaV3 (female, enhanced dnn)',
+    language: 'en-US',
+    customizable: true,
+    gender: 'female',
+    url: 'https://stream.watsonplatform.net/text-to-speech/api/v1/voices/en-US_OliviaV3Voice',
+    supported_features: {
+      voice_transformation: false,
+      custom_pronunciation: true,
+    },
+    demo: {
+      text: US_TEXT,
+      ssml: US_SSML,
+    },
+    description: 'Olivia: American English female voice. Dnn technology',
+  }, {
+    name: 'en-US_HenryV3Voice',
+    option: 'American English (en-US): HenryV3 (male, enhanced dnn)',
+    language: 'en-US',
+    customizable: true,
+    gender: 'male',
+    url: 'https://stream.watsonplatform.net/text-to-speech/api/v1/voices/en-US_HenryV3Voice',
+    supported_features: {
+      voice_transformation: false,
+      custom_pronunciation: true,
+    },
+    demo: {
+      text: US_TEXT,
+      ssml: US_SSML,
+    },
+    description: 'Henry: American English male voice. Dnn technology',
+  }, {
+    name: 'en-US_KevinV3Voice',
+    option: 'American English (en-US): KevinV3 (male, enhanced dnn)',
+    language: 'en-US',
+    customizable: true,
+    gender: 'male',
+    url: 'https://stream.watsonplatform.net/text-to-speech/api/v1/voices/en-US_KevinV3Voice',
+    supported_features: {
+      voice_transformation: false,
+      custom_pronunciation: true,
+    },
+    demo: {
+      text: US_TEXT,
+      ssml: US_SSML,
+    },
+    description: 'Kevin: American English male voice. Dnn technology',
+  }, {
+    name: 'en-US_EmilyV3Voice',
+    option: 'American English (en-US): EmilyV3 (female, enhanced dnn)',
+    language: 'en-US',
+    customizable: true,
+    gender: 'female',
+    url: 'https://stream.watsonplatform.net/text-to-speech/api/v1/voices/en-US_EmilyV3Voice',
+    supported_features: {
+      voice_transformation: false,
+      custom_pronunciation: true,
+    },
+    demo: {
+      text: US_TEXT,
+      ssml: US_SSML,
+    },
+    description: 'Emily: American English female voice. Dnn technology',
   }, {
     name: 'en-GB_KateVoice',
     option: 'British English (en-GB): Kate (female)',
