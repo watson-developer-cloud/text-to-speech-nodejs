@@ -9,6 +9,7 @@ const PT_TEXT = 'Consciente do seu patrimônio espiritual e moral, a União é f
 const AR_TEXT = 'تقوم خدمة I B M النص إلى خدمة الكلام بتحويل النص المكتوب إلى صوت طبيعي في مجموعة متنوعة من اللغات والأصوات.';
 const CN_TEXT = '基于海量数据的云计算、大数据、人工智能、区块链等新兴技术，正在对商业产生深远的影响。科技变革的步伐持续加速，各行各业的领先企业正在将关键业务应用转移到云端，并积极利用 AI，重塑业务。';
 const NL_TEXT = 'De volkeren van Europa hebben besloten een op gemeenschappelijke waarden gegrondveste vreedzame toekomst te delen door onderling een steeds hechter verbond tot stand te brengen. De Unie, die zich bewust is van haar geestelijke en morele erfgoed, heeft haar grondslag in de ondeelbare en universele waarden van menselijke waardigheid en van vrijheid, gelijkheid en solidariteit. Zij berust op het beginsel van democratie en het beginsel van de rechtsstaat. De Unie stelt de mens centraal in haar optreden, door het burgerschap van de Unie in te stellen en een ruimte van vrijheid, veiligheid en recht tot stand te brengen.';
+const KO_TEXT = '11월 27일 일기예보입니다. 현재 전국이 대체로 맑으나 제주도와 경북동해안은 눈이 날리거나 빗방울이 떨어지는 곳이 있겠습니다. 오늘 낮 기온은 어제와 비슷하겠습니다. 내일 저녁 한때 서울, 경기도에는 비가 조금 오는 곳이 있겠으며, 충북북부와 경북남부에는 빗방울이 떨어지는 곳이 있겠습니다. 모레 밤부터 서해안을 중심으로 초속 60m 이상의 매우 강한 돌풍이 부는 곳이 있겠으니, 시설물 관리와 안전사고에 유의하시기 바랍니다. 지금까지 기상정보였습니다.';
 
 // Sample text values with SSML
 const ES_SSML = '<p><s>Consciente de su patrimonio espiritual y moral<break time="300ms"/>, la Unión está fundada sobre los valores indivisibles y universales de la dignidad humana, <prosody rate="-15%"> la libertad, la igualdad y la solidaridad, </prosody> y se basa en los principios de la democracia y el Estado de Derecho<break time="500ms"/>.</s> <s><prosody rate="+20%">Al instituir la ciudadanía de la Unión </prosody> y crear un espacio de libertad, seguridad y justicia, sitúa a la persona en el centro de su actuación.</s></p>';
@@ -23,6 +24,7 @@ const PT_SSML = '<p><s>Consciente do seu patrimônio espiritual e moral<break ti
 const AR_SSML = 'تقوم خدمة <break time="100ms"/> I <break time="300ms"/> B <break time="300ms"/> M <break time="300ms"/> النص إلى خدمة الكلام بتحويل النص المكتوب إلى صوت طبيعي في مجموعة متنوعة من اللغات والأصوات.';
 const CN_SSML = '基于海量数据的云计算、大数据、人工智能、区块链等新兴技术，正在对商业产生深远的影响。科技变革的步伐 <break time="100ms"/> 持续加速，各行各业的领先企业正在将关键业务应用 <break strength="strong"/> 转移到云端，并积极利用 AI，重塑业务。';
 const NL_SSML = 'De volkeren van Europa hebben besloten een op gemeenschappelijke waarden gegrondveste vreedzame toekomst te delen <break time="100ms"/> door onderling een steeds hechter verbond tot stand te brengen. De Unie, die zich bewust is van haar geestelijke en morele erfgoed, heeft haar grondslag in de ondeelbare en universele waarden van <prosody rate="-8%">menselijke waardigheid en van vrijheid, gelijkheid en solidariteit. </prosody> Zij berust op het beginsel van democratie en het beginsel van de rechtsstaat. De Unie stelt de mens centraal in haar optreden <break time="100ms"/>, door het burgerschap van de Unie in te stellen en een ruimte van vrijheid, veiligheid en recht tot stand te brengen.';
+const KO_SSML = '<p><prosody pitch="100Hz"><s><prosody rate="+15%">11월 27일 일기예보입니다.</prosody></s> <s>현재 전국이 대체로 <prosody rate="+15%">맑으나 제주도와</prosody> 경북동해안은 눈이 날리거나 빗방울이 떨어지는 곳이 있겠습니다.</s> <s>오늘 낮 기온은 어제와 비슷하겠습니다.</s> <s>내일 저녁 한때 서울, 경기도에는 비가 조금 오는 곳이 <prosody rate="+20%">있겠으며, 충북북부와</prosody> 경북남부에는 빗방울이 떨어지는 곳이 있겠습니다.</s> <s>모레 밤부터 서해안을 중심으로 초속 60m 이상의 매우 강한 돌풍이 부는 곳이 <prosody rate="+20%">있겠으니,<break strength="none"/> 시설물</prosody> 관리와 안전사고에 유의하시기 바랍니다.</s> <s><prosody rate="+15%" pitch="+5Hz">지금까지 기상정보였습니다.</prosody></s></prosody></p>';
 
 // Sample text values with Voice Transformation SSML (Allison)
 const US_VOICE_SSML_ALLISON = 'Hello! I\'m Allison, but you can change my voice however you wish. <voice-transformation type="Custom" glottal_tension="-80%"> For example, you can make my voice a bit softer, </voice-transformation> <voice-transformation type="Custom" glottal_tension="40%" breathiness="40%"> or a bit strained. </voice-transformation><voice-transformation type="Custom" timbre="Breeze" timbre_extent="60%"> '
@@ -662,7 +664,39 @@ const voices = [
       ssml: NL_SSML,
     },
     description: 'Liam: Dutch voice (male). This language is in beta.',
-  },
+  },{
+    name: 'ko-KR_YoungmiVoice',
+    language: 'ko-KR',
+    option: 'Korean (ko-KR): Youngmi (female)',
+    customizable: true,
+    gender: 'female',
+    url: 'https://stream.watsonplatform.net/text-to-speech/api/v1/voices/ko-KR_YoungmiVoice',
+    supported_features: {
+      voice_transformation: false,
+      custom_pronunciation: true,
+    },
+    demo: {
+      text: KO_TEXT,
+      ssml: KO_SSML,
+    },
+    description: 'Youngmi: Korean voice (female). This language is in beta.',
+  },{
+    name: 'ko-KR_YunaVoice',
+    language: 'ko-KR',
+    option: 'Korean (ko-KR): Yuna (female)',
+    customizable: true,
+    gender: 'female',
+    url: 'https://stream.watsonplatform.net/text-to-speech/api/v1/voices/ko-KR_YunaVoice',
+    supported_features: {
+      voice_transformation: false,
+      custom_pronunciation: true,
+    },
+    demo: {
+      text: KO_TEXT,
+      ssml: KO_SSML,
+    },
+    description: 'Yuna: Korean voice (female). This language is in beta.',
+  }
 ];
 
 const sortedByOption = (rhs, lhs) => {
