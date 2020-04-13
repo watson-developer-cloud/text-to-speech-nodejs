@@ -664,7 +664,7 @@ const voices = [
       ssml: NL_SSML,
     },
     description: 'Liam: Dutch voice (male). This language is in beta.',
-  },{
+  }, {
     name: 'ko-KR_YoungmiVoice',
     language: 'ko-KR',
     option: 'Korean (ko-KR): Youngmi (female)',
@@ -680,7 +680,7 @@ const voices = [
       ssml: KO_SSML,
     },
     description: 'Youngmi: Korean voice (female). This language is in beta.',
-  },{
+  }, {
     name: 'ko-KR_YunaVoice',
     language: 'ko-KR',
     option: 'Korean (ko-KR): Yuna (female)',
@@ -696,7 +696,7 @@ const voices = [
       ssml: KO_SSML,
     },
     description: 'Yuna: Korean voice (female). This language is in beta.',
-  }
+  },
 ];
 
 const sortedByOption = (rhs, lhs) => {
