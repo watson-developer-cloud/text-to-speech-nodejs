@@ -41,7 +41,7 @@ app.get('/', (req, res) => {
 /**
  * Pipe the synthesize method
  */
-app.get('/api/v1/synthesize', async (req, res, next) => {
+app.get('/api/v2/synthesize', async (req, res, next) => {
   try {
     const { result } = await textToSpeech.synthesize(req.query);
     const transcript = result;
@@ -58,7 +58,7 @@ app.get('/api/v1/synthesize', async (req, res, next) => {
 });
 
 // Return the list of voices
-app.get('/api/v1/voices', async (req, res, next) => {
+app.get('/api/v2/voices', async (req, res, next) => {
   try {
     const { result } = textToSpeech.listVoices();
     res.json(result);
