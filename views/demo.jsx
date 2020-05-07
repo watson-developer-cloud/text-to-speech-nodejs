@@ -114,7 +114,7 @@ export default class Demo extends Component {
   onDownload(event) {
     event.target.blur();
     const params = this.setupParamsFromState(true);
-    window.location.href = `/api/v1/synthesize?${params.toString()}`;
+    window.location.href = `/api/v2/synthesize?${params.toString()}`;
   }
 
   onSpeak(event) {
@@ -123,7 +123,7 @@ export default class Demo extends Component {
 
     const audio = this.audioElementRef.current;
     audio.setAttribute('type', 'audio/ogg;codecs=opus');
-    audio.setAttribute('src', `/api/v1/synthesize?${params.toString()}`);
+    audio.setAttribute('src', `/api/v2/synthesize?${params.toString()}`);
 
     this.setState({ loading: true, hasAudio: false });
   }
