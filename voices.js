@@ -200,6 +200,22 @@ const voices = [
     },
     description: 'Renee: French (français) female voice. Dnn technology.',
   }, {
+    name: 'fr-FR_NicolasV3Voice',
+    option: 'French (fr-FR): NicolasV3 (male, enhanced dnn)',
+    language: 'fr-FR',
+    customizable: true,
+    gender: 'female',
+    url: 'https://stream.watsonplatform.net/text-to-speech/api/v1/voices/fr-FR_NocolasV3Voice',
+    supported_features: {
+      voice_transformation: false,
+      custom_pronunciation: true,
+    },
+    demo: {
+      text: FR_TEXT,
+      ssml: FR_SSML,
+    },
+    description: 'Renee: French (Nicolas) male voice. Dnn technology.',
+  }, {
     name: 'it-IT_FrancescaVoice',
     language: 'it-IT',
     option: 'Italian (it-IT): Francesca (female)',
@@ -536,6 +552,38 @@ const voices = [
       ssml: ES_SSML,
     },
     description: 'Sofia: North American Spanish (español norteamericano) female voice. Dnn technology.',
+  }, {
+    name: 'en-GB_CharlotteV3Voice',
+    option: 'British English (en-GB): CharlotteV3 (female, enhanced dnn)',
+    language: 'en-GB',
+    customizable: true,
+    gender: 'female',
+    url: 'https://stream.watsonplatform.net/text-to-speech/api/v1/voices/en-GB_CharlotteV3Voice',
+    supported_features: {
+      voice_transformation: false,
+      custom_pronunciation: true,
+    },
+    demo: {
+      text: US_TEXT,
+      ssml: US_GB_SSML,
+    },
+    description: 'Charlotte: British English female voice. Dnn technology.',
+  }, {
+    name: 'en-GB_JamesV3Voice',
+    option: 'British English (en-GB): JamesV3 (male, enhanced dnn)',
+    language: 'en-GB',
+    customizable: true,
+    gender: 'female',
+    url: 'https://stream.watsonplatform.net/text-to-speech/api/v1/voices/en-GB_JamesV3Voice',
+    supported_features: {
+      voice_transformation: false,
+      custom_pronunciation: true,
+    },
+    demo: {
+      text: US_TEXT,
+      ssml: US_GB_SSML,
+    },
+    description: 'James: British English male voice. Dnn technology.',
   }, {
     name: 'es-LA_SofiaVoice',
     language: 'es-LA',
