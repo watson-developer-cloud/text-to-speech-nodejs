@@ -35,7 +35,8 @@ const getFileExtension = (acceptQuery) => {
 };
 
 app.get('/', (req, res) => {
-  res.render('index');
+  res.redirect('https://www.ibm.com/demos/live/tts-demo/self-service/home');
+  //res.render('index');
 });
 
 /**
