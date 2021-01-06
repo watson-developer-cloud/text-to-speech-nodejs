@@ -1,3 +1,10 @@
+<h1 style="font-weight: bold;"># DEPRECATED</h1>
+<h2> 
+  This demo and repo is no longer supported. You can find the newly supported Text to Speech Demo
+  <a href="https://www.ibm.com/demos/live/tts-demo/self-service/">
+    here.
+  </a>
+</h2>
 <h1 align="center" style="border-bottom: none;">🔊 Text to Speech Demo </h1>
 <h3 align="center">Node.js sample applications that shows some of the the IBM Watson Text to Speech service features. </h3>
 <p align="center">
